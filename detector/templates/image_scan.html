@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.scan-card{
+
+background:#111827;
+
+border:1px solid #1E3A5F;
+
+border-radius:22px;
+
+padding:35px;
+
+box-shadow:0 0 25px rgba(0,229,255,.08);
+
+}
+
+.upload-box{
+
+background:#0F172A;
+
+border:2px dashed #00BCD4;
+
+border-radius:20px;
+
+padding:50px;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.upload-box:hover{
+
+background:#172554;
+
+border-color:#00E5FF;
+
+box-shadow:0 0 20px rgba(0,229,255,.25);
+
+}
+
+.upload-box i{
+
+font-size:65px;
+
+color:#00BCD4;
+
+margin-bottom:20px;
+
+}
+
+.upload-box h4{
+
+color:white;
+
+font-weight:600;
+
+}
+
+.upload-box p{
+
+color:#94A3B8;
+
+margin-top:10px;
+
+}
+
+.form-control{
+
+background:#0F172A;
+
+color:white;
+
+border:1px solid #334155;
+
+}
+
+.form-control:focus{
+
+background:#0F172A;
+
+color:white;
+
+border-color:#00E5FF;
+
+box-shadow:0 0 15px rgba(0,229,255,.25);
+
+}
+
+.preview-box{
+
+display:none;
+
+background:#0F172A;
+
+border:1px solid #334155;
+
+border-radius:18px;
+
+padding:25px;
+
+margin-top:30px;
+
+text-align:center;
+
+}
+
+.preview-box img{
+
+max-width:100%;
+
+max-height:350px;
+
+border-radius:15px;
+
+box-shadow:0 0 20px rgba(0,229,255,.20);
+
+}
+
+.info-box{
+
+background:#172554;
+
+border-left:5px solid #00E5FF;
+
+padding:18px;
+
+border-radius:12px;
+
+color:#CBD5E1;
+
+margin-top:25px;
+
+}
+
+</style>
+
+<div class="container py-5">
+
+<div class="text-center mb-5">
+
+<h1 class="fw-bold text-info">
+
+🖼️ Image Scam Detection
+
+</h1>
+
+<p class="text-secondary">
+
+Upload an image to perform OCR extraction, phishing detection and AI-powered scam analysis.
+
+</p>
+
+</div>
+
+<div class="scan-card">
+
+<form
+
+method="POST"
+
+enctype="multipart/form-data"
+
+>
+
+{% csrf_token %}
+
+<div class="mb-4">
+
+<label class="form-label fs-5">
+
+Select Image
+
+</label>
+
+<input
+
+type="file"
+
+name="image"
+
+id="imageInput"
+
+accept="image/*"
+
+class="form-control"
+
+required
+
+>
+
+</div>
+
+<div
+
+id="dropZone"
+
+class="upload-box"
+
+>
+
+<i class="fa-solid fa-cloud-arrow-up"></i>
+
+<h4>
+
+Drag & Drop Image Here
+
+</h4>
+
+<p>
+
+or click above to browse your computer
+
+</p>
+
+<p>
+
+You can also press <strong>Ctrl + V</strong> to paste an image directly.
+
+</p>
+
+</div>
+
+<div class="info-box">
+
+<strong>Supported Formats:</strong>
+
+JPG, JPEG, PNG, BMP, WEBP
+
+<br><br>
+
+✔ OCR Text Extraction
+
+<br>
+
+✔ Rule-Based Scam Detection
+
+<br>
+
+✔ Machine Learning Classification
+
+<br>
+
+✔ Confidence Score Estimation
+
+</div>
+
+<div
+
+class="preview-box"
+
+id="previewBox"
+
+>
+
+<img
+
+id="preview"
+
+class="img-fluid"
+
+style="display:none;"
+
+>
+
+<h4
+
+id="imageName"
+
+class="text-info mt-4"
+
+>
+
+</h4>
+
+</div>
+
+<div class="text-center mt-5">
+
+<button
+
+type="submit"
+
+class="btn btn-info btn-lg me-3"
+
+>
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Analyze Image
+
+</button>
+
+<a
+
+href="{% url 'dashboard' %}"
+
+class="btn btn-secondary btn-lg"
+
+>
+
+<i class="fa-solid fa-house"></i>
+
+Back Dashboard
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+const input=document.getElementById("imageInput");
+
+const preview=document.getElementById("preview");
+
+const previewBox=document.getElementById("previewBox");
+
+const imageName=document.getElementById("imageName");
+
+input.addEventListener(
+
+"change",
+
+function(e){
+
+const file=e.target.files[0];
+
+if(file){
+
+preview.src=URL.createObjectURL(file);
+
+preview.style.display="block";
+
+previewBox.style.display="block";
+
+imageName.innerHTML=file.name;
+
+}
+
+}
+
+);
+
+document.addEventListener(
+
+"paste",
+
+function(event){
+
+const items=event.clipboardData.items;
+
+for(let item of items){
+
+if(item.type.indexOf("image")!==-1){
+
+const file=item.getAsFile();
+
+const dt=new DataTransfer();
+
+dt.items.add(file);
+
+input.files=dt.files;
+
+preview.src=URL.createObjectURL(file);
+
+preview.style.display="block";
+
+previewBox.style.display="block";
+
+imageName.innerHTML=file.name;
+
+}
+
+}
+
+}
+
+);
+
+const dropZone=document.getElementById("dropZone");
+
+dropZone.addEventListener("dragover",function(e){
+
+e.preventDefault();
+
+dropZone.style.borderColor="#00E5FF";
+
+dropZone.style.background="#172554";
+
+});
+
+dropZone.addEventListener("dragleave",function(){
+
+dropZone.style.borderColor="#00BCD4";
+
+dropZone.style.background="#0F172A";
+
+});
+
+dropZone.addEventListener("drop",function(e){
+
+e.preventDefault();
+
+const file=e.dataTransfer.files[0];
+
+if(file){
+
+const dt=new DataTransfer();
+
+dt.items.add(file);
+
+input.files=dt.files;
+
+preview.src=URL.createObjectURL(file);
+
+preview.style.display="block";
+
+previewBox.style.display="block";
+
+imageName.innerHTML=file.name;
+
+}
+
+dropZone.style.borderColor="#00BCD4";
+
+dropZone.style.background="#0F172A";
+
+});
+
+</script>
+
+{% endblock %}

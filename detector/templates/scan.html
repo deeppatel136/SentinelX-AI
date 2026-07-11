@@ -1,0 +1,395 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.scan-card{
+
+background:#111827;
+
+border:1px solid #1E3A5F;
+
+border-radius:22px;
+
+padding:35px;
+
+box-shadow:0 0 25px rgba(0,229,255,.08);
+
+}
+
+.url-box{
+
+background:#0F172A;
+
+border:2px solid #334155;
+
+border-radius:18px;
+
+padding:25px;
+
+transition:.3s;
+
+}
+
+.url-input{
+
+    background:#07152d;
+
+    color:#fff;
+
+    border:2px solid #00e5ff;
+
+    border-radius:15px;
+
+    height:60px;
+
+    font-size:18px;
+
+    padding:15px 20px;
+
+    transition:.3s;
+
+}
+
+.url-input::placeholder{
+
+    color:#9ca3af;
+
+}
+
+.url-input:focus{
+
+    background:#07152d;
+
+    color:#fff;
+
+    border-color:#00e5ff;
+
+    box-shadow:0 0 15px rgba(0,229,255,.4);
+
+}
+
+.url-box:focus-within{
+
+border-color:#00E5FF;
+
+box-shadow:0 0 20px rgba(0,229,255,.25);
+
+}
+
+textarea{
+
+background:#0F172A !important;
+
+color:white !important;
+
+border:none !important;
+
+resize:none;
+
+font-size:16px;
+
+}
+
+textarea:focus{
+
+outline:none !important;
+
+box-shadow:none !important;
+
+}
+
+textarea::placeholder{
+
+color:#94A3B8;
+
+}
+
+.example-box{
+
+background:#172554;
+
+border-left:5px solid #00E5FF;
+
+border-radius:15px;
+
+padding:18px;
+
+margin-top:25px;
+
+color:#CBD5E1;
+
+}
+
+.tip-card{
+
+background:#0F172A;
+
+border:1px solid #1E3A5F;
+
+border-radius:18px;
+
+padding:25px;
+
+margin-top:30px;
+
+}
+
+.tip-card ul{
+
+margin:0;
+
+padding-left:20px;
+
+}
+
+.tip-card li{
+
+margin-bottom:12px;
+
+color:#CBD5E1;
+
+}
+
+</style>
+
+<div class="container py-5">
+
+<div class="text-center mb-5">
+
+<h1 class="fw-bold text-info">
+
+🌐 URL Scam Detection
+
+</h1>
+
+<p class="text-secondary">
+
+Analyze suspicious URLs using Rule-Based Detection and Machine Learning.
+
+</p>
+
+</div>
+
+<div class="scan-card">
+
+<form method="POST">
+
+{% csrf_token %}
+
+<label class="form-label fs-5">
+
+Enter Website URL
+
+</label>
+
+<div class="url-box">
+
+<input
+    type="url"
+    name="url"
+    class="form-control form-control-lg"
+    placeholder="https://example.com"
+    required
+>
+
+</div>
+
+<div class="example-box">
+
+<strong>
+
+Supported Examples
+
+</strong>
+
+<br><br>
+
+✔ Banking URLs
+
+<br>
+
+✔ Login Pages
+
+<br>
+
+✔ Shortened URLs
+
+<br>
+
+✔ Shopping Links
+
+<br>
+
+✔ Social Media Links
+
+<br>
+
+✔ QR Redirect Links
+
+</div>
+
+<div class="tip-card">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+What SentinelX AI Checks
+
+</h4>
+
+<ul>
+
+<li>URL Length Analysis</li>
+
+<li>HTTPS Security Verification</li>
+
+<li>IP Address Detection</li>
+
+<li>Shortened URL Detection</li>
+
+<li>Suspicious Keywords</li>
+
+<li>Machine Learning Classification</li>
+
+<li>Confidence Score Estimation</li>
+
+</ul>
+
+</div>
+
+<div class="text-center mt-5">
+
+<button
+
+type="submit"
+
+class="btn btn-info btn-lg me-3"
+
+>
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Analyze URL
+
+</button>
+
+<a
+
+href="{% url 'dashboard' %}"
+
+class="btn btn-secondary btn-lg"
+
+>
+
+<i class="fa-solid fa-house"></i>
+
+Back Dashboard
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="row mt-5">
+
+<div class="col-md-4">
+
+<div class="tip-card text-center">
+
+<i class="fa-solid fa-link fa-3x text-info mb-3"></i>
+
+<h5>
+
+URL Scanner
+
+</h5>
+
+<p class="text-secondary">
+
+Detects phishing links, fake domains and malicious URLs using AI.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="tip-card text-center">
+
+<i class="fa-solid fa-robot fa-3x text-danger mb-3"></i>
+
+<h5>
+
+Machine Learning
+
+</h5>
+
+<p class="text-secondary">
+
+Predicts whether a URL is Phishing or Legitimate with confidence score.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="tip-card text-center">
+
+<i class="fa-solid fa-shield-halved fa-3x text-success mb-3"></i>
+
+<h5>
+
+Cyber Protection
+
+</h5>
+
+<p class="text-secondary">
+
+Provides detailed security analysis and threat intelligence before you visit the website.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="text-center mt-5">
+
+<hr>
+
+<h4 class="text-info">
+
+🛡 SentinelX AI
+
+</h4>
+
+<p class="text-secondary">
+
+AI-Powered Multi-Channel Scam Detection Platform
+
+</p>
+
+<p class="text-secondary">
+
+URL analysis combines Rule-Based Detection, Machine Learning Classification and Confidence Score Estimation to identify phishing attacks before they cause harm.
+
+</p>
+
+</div>
+
+</div>
+
+{% endblock %}

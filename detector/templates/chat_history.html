@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+SentinelX AI | Chat History
+
+</title>
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+font-family:Poppins,sans-serif;
+
+}
+
+body{
+
+background:#081120;
+
+color:white;
+
+}
+
+.container{
+
+max-width:1400px;
+
+padding:40px;
+
+}
+
+.header{
+
+text-align:center;
+
+margin-bottom:45px;
+
+}
+
+.header h1{
+
+color:#00E5FF;
+
+font-size:45px;
+
+font-weight:700;
+
+}
+
+.header p{
+
+color:#94A3B8;
+
+font-size:18px;
+
+margin-top:10px;
+
+}
+
+.history-card{
+
+background:#111827;
+
+border:1px solid #173B64;
+
+border-radius:22px;
+
+padding:35px;
+
+box-shadow:0 0 25px rgba(0,229,255,.08);
+
+}
+
+.chat-card{
+
+background:#0F172A;
+
+border:1px solid #173B64;
+
+border-radius:18px;
+
+padding:25px;
+
+margin-bottom:25px;
+
+transition:.3s;
+
+}
+
+.chat-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#00E5FF;
+
+box-shadow:0 0 20px rgba(0,229,255,.18);
+
+}
+
+.user-box{
+
+background:#00C2FF;
+
+padding:18px;
+
+border-radius:15px;
+
+color:white;
+
+margin-bottom:20px;
+
+}
+
+.ai-box{
+
+background:#020B16;
+
+padding:20px;
+
+border-radius:15px;
+
+border:1px solid #173B64;
+
+}
+
+.ai-box pre{
+
+margin:0;
+
+white-space:pre-wrap;
+
+word-break:break-word;
+
+font-size:15px;
+
+color:#E2E8F0;
+
+font-family:Poppins,sans-serif;
+
+}
+
+.time{
+
+margin-top:20px;
+
+color:#94A3B8;
+
+font-size:14px;
+
+text-align:right;
+
+}
+
+.empty{
+
+text-align:center;
+
+padding:70px;
+
+}
+
+.empty i{
+
+font-size:80px;
+
+color:#00E5FF;
+
+margin-bottom:25px;
+
+}
+
+.empty h3{
+
+margin-bottom:15px;
+
+}
+
+.empty p{
+
+color:#94A3B8;
+
+font-size:18px;
+
+}
+
+.btn-area{
+
+margin-top:40px;
+
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>
+
+🤖 SentinelX AI
+
+</h1>
+
+<p>
+
+Gemini AI Conversation History
+
+</p>
+
+</div>
+
+<div class="history-card">
+
+{% if chats %}
+
+{% for chat in chats %}
+
+<div class="chat-card">
+
+<h5 class="text-info mb-3">
+
+<i class="fa-solid fa-user"></i>
+
+User Question
+
+</h5>
+
+<div class="user-box">
+
+{{ chat.user_message }}
+
+</div>
+
+<h5 class="text-info mb-3">
+
+<i class="fa-solid fa-robot"></i>
+
+SentinelX AI Response
+
+</h5>
+
+<div class="ai-box">
+
+<pre>
+
+{{ chat.ai_response }}
+
+</pre>
+
+</div>
+
+<div class="time">
+
+<i class="fa-solid fa-clock"></i>
+
+{{ chat.created_at|date:"d M Y | h:i A" }}
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="empty">
+
+<i class="fa-solid fa-comments"></i>
+
+<h3>
+
+No Chat History Found
+
+</h3>
+
+<p>
+
+You haven't talked with SentinelX AI yet.
+
+Start a new conversation and your chat history will appear here.
+
+</p>
+
+</div>
+
+{% endif %}
+
+<hr class="my-5">
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div
+style="
+background:#0F172A;
+border:1px solid #173B64;
+border-radius:18px;
+padding:25px;
+text-align:center;
+height:100%;
+">
+
+<i
+class="fa-solid fa-comments"
+style="
+font-size:45px;
+color:#00E5FF;
+margin-bottom:18px;
+"></i>
+
+<h5>
+
+Total Conversations
+
+</h5>
+
+<h2
+class="text-info fw-bold">
+
+{{ chats|length }}
+
+</h2>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div
+style="
+background:#0F172A;
+border:1px solid #173B64;
+border-radius:18px;
+padding:25px;
+text-align:center;
+height:100%;
+">
+
+<i
+class="fa-solid fa-brain"
+style="
+font-size:45px;
+color:#22C55E;
+margin-bottom:18px;
+"></i>
+
+<h5>
+
+AI Model
+
+</h5>
+
+<h4
+class="text-success">
+
+Gemini AI
+
+</h4>
+
+<p
+class="text-secondary mt-2">
+
+Cybersecurity Assistant
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div
+style="
+background:#0F172A;
+border:1px solid #173B64;
+border-radius:18px;
+padding:25px;
+text-align:center;
+height:100%;
+">
+
+<i
+class="fa-solid fa-shield-halved"
+style="
+font-size:45px;
+color:#FACC15;
+margin-bottom:18px;
+"></i>
+
+<h5>
+
+Platform
+
+</h5>
+
+<h4
+class="text-warning">
+
+SentinelX AI
+
+</h4>
+
+<p
+class="text-secondary mt-2">
+
+AI Powered Cyber Defense
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-5">
+
+<div
+style="
+background:#0F172A;
+border:1px solid #173B64;
+border-radius:18px;
+padding:25px;
+">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-circle-info"></i>
+
+About Chat History
+
+</h4>
+
+<p
+style="
+color:#CBD5E1;
+line-height:1.9;
+">
+
+Every conversation with SentinelX AI is securely stored in your account.
+You can revisit previous cybersecurity discussions, phishing analysis,
+malware explanations, password security guidance,
+network security advice and AI-generated recommendations at any time.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="btn-area">
+
+<a
+href="{% url 'chat' %}"
+class="btn btn-info btn-lg me-3">
+
+<i class="fa-solid fa-comments"></i>
+
+Back to Chat
+
+</a>
+
+<a
+href="{% url 'dashboard' %}"
+class="btn btn-success btn-lg me-3">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+<a
+href="{% url 'history' %}"
+class="btn btn-warning btn-lg">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Scan History
+
+</a>
+
+</div>
+
+</div>
+
+<div
+class="text-center mt-5 mb-4">
+
+<hr
+style="
+border-color:#173B64;
+opacity:1;
+">
+
+<h4
+style="
+color:#00E5FF;
+font-weight:700;
+">
+
+🤖 SentinelX AI
+
+</h4>
+
+<p
+style="
+color:#94A3B8;
+font-size:17px;
+">
+
+AI-Powered Multi-Channel Scam Detection Platform
+
+</p>
+
+<p
+style="
+color:#64748B;
+font-size:15px;
+line-height:1.8;
+">
+
+This conversation history stores your previous interactions with the
+SentinelX AI Assistant. Review past cybersecurity guidance, phishing
+analysis, malware explanations, password security recommendations,
+network security advice, and AI-generated insights whenever needed.
+
+</p>
+
+<div class="mt-4">
+
+<span
+class="badge rounded-pill bg-primary fs-6 px-3 py-2 me-2">
+
+Gemini AI
+
+</span>
+
+<span
+class="badge rounded-pill bg-success fs-6 px-3 py-2 me-2">
+
+Chat History
+
+</span>
+
+<span
+class="badge rounded-pill bg-info text-dark fs-6 px-3 py-2 me-2">
+
+Cybersecurity
+
+</span>
+
+<span
+class="badge rounded-pill bg-warning text-dark fs-6 px-3 py-2">
+
+SentinelX AI
+
+</span>
+
+</div>
+
+<p
+class="mt-5"
+style="
+color:#475569;
+font-size:14px;
+">
+
+© 2026 SentinelX AI | Advanced AI-Powered Multi-Channel Scam Detection Platform
+
+</p>
+
+</div>
+
+</body>
+
+</html>

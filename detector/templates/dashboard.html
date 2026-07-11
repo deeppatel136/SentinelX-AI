@@ -1,0 +1,797 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard | SentinelX AI
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.hero{
+
+    margin-top:30px;
+
+    margin-bottom:40px;
+
+    text-align:center;
+
+}
+
+.hero h1{
+
+    font-size:46px;
+
+    font-weight:700;
+
+    color:#00e5ff;
+
+}
+
+.hero h5{
+
+    color:#cbd5e1;
+
+    margin-top:12px;
+
+}
+
+.hero p{
+
+    color:#94a3b8;
+
+}
+
+.stat-card{
+
+    background:#111827;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    border:1px solid #1f2937;
+
+    box-shadow:0 0 18px rgba(0,229,255,.08);
+
+    transition:.35s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 0 30px rgba(0,229,255,.22);
+
+}
+
+.stat-card i{
+
+    font-size:38px;
+
+    margin-bottom:15px;
+
+}
+
+.stat-card h2{
+
+    font-size:38px;
+
+    font-weight:700;
+
+}
+
+.stat-card h5{
+
+    color:#d1d5db;
+
+    margin-top:12px;
+
+}
+
+.chart-card{
+
+    background:#111827;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    border:1px solid #1f2937;
+
+    box-shadow:0 0 20px rgba(0,229,255,.08);
+
+}
+
+.table-dark{
+
+    background:#020617;
+
+}
+
+.table tbody tr:hover{
+
+    background:#1f2937;
+
+}
+
+.badge{
+
+    padding:8px 15px;
+
+    font-size:13px;
+
+}
+
+.progress{
+
+    background:#1e293b;
+
+}
+
+.progress-bar{
+
+    font-weight:600;
+
+}
+
+</style>
+
+<div class="container">
+
+<div class="hero">
+
+<h1>
+
+🛡 SentinelX AI
+
+</h1>
+
+<h5>
+
+AI-Powered Multi-Channel Scam Detection Platform
+
+</h5>
+
+<p>
+
+Detect • Analyze • Protect
+
+</p>
+
+</div>
+
+<div class="row g-4">
+
+<div class="col-lg-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-chart-line text-info"></i>
+
+<h2>{{ total_scans }}</h2>
+
+<h5>Total Scans</h5>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-shield text-success"></i>
+
+<h2>{{ safe_count }}</h2>
+
+<h5>Safe Records</h5>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-triangle-exclamation text-warning"></i>
+
+<h2>{{ suspicious_count }}</h2>
+
+<h5>Suspicious</h5>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-skull-crossbones text-danger"></i>
+
+<h2>{{ dangerous_count }}</h2>
+
+<h5>Dangerous</h5>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row mt-4 g-4">
+
+<div class="col-md-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-globe text-primary"></i>
+
+<h2>
+
+{{ url_scans }}
+
+</h2>
+
+<h5>
+
+URL Scans
+
+</h5>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-envelope text-info"></i>
+
+<h2>
+
+{{ email_scans }}
+
+</h2>
+
+<h5>
+
+Email Scans
+
+</h5>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-image text-secondary"></i>
+
+<h2>
+
+{{ image_scans }}
+
+</h2>
+
+<h5>
+
+Image Scans
+
+</h5>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-file text-warning"></i>
+
+<h2>
+
+{{ file_scans }}
+
+</h2>
+
+<h5>
+
+File Scans
+
+</h5>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row mt-4">
+
+<div class="col-lg-6 mx-auto">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-robot text-danger"></i>
+
+<h2>
+
+{{ phishing_count }}
+
+</h2>
+
+<h5>
+
+AI Detected Threats
+
+</h5>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="my-5" style="border-color:#334155;">
+
+<div class="row">
+
+<div class="col-lg-6 mb-4">
+
+<div class="chart-card">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-chart-pie"></i>
+
+Risk Distribution
+
+</h4>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+</div>
+
+<div class="col-lg-6 mb-4">
+
+<div class="chart-card">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-chart-column"></i>
+
+Security Analytics
+
+</h4>
+
+<canvas id="barChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="my-5" style="border-color:#334155;">
+
+<!-- ================= RECENT THREAT ACTIVITY ================= -->
+
+<div class="row">
+
+<div class="col-12">
+
+<div class="chart-card">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-bug"></i>
+
+Recent Threat Activity
+
+</h4>
+
+<div class="table-responsive">
+
+<table class="table table-dark table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Type</th>
+
+<th>Input</th>
+
+<th>Status</th>
+
+<th>ML Result</th>
+
+<th>Confidence</th>
+
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for scan in recent_scans %}
+
+<tr>
+
+<td>
+
+{% if scan.scan_type == "URL" %}
+
+<span class="badge bg-primary">
+
+🌐 URL
+
+</span>
+
+{% elif scan.scan_type == "EMAIL" %}
+
+<span class="badge bg-success">
+
+📧 EMAIL
+
+</span>
+
+{% elif scan.scan_type == "IMAGE" %}
+
+<span class="badge bg-secondary">
+
+🖼 IMAGE
+
+</span>
+
+{% elif scan.scan_type == "FILE" %}
+
+<span class="badge bg-warning text-dark">
+
+📂 FILE
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if scan.scan_type == "EMAIL" %}
+
+Email Analysis
+
+{% elif scan.scan_type == "IMAGE" %}
+
+{{ scan.image_name }}
+
+{% elif scan.scan_type == "FILE" %}
+
+{{ scan.file_name }}
+
+{% else %}
+
+{{ scan.input_data|truncatechars:45 }}
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if scan.status == "Safe" %}
+
+<span class="badge bg-success">
+
+Safe
+
+</span>
+
+{% elif scan.status == "Suspicious" %}
+
+<span class="badge bg-warning text-dark">
+
+Suspicious
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+Dangerous
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if scan.ml_prediction == "Phishing" %}
+
+<span class="badge bg-danger">
+
+🤖 Phishing
+
+</span>
+
+{% elif scan.ml_prediction == "Legitimate" %}
+
+<span class="badge bg-success">
+
+✅ Legitimate
+
+</span>
+
+{% else %}
+
+{{ scan.ml_prediction }}
+
+{% endif %}
+
+</td>
+
+<td style="width:220px;">
+
+<div class="progress">
+
+<div class="progress-bar bg-info"
+
+role="progressbar"
+
+style="width: {{ scan.ml_confidence }}%;">
+
+{{ scan.ml_confidence }}%
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+
+{{ scan.created_at|date:"d M Y H:i" }}
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="6" class="text-center">
+
+No Scan History Available
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const pieCtx = document.getElementById('riskChart');
+
+new Chart(pieCtx,{
+
+type:'doughnut',
+
+data:{
+
+labels:[
+
+'Safe',
+
+'Suspicious',
+
+'Dangerous'
+
+],
+
+datasets:[{
+
+data:[
+
+{{ safe_count }},
+
+{{ suspicious_count }},
+
+{{ dangerous_count }}
+
+],
+
+backgroundColor:[
+
+'#22c55e',
+
+'#facc15',
+
+'#ef4444'
+
+],
+
+borderWidth:0
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+labels:{
+
+color:'white'
+
+}
+
+}
+
+}
+
+}
+
+});
+
+const barCtx = document.getElementById('barChart');
+
+new Chart(barCtx,{
+
+type:'bar',
+
+data:{
+
+labels:[
+
+'URL',
+
+'Email',
+
+'Image',
+
+'File',
+
+'Threats'
+
+],
+
+datasets:[{
+
+label:'Records',
+
+data:[
+
+{{ url_scans }},
+
+{{ email_scans }},
+
+{{ image_scans }},
+
+{{ file_scans }},
+
+{{ phishing_count }}
+
+],
+
+backgroundColor:[
+
+'#3b82f6',
+
+'#06b6d4',
+
+'#8b5cf6',
+
+'#f59e0b',
+
+'#ef4444'
+
+],
+
+borderRadius:10
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+labels:{
+
+color:'white'
+
+}
+
+}
+
+},
+
+scales:{
+
+x:{
+
+ticks:{
+
+color:'white'
+
+},
+
+grid:{
+
+color:'#334155'
+
+}
+
+},
+
+y:{
+
+beginAtZero:true,
+
+ticks:{
+
+color:'white'
+
+},
+
+grid:{
+
+color:'#334155'
+
+}
+
+}
+
+}
+
+}
+
+});
+
+</script>
+
+{% endblock %}

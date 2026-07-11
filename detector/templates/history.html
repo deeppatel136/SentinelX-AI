@@ -1,0 +1,857 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.page-title{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#00E5FF;
+
+}
+
+.page-subtitle{
+
+color:#94A3B8;
+
+font-size:17px;
+
+}
+
+.filter-card{
+
+background:#111827;
+
+border:1px solid #1E3A5F;
+
+border-radius:20px;
+
+padding:30px;
+
+box-shadow:0 0 25px rgba(0,229,255,.08);
+
+margin-bottom:35px;
+
+}
+
+.table-card{
+
+background:#111827;
+
+border:1px solid #1E3A5F;
+
+border-radius:20px;
+
+padding:25px;
+
+box-shadow:0 0 25px rgba(0,229,255,.08);
+
+overflow-x:auto;
+
+}
+
+.form-control,
+
+.form-select{
+
+background:#0F172A;
+
+color:#E2E8F0;
+
+border:1px solid #334155;
+
+}
+
+.form-control:focus,
+
+.form-select:focus{
+
+background:#0F172A;
+
+color:white;
+
+border-color:#00E5FF;
+
+box-shadow:0 0 15px rgba(0,229,255,.25);
+
+}
+
+.form-select option{
+
+background:#0F172A;
+
+color:white;
+
+}
+
+/* TABLE */
+
+.table{
+
+background:#0F172A !important;
+
+color:#E2E8F0 !important;
+
+border-color:#334155 !important;
+
+margin-bottom:0;
+
+}
+
+.table thead tr{
+
+background:#111827 !important;
+
+}
+
+.table thead th{
+
+background:#111827 !important;
+
+color:#00E5FF !important;
+
+border-color:#334155 !important;
+
+font-weight:600;
+
+}
+
+.table tbody tr{
+
+background:#0F172A !important;
+
+transition:.3s;
+
+}
+
+.table tbody td{
+
+background:#0F172A !important;
+
+color:#E2E8F0 !important;
+
+border-color:#334155 !important;
+
+vertical-align:middle;
+
+}
+
+.table-hover>tbody>tr:hover>*{
+
+background:#172554 !important;
+
+color:white !important;
+
+}
+
+.table-bordered{
+
+border-color:#334155 !important;
+
+}
+
+.badge{
+
+font-size:13px;
+
+padding:8px 12px;
+
+}
+
+.btn-filter{
+
+background:#06B6D4;
+
+color:white;
+
+font-weight:600;
+
+border:none;
+
+}
+
+.btn-filter:hover{
+
+background:#0891B2;
+
+color:white;
+
+}
+
+.reason-cell{
+
+max-width:300px;
+
+white-space:pre-line;
+
+word-break:break-word;
+
+}
+
+.progress{
+
+height:22px;
+
+background:#1E293B;
+
+}
+
+.progress-bar{
+
+font-weight:600;
+
+}
+
+::-webkit-scrollbar{
+
+height:10px;
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#06B6D4;
+
+border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#111827;
+
+}
+
+</style>
+
+<div class="container py-5">
+
+<div class="text-center mb-5">
+
+<h1 class="page-title">
+
+📜 Scan History
+
+</h1>
+
+<p class="page-subtitle">
+
+Complete history of URL, Email, Image and File scans performed by SentinelX AI.
+
+</p>
+
+</div>
+
+<div class="filter-card">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-filter"></i>
+
+Advanced Filters
+
+</h4>
+
+<form method="GET">
+
+<div class="row g-3">
+
+<div class="col-lg-2">
+
+<select
+name="scan_type"
+class="form-select">
+
+<option value="">All Types</option>
+
+<option value="URL">URL</option>
+
+<option value="EMAIL">EMAIL</option>
+
+<option value="IMAGE">IMAGE</option>
+
+<option value="FILE">FILE</option>
+
+</select>
+
+</div>
+
+<div class="col-lg-2">
+
+<select
+name="status"
+class="form-select">
+
+<option value="">All Status</option>
+
+<option value="Safe">Safe</option>
+
+<option value="Suspicious">Suspicious</option>
+
+<option value="Dangerous">Dangerous</option>
+
+</select>
+
+</div>
+
+<div class="col-lg-2">
+
+<select
+name="ml_prediction"
+class="form-select">
+
+<option value="">All ML Results</option>
+
+<option value="Phishing">Phishing</option>
+
+<option value="Legitimate">Legitimate</option>
+
+</select>
+
+</div>
+
+<div class="col-lg-2">
+
+<input
+
+type="date"
+
+name="start_date"
+
+class="form-control"
+
+>
+
+</div>
+
+<div class="col-lg-2">
+
+<input
+
+type="date"
+
+name="end_date"
+
+class="form-control"
+
+>
+
+</div>
+
+<div class="col-lg-2 d-grid">
+
+<button class="btn btn-filter">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Filter
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="table-card">
+
+<h4 class="text-info mb-4">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+Scan Records
+
+</h4>
+
+<table class="table table-hover table-bordered align-middle">
+
+<thead>
+
+<tr>
+
+<th>Type</th>
+
+<th>Input / File</th>
+
+<th>Risk</th>
+
+<th>Status</th>
+
+<th>Reasons</th>
+
+<th>ML</th>
+
+<th>Confidence</th>
+
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for scan in scans %}
+
+<tr>
+
+<td>
+
+{% if scan.scan_type == 'URL' %}
+
+<span class="badge bg-primary">
+
+🌐 URL
+
+</span>
+
+{% elif scan.scan_type == 'EMAIL' %}
+
+<span class="badge bg-success">
+
+📧 EMAIL
+
+</span>
+
+{% elif scan.scan_type == 'IMAGE' %}
+
+<span class="badge bg-warning text-dark">
+
+🖼 IMAGE
+
+</span>
+
+{% elif scan.scan_type == 'FILE' %}
+
+<span class="badge bg-info text-dark">
+
+📄 FILE
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if scan.scan_type == 'URL' %}
+
+<div>
+
+<strong class="text-info">
+
+{{ scan.input_data }}
+
+</strong>
+
+</div>
+
+{% elif scan.scan_type == 'EMAIL' %}
+
+<div>
+
+<strong class="text-success">
+
+📧 Email Scan
+
+</strong>
+
+</div>
+
+{% elif scan.scan_type == 'IMAGE' %}
+
+<div>
+
+<strong class="text-warning">
+
+{{ scan.image_name }}
+
+</strong>
+
+</div>
+
+{% elif scan.scan_type == 'FILE' %}
+
+<div>
+
+<strong class="text-info">
+
+{{ scan.file_name }}
+
+</strong>
+
+</div>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<span class="fw-bold text-info fs-5">
+
+{{ scan.risk_score }}
+
+</span>
+
+</td>
+
+<td>
+
+{% if scan.status == 'Safe' %}
+
+<span class="badge rounded-pill bg-success">
+
+🟢 Safe
+
+</span>
+
+{% elif scan.status == 'Suspicious' %}
+
+<span class="badge rounded-pill bg-warning text-dark">
+
+🟡 Suspicious
+
+</span>
+
+{% else %}
+
+<span class="badge rounded-pill bg-danger">
+
+🔴 Dangerous
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td class="reason-cell">
+
+{% if scan.analysis_reason %}
+
+{{ scan.analysis_reason }}
+
+{% else %}
+
+<span class="text-secondary">
+
+No suspicious indicators detected.
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if scan.ml_prediction == "Phishing" %}
+
+<span class="badge rounded-pill bg-danger">
+
+🤖 Phishing
+
+</span>
+
+{% elif scan.ml_prediction == "Legitimate" %}
+
+<span class="badge rounded-pill bg-success">
+
+✅ Legitimate
+
+</span>
+
+{% else %}
+
+<span class="badge rounded-pill bg-secondary">
+
+N/A
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td style="min-width:180px;">
+
+<div class="progress">
+
+<div
+
+class="progress-bar bg-info"
+
+role="progressbar"
+
+style="width: {{ scan.ml_confidence }}%;"
+
+>
+
+{{ scan.ml_confidence }}%
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+
+<div class="fw-semibold">
+
+{{ scan.created_at|date:"d M Y" }}
+
+</div>
+
+<small class="text-secondary">
+
+{{ scan.created_at|time:"H:i" }}
+
+</small>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="8" class="text-center py-5">
+
+<h4 class="text-secondary">
+
+No Scan History Found
+
+</h4>
+
+<p class="text-secondary mb-0">
+
+Start scanning URLs, Emails, Images or Files to generate your history.
+
+</p>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="row mt-5">
+
+<div class="col-lg-6 mb-3">
+
+<a
+
+href="{% url 'download_report' %}?{{ request.GET.urlencode }}"
+
+class="btn btn-success btn-lg w-100"
+
+>
+
+<i class="fa-solid fa-file-pdf"></i>
+
+Download PDF Report
+
+</a>
+
+</div>
+
+<div class="col-lg-6 mb-3">
+
+<a
+
+href="{% url 'dashboard' %}"
+
+class="btn btn-info btn-lg w-100"
+
+>
+
+<i class="fa-solid fa-house"></i>
+
+Back to Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<div class="row g-4 mt-4">
+
+<div class="col-md-3">
+
+<div class="card bg-dark border-info h-100 shadow">
+
+<div class="card-body text-center">
+
+<h5 class="text-info">
+
+🌐 URL Scans
+
+</h5>
+
+<h2 class="text-white">
+
+{{ url_scans }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-dark border-success h-100 shadow">
+
+<div class="card-body text-center">
+
+<h5 class="text-success">
+
+📧 Email Scans
+
+</h5>
+
+<h2 class="text-white">
+
+{{ email_scans }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-dark border-warning h-100 shadow">
+
+<div class="card-body text-center">
+
+<h5 class="text-warning">
+
+🖼 Image Scans
+
+</h5>
+
+<h2 class="text-white">
+
+{{ image_scans }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-dark border-primary h-100 shadow">
+
+<div class="card-body text-center">
+
+<h5 class="text-info">
+
+📄 File Scans
+
+</h5>
+
+<h2 class="text-white">
+
+{{ file_scans }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="text-center mt-5">
+
+<hr style="border-color:#1E3A5F;">
+
+<h4 class="text-info">
+
+🛡 SentinelX AI
+
+</h4>
+
+<p class="text-secondary">
+
+AI-Powered Multi-Channel Scam Detection Platform
+
+</p>
+
+<p class="text-secondary">
+
+All scan records are securely stored and can be filtered, reviewed and exported as a PDF report for future security analysis.
+
+</p>
+
+<div class="mt-4">
+
+<span class="badge bg-success me-2">
+
+URL Detection
+
+</span>
+
+<span class="badge bg-primary me-2">
+
+Email Detection
+
+</span>
+
+<span class="badge bg-warning text-dark me-2">
+
+Image OCR
+
+</span>
+
+<span class="badge bg-info text-dark">
+
+File Analysis
+
+</span>
+
+</div>
+
+<p class="mt-4 text-secondary">
+
+© 2026 SentinelX AI | Advanced AI-Based Multi-Channel Scam Detection Platform
+
+</p>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+
+SentinelX AI | URL Scan Result
+
+</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet">
+
+<style>
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+body{
+
+background:#081120;
+
+font-family:'Segoe UI',sans-serif;
+
+color:#fff;
+
+min-height:100vh;
+
+padding:40px 0;
+
+}
+
+/* ===========================
+Main Card
+=========================== */
+
+.main-card{
+
+background:#111827;
+
+border:1px solid rgba(0,255,255,.18);
+
+border-radius:22px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 0 35px rgba(0,255,255,.08);
+
+}
+
+/* ===========================
+Header
+=========================== */
+
+.header{
+
+background:
+
+linear-gradient(
+135deg,
+#0f172a,
+#172554
+);
+
+padding:32px;
+
+border-bottom:1px solid rgba(0,255,255,.18);
+
+}
+
+.header h2{
+
+font-size:34px;
+
+font-weight:700;
+
+color:white;
+
+}
+
+.header p{
+
+margin-top:8px;
+
+color:#b6c2d1;
+
+}
+
+/* ===========================
+Titles
+=========================== */
+
+.section-title{
+
+color:#00e5ff;
+
+font-weight:700;
+
+margin-bottom:20px;
+
+}
+
+/* ===========================
+URL Box
+=========================== */
+
+.url-box{
+
+background:#071321;
+
+border:1px solid #00d9ff;
+
+border-radius:14px;
+
+padding:18px;
+
+font-size:16px;
+
+color:white;
+
+word-break:break-all;
+
+}
+
+/* ===========================
+Stat Cards
+=========================== */
+
+.stat-card{
+
+background:#071321;
+
+border:1px solid rgba(0,229,255,.18);
+
+border-radius:18px;
+
+transition:.35s;
+
+height:100%;
+
+}
+
+.stat-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#00e5ff;
+
+box-shadow:
+
+0 0 22px rgba(0,229,255,.15);
+
+}
+
+.stat-icon{
+
+font-size:42px;
+
+color:#00e5ff;
+
+margin-bottom:12px;
+
+}
+
+.stat-title{
+
+font-size:15px;
+
+color:#9ca3af;
+
+margin-bottom:10px;
+
+}
+
+.stat-value{
+
+font-size:38px;
+
+font-weight:bold;
+
+color:white;
+
+}
+
+/* ===========================
+Status Badges
+=========================== */
+
+.badge-box{
+
+font-size:17px;
+
+padding:10px 24px;
+
+border-radius:30px;
+
+}
+
+.safe{
+
+background:#16a34a;
+
+}
+
+.warning{
+
+background:#facc15;
+
+color:black;
+
+}
+
+.danger{
+
+background:#dc2626;
+
+}
+
+/* ===========================
+Lists
+=========================== */
+
+.list-group-item{
+
+background:transparent !important;
+
+border-color:#374151 !important;
+
+color:white;
+
+}
+
+/* ===========================
+AI Security Assistant
+=========================== */
+
+.ai-card{
+
+background:#071321;
+
+border:1px solid rgba(0,229,255,.20);
+
+border-radius:18px;
+
+padding:28px;
+
+box-shadow:
+
+0 0 18px rgba(0,229,255,.08);
+
+}
+
+.ai-title{
+
+font-size:30px;
+
+font-weight:700;
+
+color:#00e5ff;
+
+margin-bottom:20px;
+
+}
+
+.ai-output{
+
+background:#0d1b2d;
+
+border:1px solid rgba(0,229,255,.15);
+
+border-radius:15px;
+
+padding:25px;
+
+color:#e5f3ff;
+
+font-size:16px;
+
+line-height:1.9;
+
+white-space:pre-wrap;
+
+overflow-x:auto;
+
+max-height:700px;
+
+overflow-y:auto;
+
+}
+
+/* Scrollbar */
+
+.ai-output::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+.ai-output::-webkit-scrollbar-thumb{
+
+background:#00d9ff;
+
+border-radius:20px;
+
+}
+
+/* ===========================
+Buttons
+=========================== */
+
+.btn{
+
+border-radius:12px;
+
+font-weight:600;
+
+}
+
+.btn-info{
+
+background:#00c8ff;
+
+border:none;
+
+}
+
+.btn-info:hover{
+
+background:#00b0e6;
+
+}
+
+.btn-success{
+
+border:none;
+
+}
+
+.btn-outline-light:hover{
+
+color:black;
+
+}
+
+/* ===========================
+Alerts
+=========================== */
+
+.alert{
+
+border-radius:16px;
+
+}
+
+/* ===========================
+Footer
+=========================== */
+
+.footer-brand{
+
+font-size:22px;
+
+font-weight:700;
+
+color:#00d9ff;
+
+}
+
+.footer-text{
+
+color:#8ca3bf;
+
+font-size:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-11">
+
+<div class="main-card">
+
+<!-- ================= HEADER ================= -->
+
+<div class="header d-flex justify-content-between align-items-center">
+
+<div>
+
+<h2>
+
+<i class="bi bi-globe2 text-info"></i>
+
+URL Scan Result
+
+</h2>
+
+<p>
+
+AI Powered URL Security Analysis Report
+
+</p>
+
+</div>
+
+<div>
+
+{% if status == "Safe" %}
+
+<span class="badge badge-box safe">
+
+SAFE
+
+</span>
+
+{% elif status == "Suspicious" %}
+
+<span class="badge badge-box warning">
+
+SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge badge-box danger">
+
+DANGEROUS
+
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<!-- ================= BODY ================= -->
+
+<div class="card-body p-4">
+
+<!-- URL -->
+
+<h4 class="section-title">
+
+<i class="bi bi-link-45deg"></i>
+
+Scanned URL
+
+</h4>
+
+<div class="url-box mb-5">
+
+{{ url }}
+
+</div>
+
+<!-- TOP CARDS -->
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="card-body text-center">
+
+<i class="bi bi-shield-check stat-icon"></i>
+
+<div class="stat-title">
+
+Risk Score
+
+</div>
+
+<div class="stat-value">
+
+{{ score }}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="card-body text-center">
+
+<i class="bi bi-cpu-fill stat-icon"></i>
+
+<div class="stat-title">
+
+AI Prediction
+
+</div>
+
+{% if ml_prediction == "Phishing" %}
+
+<span class="badge bg-danger fs-5 px-4 py-2">
+
+{{ ml_prediction }}
+
+</span>
+
+{% else %}
+
+<span class="badge bg-success fs-5 px-4 py-2">
+
+{{ ml_prediction }}
+
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="stat-card">
+
+<div class="card-body text-center">
+
+<i class="bi bi-bar-chart-line-fill stat-icon"></i>
+
+<div class="stat-title">
+
+Confidence
+
+</div>
+
+<div class="stat-value text-success">
+
+{{ ml_confidence }}%
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="border-secondary my-5">
+
+<!-- DETECTION + AI -->
+
+<div class="row g-4">
+
+<div class="col-lg-7">
+
+<div class="stat-card">
+
+<div class="card-body p-4">
+
+<h4 class="section-title">
+
+<i class="bi bi-search"></i>
+
+Detection Reasons
+
+</h4>
+
+<ul class="list-group list-group-flush">
+
+{% for reason in reasons %}
+
+<li class="list-group-item">
+
+<i class="bi bi-exclamation-circle-fill text-warning me-2"></i>
+
+{{ reason }}
+
+</li>
+
+{% empty %}
+
+<li class="list-group-item text-success">
+
+<i class="bi bi-check-circle-fill me-2"></i>
+
+No suspicious indicators detected.
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-5">
+
+<div class="stat-card">
+
+<div class="card-body p-4">
+
+<h4 class="section-title">
+
+<i class="bi bi-cpu-fill"></i>
+
+Quick AI Analysis
+
+</h4>
+
+<div class="mb-4">
+
+<h6 class="text-secondary">
+
+Machine Learning
+
+</h6>
+
+{% if ml_prediction == "Phishing" %}
+
+<div class="badge bg-danger fs-5 px-4 py-3">
+
+⚠️ {{ ml_prediction }}
+
+</div>
+
+{% else %}
+
+<div class="badge bg-success fs-5 px-4 py-3">
+
+✅ {{ ml_prediction }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+<hr>
+
+<div class="mb-3">
+
+<h6 class="text-secondary">
+
+Overall Status
+
+</h6>
+
+{% if status == "Safe" %}
+
+<span class="badge bg-success fs-6 px-4 py-2">
+
+SAFE
+
+</span>
+
+{% elif status == "Suspicious" %}
+
+<span class="badge bg-warning text-dark fs-6 px-4 py-2">
+
+SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger fs-6 px-4 py-2">
+
+DANGEROUS
+
+</span>
+
+{% endif %}
+
+</div>
+
+<hr>
+
+<div>
+
+<h6 class="text-secondary">
+
+Confidence Score
+
+</h6>
+
+<h2 class="text-info fw-bold">
+
+{{ ml_confidence }}%
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="border-secondary my-5">
+
+<!-- ================= Threat Classification ================= -->
+
+<div class="stat-card mb-4">
+
+<div class="card-body p-4">
+
+<h4 class="section-title">
+
+<i class="bi bi-shield-exclamation"></i>
+
+Threat Classification
+
+</h4>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+
+<h6 class="text-secondary">
+
+Overall Status
+
+</h6>
+
+{% if status == "Safe" %}
+
+<span class="badge bg-success fs-5 px-4 py-2">
+
+SAFE
+
+</span>
+
+{% elif status == "Suspicious" %}
+
+<span class="badge bg-warning text-dark fs-5 px-4 py-2">
+
+SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger fs-5 px-4 py-2">
+
+DANGEROUS
+
+</span>
+
+{% endif %}
+
+</div>
+
+<div class="col-md-4">
+
+<h6 class="text-secondary">
+
+Risk Score
+
+</h6>
+
+<h2 class="text-info fw-bold">
+
+{{ score }}
+
+</h2>
+
+</div>
+
+<div class="col-md-4">
+
+<h6 class="text-secondary">
+
+ML Confidence
+
+</h6>
+
+<h2 class="text-success fw-bold">
+
+{{ ml_confidence }}%
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= AI SECURITY ASSISTANT ================= -->
+
+<div class="ai-card my-5">
+
+<h2 class="ai-title">
+
+<i class="bi bi-robot"></i>
+
+AI Security Assistant
+
+</h2>
+
+<div class="alert alert-primary border-0 mb-4">
+
+<i class="bi bi-stars"></i>
+
+The explanation below is generated using Google's Gemini AI by combining the Rule-Based Detection, Machine Learning prediction and confidence score.
+
+</div>
+
+<div class="ai-output">
+
+{{ ai_explanation }}
+
+</div>
+
+</div>
+
+<!-- ================= Recommendations ================= -->
+
+<div class="stat-card">
+
+<div class="card-body p-4">
+
+<h4 class="section-title">
+
+<i class="bi bi-lightbulb-fill"></i>
+
+Security Recommendations
+
+</h4>
+
+<ul class="list-group list-group-flush">
+
+{% if status == "Dangerous" %}
+
+<li class="list-group-item">
+
+❌ Do <strong>NOT</strong> visit this website.
+
+</li>
+
+<li class="list-group-item">
+
+🔒 Never enter passwords, OTPs or banking details.
+
+</li>
+
+<li class="list-group-item">
+
+🛡️ Block this URL immediately.
+
+</li>
+
+<li class="list-group-item">
+
+📢 Report this URL as phishing.
+
+</li>
+
+<li class="list-group-item">
+
+💻 Run an antivirus scan if you already opened it.
+
+</li>
+
+{% elif status == "Suspicious" %}
+
+<li class="list-group-item">
+
+⚠️ Verify the domain carefully.
+
+</li>
+
+<li class="list-group-item">
+
+🔍 Check HTTPS and SSL certificate.
+
+</li>
+
+<li class="list-group-item">
+
+📱 Avoid downloading unknown files.
+
+</li>
+
+<li class="list-group-item">
+
+👤 Don't enter login credentials.
+
+</li>
+
+<li class="list-group-item">
+
+🛡️ Use VirusTotal for additional verification.
+
+</li>
+
+{% else %}
+
+<li class="list-group-item">
+
+✅ No major phishing indicators detected.
+
+</li>
+
+<li class="list-group-item">
+
+🌐 Continue browsing carefully.
+
+</li>
+
+<li class="list-group-item">
+
+🔄 Keep browser updated.
+
+</li>
+
+<li class="list-group-item">
+
+🛡️ Keep antivirus enabled.
+
+</li>
+
+<li class="list-group-item">
+
+🔐 Always verify sensitive websites before entering passwords.
+
+</li>
+
+{% endif %}
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="alert alert-info mt-4 border-0 shadow">
+
+<i class="bi bi-info-circle-fill"></i>
+
+Analysis completed successfully using Rule-Based Detection, Machine Learning and Gemini AI Security Assistant.
+
+</div>
+
+<!-- ================= FINAL RESULT ================= -->
+
+<div class="text-center mt-5">
+
+{% if status == "Dangerous" %}
+
+<div class="alert alert-danger border-0 shadow-lg p-4">
+
+<h2 class="fw-bold">
+
+<i class="bi bi-x-octagon-fill"></i>
+
+Dangerous Website Detected
+
+</h2>
+
+<p class="mb-0 mt-3">
+
+This URL contains multiple phishing indicators and may steal passwords, banking details or personal information.
+
+</p>
+
+</div>
+
+{% elif status == "Suspicious" %}
+
+<div class="alert alert-warning border-0 shadow-lg p-4">
+
+<h2 class="fw-bold">
+
+<i class="bi bi-exclamation-triangle-fill"></i>
+
+Suspicious Website
+
+</h2>
+
+<p class="mb-0 mt-3">
+
+Some suspicious indicators were detected.
+
+Proceed carefully and verify the website before using it.
+
+</p>
+
+</div>
+
+{% else %}
+
+<div class="alert alert-success border-0 shadow-lg p-4">
+
+<h2 class="fw-bold">
+
+<i class="bi bi-check-circle-fill"></i>
+
+Website Appears Safe
+
+</h2>
+
+<p class="mb-0 mt-3">
+
+No major phishing indicators were detected.
+
+Although the website appears safe, always verify important websites before entering passwords or payment information.
+
+</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<hr class="border-secondary my-5">
+
+<!-- ================= ACTION BUTTONS ================= -->
+
+<div class="row text-center g-3">
+
+<div class="col-md-4">
+
+<a
+
+href="{% url 'scan' %}"
+
+class="btn btn-info btn-lg w-100"
+
+>
+
+<i class="bi bi-arrow-repeat"></i>
+
+Scan Another URL
+
+</a>
+
+</div>
+
+<div class="col-md-4">
+
+<a
+
+href="{% url 'history' %}"
+
+class="btn btn-success btn-lg w-100"
+
+>
+
+<i class="bi bi-clock-history"></i>
+
+View History
+
+</a>
+
+</div>
+
+<div class="col-md-4">
+
+<a
+
+href="{% url 'dashboard' %}"
+
+class="btn btn-outline-light btn-lg w-100"
+
+>
+
+<i class="bi bi-speedometer2"></i>
+
+Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<hr class="border-secondary my-5">
+
+<div class="text-center">
+
+<div class="footer-brand">
+
+<i class="bi bi-shield-lock-fill"></i>
+
+SentinelX AI
+
+</div>
+
+<p class="footer-text mt-3">
+
+AI Powered Multi-Channel Scam & Phishing Detection Platform
+
+</p>
+
+<p class="footer-text">
+
+Rule-Based Detection
+
+&nbsp;|&nbsp;
+
+Machine Learning
+
+&nbsp;|&nbsp;
+
+Gemini AI Security Assistant
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

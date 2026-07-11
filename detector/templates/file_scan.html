@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.scan-card{
+
+background:#111827;
+
+border:1px solid #1E3A5F;
+
+border-radius:20px;
+
+padding:40px;
+
+box-shadow:0 0 30px rgba(0,229,255,.08);
+
+}
+
+.scan-title{
+
+font-size:38px;
+
+font-weight:700;
+
+color:#00E5FF;
+
+}
+
+.scan-subtitle{
+
+color:#94A3B8;
+
+font-size:17px;
+
+}
+
+.upload-box{
+
+margin-top:35px;
+
+padding:45px;
+
+border:2px dashed #00E5FF;
+
+border-radius:18px;
+
+background:#0F172A;
+
+transition:.3s;
+
+text-align:center;
+
+}
+
+.upload-box:hover{
+
+background:#172554;
+
+border-color:#38BDF8;
+
+}
+
+.upload-box i{
+
+font-size:65px;
+
+color:#00E5FF;
+
+margin-bottom:20px;
+
+}
+
+.upload-box h4{
+
+color:white;
+
+font-weight:600;
+
+}
+
+.upload-box p{
+
+color:#94A3B8;
+
+}
+
+.form-control{
+
+background:#0F172A;
+
+color:white;
+
+border:1px solid #334155;
+
+padding:12px;
+
+}
+
+.form-control:focus{
+
+background:#0F172A;
+
+color:white;
+
+border-color:#00E5FF;
+
+box-shadow:0 0 15px rgba(0,229,255,.25);
+
+}
+
+.form-control::file-selector-button{
+
+background:#00BCD4;
+
+border:none;
+
+color:white;
+
+padding:10px 18px;
+
+margin-right:20px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+.support-card{
+
+background:#0F172A;
+
+border:1px solid #1E3A5F;
+
+border-radius:15px;
+
+padding:20px;
+
+margin-top:30px;
+
+}
+
+.support-card ul{
+
+margin:0;
+
+padding-left:20px;
+
+color:#CBD5E1;
+
+}
+
+.btn-scan{
+
+background:#00BCD4;
+
+color:white;
+
+font-weight:bold;
+
+padding:12px 35px;
+
+border-radius:10px;
+
+border:none;
+
+transition:.3s;
+
+}
+
+.btn-scan:hover{
+
+background:#0891B2;
+
+transform:translateY(-2px);
+
+}
+
+</style>
+
+<div class="container py-5">
+
+<div class="text-center mb-5">
+
+<h1 class="scan-title">
+
+📄 File Scam Detection
+
+</h1>
+
+<p class="scan-subtitle">
+
+Upload a document and let SentinelX AI detect phishing, scams, fraud and malicious content using OCR, Rule-Based Analysis and Machine Learning.
+
+</p>
+
+</div>
+
+<div class="scan-card">
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="upload-box">
+
+<i class="fa-solid fa-file-arrow-up"></i>
+
+<h4>
+
+Choose File
+
+</h4>
+
+<p>
+
+Supported formats: TXT, PDF, DOCX, PPTX
+
+</p>
+
+<input
+
+type="file"
+
+name="file"
+
+class="form-control mt-4"
+
+accept=".txt,.pdf,.doc,.docx,.ppt,.pptx"
+
+required
+
+>
+
+</div>
+
+<div class="support-card">
+
+<h4 class="text-info mb-3">
+
+<i class="fa-solid fa-circle-info"></i>
+
+Supported File Types
+
+</h4>
+
+<ul>
+
+<li>📄 TXT Documents</li>
+
+<li>📕 PDF Files</li>
+
+<li>📘 Microsoft Word (.doc / .docx)</li>
+
+<li>📙 PowerPoint (.ppt / .pptx)</li>
+
+<li>🤖 Automatic Text Extraction</li>
+
+<li>🧠 Machine Learning Classification</li>
+
+<li>🛡 Rule-Based Scam Detection</li>
+
+<li>📊 AI Confidence Score</li>
+
+</ul>
+
+</div>
+
+<div class="text-center mt-5">
+
+<button
+
+type="submit"
+
+class="btn btn-scan btn-lg me-3"
+
+>
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Analyze File
+
+</button>
+
+<a
+
+href="{% url 'dashboard' %}"
+
+class="btn btn-secondary btn-lg"
+
+>
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}
