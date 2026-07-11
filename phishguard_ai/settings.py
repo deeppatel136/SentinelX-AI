@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,16 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(stu#zn-9&tt(3m^mn(y%wqhs-$rs55gk5gaa#rv(g$wl21i=m'
 SECRET_KEY = os.environ.get(
     "SECRET_KEY"
 )
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get(
     "DEBUG",
     "False"
 ) == "True"
-
 ALLOWED_HOSTS = [
     "*"
 ]
@@ -48,15 +49,23 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+
+    'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'django.middleware.common.CommonMiddleware',
+
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+
+    'django.contrib.messages.middleware.MessageMiddleware',
+
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'phishguard_ai.urls'
@@ -83,16 +92,14 @@ WSGI_APPLICATION = 'phishguard_ai.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'phishguard_db',
-        'USER': 'root',
-        'PASSWORD': '1306',
-        'HOST': 'localhost',
-        'PORT': '3310',
-    }
-}
 
+    "default": dj_database_url.config(
+
+        default=os.environ.get("DATABASE_URL")
+
+    )
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -142,6 +149,3 @@ STATICFILES_STORAGE = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from pathlib import Path
-import os
-import dj_database_url
