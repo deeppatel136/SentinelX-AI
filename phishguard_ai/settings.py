@@ -10,9 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import from pathlib import Path
-import os
-import dj_database_url
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,15 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY"
-)
+SECRET_KEY = 'django-insecure-(stu#zn-9&tt(3m^mn(y%wqhs-$rs55gk5gaa#rv(g$wl21i=m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get(
-    "DEBUG",
-    "False"
-) == "True"
+DEBUG = True
 ALLOWED_HOSTS = [
     "*"
 ]
@@ -93,13 +86,24 @@ WSGI_APPLICATION = 'phishguard_ai.wsgi.application'
 
 DATABASES = {
 
-    "default": dj_database_url.config(
+    "default": {
 
-        default=os.environ.get("DATABASE_URL")
+        "ENGINE": "django.db.backends.postgresql",
 
-    )
+        "NAME": "sentinelx_db",
+
+        "USER": "postgres",
+
+        "PASSWORD": "4425",
+
+        "HOST": "localhost",
+
+        "PORT": "5432",
+
+    }
 
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -138,11 +142,10 @@ LOGIN_URL = 'login'
 
 STATIC_URL = "/static/"
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = (
-    "whitenoise.storage.CompressedManifestStaticFilesStorage"
-)
+STATIC_URL = "static/"
+  
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
