@@ -84,24 +84,13 @@ WSGI_APPLICATION = 'phishguard_ai.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+import dj_database_url
+
 DATABASES = {
-
-    "default": {
-
-        "ENGINE": "django.db.backends.postgresql",
-
-        "NAME": "sentinelx_db",
-
-        "USER": "postgres",
-
-        "PASSWORD": "4425",
-
-        "HOST": "localhost",
-
-        "PORT": "5432",
-
-    }
-
+    "default": dj_database_url.config(
+        default="postgresql://postgres:4425@localhost:5432/sentinelx_db"
+    )
 }
 
 
