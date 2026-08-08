@@ -204,6 +204,253 @@ margin:45px 0;
 
 <body>
 
+{% if validation_failed %}
+
+<div class="container py-5">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-8">
+
+<div class="card shadow-lg"
+
+style="background:#111827;
+border:none;
+border-radius:22px;">
+
+<div class="card-header"
+
+style="background:#7F1D1D;
+color:white;
+border-radius:22px 22px 0 0;">
+
+<h2>
+
+📄 File Integrity Report
+
+</h2>
+
+</div>
+
+<div class="card-body p-5">
+
+<div class="row text-center">
+
+<div class="col-md-6 mb-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-circle-xmark text-danger"></i>
+
+<h5>
+
+Status
+
+</h5>
+
+{% if error_type == "PASSWORD_PROTECTED" %}
+
+<h3 class="text-warning">
+
+🔒 Password Protected
+
+</h3>
+
+{% elif error_type == "CORRUPTED_PDF" %}
+
+<h3 class="text-danger">
+
+📄 Corrupted PDF
+
+</h3>
+
+{% elif error_type == "CORRUPTED_DOCX" %}
+
+<h3 class="text-danger">
+
+📄 Corrupted DOCX
+
+</h3>
+
+{% elif error_type == "CORRUPTED_TEXT" %}
+
+<h3 class="text-danger">
+
+📄 Corrupted Text File
+
+</h3>
+
+{% elif error_type == "INVALID_IMAGE" %}
+
+<h3 class="text-danger">
+
+🖼 Invalid Image
+
+</h3>
+
+{% elif error_type == "CORRUPTED_IMAGE" %}
+
+<h3 class="text-danger">
+
+🖼 Corrupted Image
+
+</h3>
+
+{% elif error_type == "EMPTY_FILE" %}
+
+<h3 class="text-warning">
+
+📂 Empty File
+
+</h3>
+
+{% elif error_type == "UNSUPPORTED_FILE" %}
+
+<h3 class="text-danger">
+
+🚫 Unsupported File
+
+</h3>
+
+{% elif error_type == "FILE_TOO_LARGE" %}
+
+<h3 class="text-warning">
+
+📦 File Too Large
+
+</h3>
+
+{% elif error_type == "FILE_NOT_FOUND" %}
+
+<h3 class="text-danger">
+
+❌ File Missing
+
+</h3>
+
+{% else %}
+
+<h3 class="text-danger">
+
+❌ Validation Failed
+
+</h3>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-shield-halved text-warning"></i>
+
+<h5>
+
+Integrity
+
+</h5>
+
+{% if error_type == "PASSWORD_PROTECTED" %}
+
+<h3 class="text-warning">
+
+Encrypted
+
+</h3>
+
+{% elif error_type == "EMPTY_FILE" %}
+
+<h3 class="text-warning">
+
+Empty
+
+</h3>
+
+{% elif error_type == "UNSUPPORTED_FILE" %}
+
+<h3 class="text-danger">
+
+Unsupported
+
+</h3>
+
+{% else %}
+
+<h3 class="text-danger">
+
+Failed
+
+</h3>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+<h4 class="text-info">
+
+<i class="fa-solid fa-circle-info"></i>
+
+Validation Details
+
+</h4>
+<p class="fs-5">
+
+{{ error_message }}
+
+</p>
+
+<hr>
+
+<h4 class="text-info">
+
+<i class="fa-solid fa-lightbulb"></i>
+
+Recommendation
+
+</h4>
+
+<p class="fs-5">
+
+{{ recommendation }}
+
+</p>
+
+<div class="text-center mt-5">
+
+<a
+
+href="{% url 'file_scan' %}"
+
+class="btn btn-info btn-lg">
+
+<i class="fa-solid fa-file-circle-plus"></i>
+
+Upload Another File
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% else %}
+
 <div class="container">
 
 <div class="header">
@@ -245,6 +492,88 @@ Uploaded File
 {{ file_name }}
 
 </p>
+
+</div>
+
+<div class="row g-3 mb-4">
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-file text-info"></i>
+
+<h5>
+
+File Type
+
+</h5>
+
+<h4>
+
+{{ file_extension|upper }}
+
+</h4>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-database text-warning"></i>
+
+<h5>
+
+File Size
+
+</h5>
+
+<h4>
+
+{{ file_size }} Bytes
+
+</h4>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-circle-check text-success"></i>
+
+<h5>
+
+Validation
+
+</h5>
+
+{% if validation_status == "VALID" %}
+
+<span class="badge bg-success">
+
+VALID
+
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+
+FAILED
+
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
 
 </div>
 
@@ -356,7 +685,7 @@ Confidence
 
 <div
 class="progress-bar bg-info"
-style="width:{{ ml_confidence }}%;">
+style="width:{{ ml_confidence|default:0 }}%;"
 
 {{ ml_confidence }}%
 
@@ -380,15 +709,7 @@ Gemini AI Security Assistant
 
 </h3>
 
-<div class="ai-box">
-
-<pre>
-
 {{ ai_explanation }}
-
-</pre>
-
-</div>
 
 <hr>
 
@@ -831,6 +1152,8 @@ Advanced AI-Powered Multi-Channel Scam Detection Platform
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endif %}
 
 </body>
 

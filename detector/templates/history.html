@@ -278,6 +278,8 @@ class="form-select">
 
 <option value="FILE">FILE</option>
 
+<option value="QR">QR</option>
+
 </select>
 
 </div>
@@ -438,6 +440,14 @@ Scan Records
 
 </span>
 
+{% elif scan.scan_type == 'QR' %}
+
+<span class="badge bg-success">
+
+📱 QR
+
+</span>
+
 {% endif %}
 
 </td>
@@ -487,6 +497,18 @@ Scan Records
 <strong class="text-info">
 
 {{ scan.file_name }}
+
+</strong>
+
+</div>
+
+{% elif scan.scan_type == 'QR' %}
+
+<div>
+
+<strong class="text-success">
+
+{{ scan.input_data|truncatechars:45 }}
 
 </strong>
 
@@ -638,7 +660,7 @@ No Scan History Found
 
 <p class="text-secondary mb-0">
 
-Start scanning URLs, Emails, Images or Files to generate your history.
+Start scanning URLs, Emails, Images, Files or QR Codes to generate your history.
 
 </p>
 
@@ -696,7 +718,7 @@ Back to Dashboard
 
 <div class="row g-4 mt-4">
 
-<div class="col-md-3">
+<!-- <div class="col-md-3">
 
 <div class="card bg-dark border-info h-100 shadow">
 
@@ -780,6 +802,8 @@ Back to Dashboard
 
 </h5>
 
+
+
 <h2 class="text-white">
 
 {{ file_scans }}
@@ -793,6 +817,30 @@ Back to Dashboard
 </div>
 
 </div>
+
+<div class="col-md-3">
+
+<div class="card bg-dark border-success h-100 shadow">
+
+<div class="card-body text-center">
+
+<h5 class="text-success">
+
+📱 QR Scans
+
+</h5>
+
+<h2 class="text-white">
+
+{{ qr_scans }}
+
+</h2>
+
+</div>
+
+</div>
+
+</div> -->
 
 <div class="text-center mt-5">
 
@@ -836,9 +884,15 @@ Image OCR
 
 </span>
 
-<span class="badge bg-info text-dark">
+<span class="badge bg-info text-dark me-2">
 
 File Analysis
+
+</span>
+
+<span class="badge bg-success">
+
+QR Analysis
 
 </span>
 

@@ -312,13 +312,35 @@ File Scans
 
 </div>
 
+<div class="col-md-3">
+
+<div class="stat-card text-center">
+
+<i class="fa-solid fa-qrcode text-success"></i>
+
+<h2>
+
+{{ qr_scans }}
+
+</h2>
+
+<h5>
+
+QR Scans
+
+</h5>
+
+</div>
+
+</div>
+
 </div>
 
 <div class="row mt-4">
 
 <div class="col-lg-6 mx-auto">
 
-<div class="stat-card text-center">
+<!-- <div class="stat-card text-center">
 
 <i class="fa-solid fa-robot text-danger"></i>
 
@@ -334,7 +356,7 @@ AI Detected Threats
 
 </h5>
 
-</div>
+</div> -->
 
 </div>
 
@@ -464,6 +486,14 @@ Recent Threat Activity
 
 </span>
 
+{% elif scan.scan_type == "QR" %}
+
+<span class="badge bg-info">
+
+📱 QR
+
+</span>
+
 {% endif %}
 
 </td>
@@ -481,6 +511,10 @@ Email Analysis
 {% elif scan.scan_type == "FILE" %}
 
 {{ scan.file_name }}
+
+{% elif scan.scan_type == "QR" %}
+
+QR Code Scan
 
 {% else %}
 
@@ -690,7 +724,7 @@ labels:[
 
 'File',
 
-'Threats'
+'QR'
 
 ],
 
@@ -708,7 +742,7 @@ data:[
 
 {{ file_scans }},
 
-{{ phishing_count }}
+{{ qr_scans }}
 
 ],
 
@@ -722,7 +756,7 @@ backgroundColor:[
 
 '#f59e0b',
 
-'#ef4444'
+'#10b981'
 
 ],
 

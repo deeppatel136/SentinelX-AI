@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Website QR Report | SentinelX AI
+
+</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+    background:#081321;
+
+    color:white;
+
+}
+
+.container-fluid{
+
+    padding:45px;
+
+}
+
+/* ========================= */
+
+.hero{
+
+    background:#17233b;
+
+    border-radius:22px;
+
+    padding:40px;
+
+    border:1px solid rgba(0,255,255,.12);
+
+    box-shadow:0 0 30px rgba(0,255,255,.08);
+
+}
+
+.logo{
+
+    font-size:34px;
+
+    color:#00d9ff;
+
+    font-weight:700;
+
+}
+
+.logo span{
+
+    color:white;
+
+}
+
+.report-title{
+
+    font-size:46px;
+
+    font-weight:700;
+
+    margin-top:15px;
+
+}
+
+.subtitle{
+
+    color:#9aaec7;
+
+    font-size:20px;
+
+}
+
+/* ========================= */
+
+.verdict{
+
+    float:right;
+
+    margin-top:-90px;
+
+    padding:12px 30px;
+
+    border-radius:40px;
+
+    font-weight:700;
+
+    font-size:20px;
+
+}
+
+.ai-report{
+
+    color:#f1f5f9;
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    letter-spacing:.3px;
+
+    white-space:pre-line;
+
+}
+
+.safe{
+
+    background:#16a34a;
+
+}
+
+.warning{
+
+    background:#f59e0b;
+
+}
+
+.danger{
+
+    background:#dc2626;
+
+}
+
+/* ========================= */
+
+.info-card{
+
+    background:#17233b;
+
+    border:none;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    margin-top:35px;
+
+    transition:.3s;
+
+}
+
+.info-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 0 20px rgba(0,217,255,.15);
+
+}
+
+.info-icon{
+
+    font-size:34px;
+
+    color:#00d9ff;
+
+}
+
+.recommend-card{
+
+    background:#10263b;
+
+    border-left:5px solid #22c55e;
+
+    border-radius:18px;
+
+}
+
+.avoid-card{
+
+    background:#331818;
+
+    border-left:5px solid #ef4444;
+
+    border-radius:18px;
+
+}
+
+.recommend-card li,
+.avoid-card li{
+
+    color:#f8fafc;
+
+    line-height:1.8;
+
+    font-size:16px;
+
+}
+
+.summary-number{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+.summary-title{
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+}
+
+.info-title{
+
+    margin-top:18px;
+
+    color:#8fa8c0;
+
+}
+
+.info-value{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-top:12px;
+
+}
+
+.section-card{
+
+    background:#17233b;
+
+    border:none;
+
+    border-radius:22px;
+
+    margin-top:40px;
+
+    padding:35px;
+
+}
+
+.section-title{
+
+    color:#00d9ff;
+
+    font-size:28px;
+
+    margin-bottom:25px;
+
+}
+
+.badge-status{
+
+    font-size:18px;
+
+    padding:8px 18px;
+
+}
+
+.table-dark{
+
+    --bs-table-bg:#17233b;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="logo">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Sentinel<span>X AI</span>
+
+</div>
+
+<div class="report-title">
+
+Website QR Security Report
+
+</div>
+
+<div class="subtitle">
+
+Hybrid Detection • Rule Engine • Machine Learning • Gemini AI
+
+</div>
+
+<div class="verdict
+
+{% if verdict_color == 'success' %}
+
+safe
+
+{% elif verdict_color == 'warning' %}
+
+warning
+
+{% else %}
+
+danger
+
+{% endif %}">
+
+{{ verdict_icon }}
+
+{{ final_verdict }}
+
+</div>
+
+</div>
+
+<!-- SUMMARY -->
+
+<div class="row">
+
+<div class="col-lg-3">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-qrcode"></i>
+
+</div>
+
+<div class="info-title">
+
+QR Type
+
+</div>
+
+<div class="info-value">
+
+{{ qr_type }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-shield-virus"></i>
+
+</div>
+
+<div class="info-title">
+
+Threat Level
+
+</div>
+
+<div class="info-value">
+
+{{ status }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-gauge-high"></i>
+
+</div>
+
+<div class="info-title">
+
+Risk Score
+
+</div>
+
+<div class="info-value">
+
+{{ risk_score }}%
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-brain"></i>
+
+</div>
+
+<div class="info-title">
+
+ML Confidence
+
+</div>
+
+<div class="info-value">
+
+{{ ml_confidence }}%
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- WEBSITE INFORMATION -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-globe"></i>
+
+Website Information
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-8">
+
+<table class="table table-dark table-borderless align-middle">
+
+<tr>
+
+<th width="220">
+
+<i class="fa-solid fa-link text-info"></i>
+
+Website URL
+
+</th>
+
+<td class="text-break">
+
+{{ data }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-layer-group text-info"></i>
+
+QR Type
+
+</th>
+
+<td>
+
+{{ qr_type }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-shield-halved text-info"></i>
+
+Security Status
+
+</th>
+
+<td>
+
+<span class="badge
+
+{% if status == 'Safe' %}
+
+bg-success
+
+{% elif status == 'Suspicious' %}
+
+bg-warning
+
+{% else %}
+
+bg-danger
+
+{% endif %}
+
+badge-status">
+
+{{ status }}
+
+</span>
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-robot text-info"></i>
+
+AI Verdict
+
+</th>
+
+<td>
+
+{{ final_verdict }}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="col-lg-4 text-center">
+
+<div style="background:#0f172a;
+padding:30px;
+border-radius:20px;">
+
+<i class="fa-solid fa-earth-americas"
+
+style="font-size:70px;
+color:#00d9ff;"></i>
+
+<h4 class="mt-4">
+
+Website QR
+
+</h4>
+
+<p class="text-secondary">
+
+External URL Detected
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- DETECTION ENGINES -->
+<!-- ====================================================== -->
+
+<div class="row">
+
+<!-- Rule Engine -->
+
+<div class="col-lg-6">
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-list-check"></i>
+
+Rule Engine
+
+</h2>
+
+<table class="table table-dark table-borderless">
+
+<tr>
+
+<th width="180">
+
+Status
+
+</th>
+
+<td>
+
+{{ status }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Risk Score
+
+</th>
+
+<td>
+
+{{ risk_score }}%
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Verdict
+
+</th>
+
+<td>
+
+{{ final_verdict }}
+
+</td>
+
+</tr>
+
+</table>
+
+<div class="progress mt-4"
+
+style="height:18px;">
+
+<div
+
+class="progress-bar
+
+{% if risk_score >= 60 %}
+
+bg-danger
+
+{% elif risk_score >= 30 %}
+
+bg-warning
+
+{% else %}
+
+bg-success
+
+{% endif %}"
+
+style="width:{{ risk_score }}%;">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Machine Learning -->
+
+<div class="col-lg-6">
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-brain"></i>
+
+Machine Learning
+
+</h2>
+
+<table class="table table-dark table-borderless">
+
+<tr>
+
+<th width="180">
+
+Prediction
+
+</th>
+
+<td>
+
+{{ ml_status }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Confidence
+
+</th>
+
+<td>
+
+{{ ml_confidence }}%
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Engine
+
+</th>
+
+<td>
+
+Random Forest Classifier
+
+</td>
+
+</tr>
+
+</table>
+
+<div class="progress mt-4"
+
+style="height:18px;">
+
+<div
+
+class="progress-bar bg-info"
+
+style="width:{{ ml_confidence }}%;">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- THREAT INDICATORS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+Threat Indicators
+
+</h2>
+
+{% if reasons %}
+
+<div class="row">
+
+{% for reason in reasons %}
+
+<div class="col-lg-6 mb-3">
+
+<div class="alert alert-warning shadow-sm">
+
+<i class="fa-solid fa-circle-exclamation me-2"></i>
+
+{{ reason }}
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-success">
+
+<i class="fa-solid fa-circle-check me-2"></i>
+
+No suspicious indicators detected.
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- GEMINI AI SECURITY ASSESSMENT -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+    <h2 class="section-title">
+
+        <i class="fa-solid fa-robot"></i>
+
+        Gemini AI Security Assessment
+
+    </h2>
+
+    <div class="card"
+         style="background:#0f172a;
+                border:none;
+                border-left:5px solid #00d9ff;
+                border-radius:15px;">
+
+        <div class="card-body">
+
+            {% if ai_report %}
+
+                <p class="ai-report">
+
+                    {{ ai_report }}
+
+                </p>
+
+            {% else %}
+
+                <div class="alert alert-warning mb-0">
+
+                    Gemini AI report is currently unavailable.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- SECURITY RECOMMENDATIONS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-lightbulb"></i>
+
+Security Recommendations
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-6">
+
+<div class="card recommend-card">
+
+<div class="card-body">
+
+<h5 class="text-success">
+
+<i class="fa-solid fa-shield"></i>
+
+Recommended
+
+</h5>
+
+<hr>
+
+<ul>
+
+<li>Verify the website before entering credentials.</li>
+
+<li>Prefer HTTPS websites.</li>
+
+<li>Check the domain spelling carefully.</li>
+
+<li>Enable Two-Factor Authentication.</li>
+
+<li>Keep your browser updated.</li>
+
+<li>Scan unknown QR codes with SentinelX AI.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-6">
+
+<div class="card avoid-card">
+
+<div class="card-body">
+
+<h5 class="text-danger">
+
+<i class="fa-solid fa-ban"></i>
+
+Avoid
+
+</h5>
+
+<hr>
+
+<ul>
+
+<li>Entering passwords on suspicious websites.</li>
+
+<li>Ignoring browser security warnings.</li>
+
+<li>Downloading unknown files.</li>
+
+<li>Sharing OTPs or banking credentials.</li>
+
+<li>Clicking shortened URLs from unknown sources.</li>
+
+<li>Scanning QR codes from untrusted stickers or posters.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- EXECUTIVE SUMMARY -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Executive Summary
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+style="background:#0f172a;border:none;border-radius:18px;">
+
+<div class="card-body">
+
+<i class="fa-solid fa-shield-virus fa-3x text-info mb-3"></i>
+
+<h5 class="summary-title">
+
+Final Verdict
+
+</h5>
+
+<h1 class="summary-number text-success">
+
+{{ final_verdict }}
+
+</h1>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+style="background:#0f172a;border:none;border-radius:18px;">
+
+<div class="card-body">
+
+<i class="fa-solid fa-gauge-high fa-3x text-warning mb-3"></i>
+
+<h5 class="summary-title">
+
+Risk Score
+
+</h5>
+
+<h1 class="summary-number text-warning">
+
+{{ risk_score }}%
+
+</h1>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+style="background:#0f172a;border:none;border-radius:18px;">
+
+<div class="card-body">
+
+<i class="fa-solid fa-brain fa-3x text-success mb-3"></i>
+
+<h5 class="summary-title">
+
+ML Confidence
+
+</h5>
+
+<h1 class="summary-number text-info">
+
+{{ ml_confidence }}%
+
+</h1>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- ACTION CENTER -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-bolt"></i>
+
+Action Center
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-3 mb-3">
+
+<a href="{% url 'qr_scan' %}"
+
+class="btn btn-primary w-100 p-3">
+
+<i class="fa-solid fa-qrcode"></i>
+
+<br><br>
+
+Scan Another QR
+
+</a>
+
+</div>
+
+<div class="col-lg-3 mb-3">
+
+<a href="{% url 'dashboard' %}"
+
+class="btn btn-success w-100 p-3">
+
+<i class="fa-solid fa-house"></i>
+
+<br><br>
+
+Dashboard
+
+</a>
+
+</div>
+
+<div class="col-lg-3 mb-3">
+
+<button
+
+onclick="window.print()"
+
+class="btn btn-warning w-100 p-3">
+
+<i class="fa-solid fa-print"></i>
+
+<br><br>
+
+Print Report
+
+</button>
+
+</div>
+
+<div class="col-lg-3 mb-3">
+
+<button
+
+class="btn btn-info w-100 p-3"
+
+disabled>
+
+<i class="fa-solid fa-file-pdf"></i>
+
+<br><br>
+
+Download PDF
+
+<small class="d-block">
+
+Coming Soon
+
+</small>
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- REPORT DETAILS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-circle-info"></i>
+
+Report Information
+
+</h2>
+
+<table class="table table-dark table-borderless">
+
+<tr>
+
+<th width="220">
+
+Report Generated
+
+</th>
+
+<td>
+
+{% now "d M Y" %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Scan Time
+
+</th>
+
+<td>
+
+{% now "H:i:s" %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Detection Engine
+
+</th>
+
+<td>
+
+Hybrid Detection Engine
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+AI Model
+
+</th>
+
+<td>
+
+Google Gemini + Random Forest
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Platform
+
+</th>
+
+<td>
+
+SentinelX AI
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- FOOTER -->
+<!-- ====================================================== -->
+
+<footer class="text-center mt-5 mb-4">
+
+<hr style="border-color:#334155;">
+
+<h3 class="text-info">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+SentinelX AI
+
+</h3>
+
+<p class="text-secondary">
+
+AI Powered Multi-Channel Scam & Phishing Detection Platform
+
+</p>
+
+<p class="text-secondary">
+
+Rule Engine • Machine Learning • Google Gemini AI
+
+</p>
+
+<small class="text-secondary">
+
+© 2026 SentinelX AI
+
+</small>
+
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

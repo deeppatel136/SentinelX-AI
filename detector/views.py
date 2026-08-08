@@ -9,6 +9,7 @@ from .ml_predictor import predict_url
 from .email_ml_detector import predict_email
 from django.http import HttpResponse
 from .image_detector import extract_text_from_image
+from .file_extractor import extract_text_from_file
 
 #from .ai_assistant import generate_ai_response
 from .ai_security_assistant import generate_ai_response
@@ -79,79 +80,129 @@ def dashboard(request):
         user=request.user
     )
 
+    # ==========================================
+    # Overall Statistics
+    # ==========================================
+
     total_scans = scans.count()
 
     safe_count = scans.filter(
-        status='Safe'
+        status="Safe"
     ).count()
 
     suspicious_count = scans.filter(
-        status='Suspicious'
+        status="Suspicious"
     ).count()
 
     dangerous_count = scans.filter(
-        status='Dangerous'
+        status="Dangerous"
     ).count()
 
     phishing_count = scans.filter(
-        ml_prediction='Phishing'
+        ml_prediction="Phishing"
     ).count()
 
+    # ==========================================
+    # Scan Type Statistics
+    # ==========================================
+
     url_scans = scans.filter(
-        scan_type='URL'
+        scan_type="URL"
     ).count()
 
     email_scans = scans.filter(
-        scan_type='EMAIL'
+        scan_type="EMAIL"
     ).count()
 
     image_scans = scans.filter(
-        scan_type='IMAGE'
+        scan_type="IMAGE"
     ).count()
 
     file_scans = scans.filter(
-        scan_type='FILE'
+        scan_type="FILE"
+    ).count()
+
+    qr_scans = scans.filter(
+        scan_type="QR"
+    ).count()
+
+    # ==========================================
+    # Dangerous Scan Statistics
+    # ==========================================
+
+    dangerous_urls = scans.filter(
+        scan_type="URL",
+        status="Dangerous"
     ).count()
 
     dangerous_emails = scans.filter(
-        scan_type='EMAIL',
-        status='Dangerous'
+        scan_type="EMAIL",
+        status="Dangerous"
     ).count()
 
+    dangerous_images = scans.filter(
+        scan_type="IMAGE",
+        status="Dangerous"
+    ).count()
+
+    dangerous_files = scans.filter(
+        scan_type="FILE",
+        status="Dangerous"
+    ).count()
+
+    dangerous_qr = scans.filter(
+        scan_type="QR",
+        status="Dangerous"
+    ).count()
+
+    # ==========================================
+    # Recent Activity
+    # ==========================================
+
     recent_scans = scans.order_by(
-        '-created_at'
+        "-created_at"
     )[:5]
+
+    # ==========================================
+    # Context
+    # ==========================================
 
     context = {
 
-        'total_scans': total_scans,
+        # Overall
+        "total_scans": total_scans,
+        "safe_count": safe_count,
+        "suspicious_count": suspicious_count,
+        "dangerous_count": dangerous_count,
+        "phishing_count": phishing_count,
 
-        'safe_count': safe_count,
+        # Scan Types
+        "url_scans": url_scans,
+        "email_scans": email_scans,
+        "image_scans": image_scans,
+        "file_scans": file_scans,
+        "qr_scans": qr_scans,
 
-        'suspicious_count': suspicious_count,
+        # Dangerous Statistics
+        "dangerous_urls": dangerous_urls,
+        "dangerous_emails": dangerous_emails,
+        "dangerous_images": dangerous_images,
+        "dangerous_files": dangerous_files,
+        "dangerous_qr": dangerous_qr,
 
-        'dangerous_count': dangerous_count,
-
-        'phishing_count': phishing_count,
-
-        'url_scans': url_scans,
-
-        'email_scans': email_scans,
-
-        'image_scans': image_scans,
-
-        'file_scans': file_scans,
-
-        'dangerous_emails': dangerous_emails,
-
-        'recent_scans': recent_scans
+        # Recent Activity
+        "recent_scans": recent_scans,
 
     }
 
     return render(
+
         request,
-        'dashboard.html',
+
+        "dashboard.html",
+
         context
+
     )
 
 @login_required
@@ -924,14 +975,15 @@ def email_scan(request):
 
     )
 
+from .image_validator import ImageValidator
+
+
 @login_required
 def image_scan(request):
 
     if request.method == "POST":
 
-        image = request.FILES.get(
-            'image'
-        )
+        image = request.FILES.get("image")
 
         if image:
 
@@ -940,20 +992,60 @@ def image_scan(request):
 
             temp_file = tempfile.NamedTemporaryFile(
                 delete=False,
-                suffix='.jpg'
+                suffix=".jpg"
             )
 
             for chunk in image.chunks():
 
-                temp_file.write(
-                    chunk
-                )
+                temp_file.write(chunk)
 
             temp_file.close()
 
-            # =====================
+            # ===========================================
+            # IMAGE VALIDATION
+            # ===========================================
+
+            validation = ImageValidator.validate(
+                temp_file.name
+            )
+
+            if not validation["valid"]:
+
+                try:
+
+                    os.remove(
+                        temp_file.name
+                    )
+
+                except:
+
+                    pass
+
+                return render(
+
+                    request,
+
+                    "image_result.html",
+
+                    {
+
+                        "image_name": image.name,
+
+                        "validation_failed": True,
+
+                        "error_type": validation["error"],
+
+                        "error_message": validation["message"],
+
+                        "recommendation": validation["recommendation"]
+
+                    }
+
+                )
+
+            # ===========================================
             # OCR
-            # =====================
+            # ===========================================
 
             extracted_text = extract_text_from_image(
                 temp_file.name
@@ -969,17 +1061,17 @@ def image_scan(request):
 
                 pass
 
-            # =====================
-            # Rule-Based Detection
-            # =====================
+            # ===========================================
+            # RULE BASED DETECTION
+            # ===========================================
 
             score, status, reasons = analyze_email(
                 extracted_text
             )
 
-            # =====================
-            # Machine Learning
-            # =====================
+            # ===========================================
+            # MACHINE LEARNING
+            # ===========================================
 
             prediction, confidence = predict_email(
                 extracted_text
@@ -1000,13 +1092,13 @@ def image_scan(request):
             print("OCR Text:")
             print(extracted_text)
             print("Rule Status :", status)
-            print("Prediction  :", ml_result)
-            print("Confidence  :", confidence)
+            print("Prediction :", ml_result)
+            print("Confidence :", confidence)
             print("=" * 50)
 
-            # =====================
-            # AI Security Assistant
-            # =====================
+            # ===========================================
+            # AI SECURITY ASSISTANT
+            # ===========================================
 
             ai_explanation = generate_ai_response(
 
@@ -1032,17 +1124,17 @@ def image_scan(request):
             print(ai_explanation)
             print("=" * 80)
 
-            # =====================
-            # Save History
-            # =====================
+            # ===========================================
+            # SAVE HISTORY
+            # ===========================================
 
             ScanHistory.objects.create(
 
                 user=request.user,
 
-                scan_type='IMAGE',
+                scan_type="IMAGE",
 
-                input_data='Image Scan',
+                input_data="Image Scan",
 
                 image_name=image.name,
 
@@ -1065,30 +1157,32 @@ def image_scan(request):
 
             )
 
-            # =====================
-            # Result Context
-            # =====================
+            # ===========================================
+            # RESULT
+            # ===========================================
 
             context = {
 
-                'image_name': image.name,
+                "image_name": image.name,
 
-                'extracted_text': extracted_text,
+                "extracted_text": extracted_text,
 
-                'risk_score': score,
+                "risk_score": score,
 
-                'status': status,
+                "status": status,
 
-                'reasons': reasons,
+                "reasons": reasons,
 
-                'ml_prediction': ml_result,
+                "ml_prediction": ml_result,
 
-                'ml_confidence': round(
+                "ml_confidence": round(
                     confidence * 100,
                     2
                 ),
 
-                'ai_explanation': ai_explanation,
+                "ai_explanation": ai_explanation,
+
+                "validation_failed": False,
 
             }
 
@@ -1096,7 +1190,7 @@ def image_scan(request):
 
                 request,
 
-                'image_result.html',
+                "image_result.html",
 
                 context
 
@@ -1106,198 +1200,515 @@ def image_scan(request):
 
         request,
 
-        'image_scan.html'
+        "image_scan.html"
 
     )
+    
+# ============================================================
+# FILE PROCESSING ENGINE
+# Used for:
+# 1. Normal Files
+# 2. Password Protected Files (after authentication)
+# ============================================================
+
+def process_file_scan(
+
+    request,
+
+    file_path,
+
+    file_name,
+
+    validation_info=None,
+
+    password=None
+
+):
+
+    import os
+
+    # =====================================
+    # File Information
+    # =====================================
+
+    file_size = os.path.getsize(file_path)
+
+    file_extension = os.path.splitext(
+
+        file_name
+
+    )[1].lower()
+
+    validation_status = "VALID"
+
+    if validation_info:
+
+        validation_status = validation_info.get(
+
+            "status",
+
+            "VALID"
+
+        )
+
+        file_size = validation_info.get(
+
+            "size",
+
+            file_size
+
+        )
+
+        file_extension = validation_info.get(
+
+            "extension",
+
+            file_extension
+
+        )
+
+    # =====================================
+    # Extract Text
+    # =====================================
+
+    extracted_text = extract_text_from_file(
+
+        file_path,
+
+        password=password
+
+    )
+
+    # =====================================
+    # Rule-Based Detection
+    # =====================================
+
+    score, status, reasons = analyze_email(
+
+        extracted_text
+
+    )
+
+    # =====================================
+    # Machine Learning
+    # =====================================
+
+    prediction, confidence = predict_email(
+
+        extracted_text
+
+    )
+
+    ml_result = (
+
+        "Phishing"
+
+        if prediction == 1
+
+        else "Legitimate"
+
+    )
+
+    # =====================================
+    # AI Security Assistant
+    # =====================================
+
+    ai_explanation = generate_ai_response(
+
+        scan_type="File",
+
+        status=status,
+
+        risk_score=score,
+
+        ml_prediction=ml_result,
+
+        ml_confidence=round(
+
+            confidence * 100,
+
+            2
+
+        ),
+
+        reasons=reasons
+
+    )
+
+    # =====================================
+    # Save Scan History
+    # =====================================
+
+    ScanHistory.objects.create(
+
+        user=request.user,
+
+        scan_type="FILE",
+
+        input_data="File Scan",
+
+        file_name=file_name,
+
+        file_text=extracted_text,
+
+        risk_score=score,
+
+        status=status,
+
+        analysis_reason="\n".join(
+
+            reasons
+
+        ),
+
+        ml_prediction=ml_result,
+
+        ml_confidence=round(
+
+            confidence * 100,
+
+            2
+
+        )
+
+    )
+
+    # =====================================
+    # Result Context
+    # =====================================
+
+    context = {
+
+        "validation_failed": False,
+
+        "file_name": file_name,
+
+        "file_size": file_size,
+
+        "file_extension": file_extension,
+
+        "validation_status": validation_status,
+
+        "extracted_text": extracted_text,
+
+        "risk_score": score,
+
+        "status": status,
+
+        "reasons": reasons,
+
+        "ml_prediction": ml_result,
+
+        "ml_confidence": round(
+
+            confidence * 100,
+
+            2
+
+        ),
+
+        "ai_explanation": ai_explanation
+
+    }
+
+    return render(
+
+        request,
+
+        "file_result.html",
+
+        context
+
+    )
+    
+from .file_validator import FileValidator    
 
 @login_required
 def file_scan(request):
 
-    if request.method == "POST":
+    import os
+    import tempfile
+    import fitz
 
-        uploaded_file = request.FILES.get(
-            'file'
-        )
+    # ==========================================================
+    # PASSWORD SUBMISSION
+    # ==========================================================
 
-        if uploaded_file:
+    if request.method == "POST" and request.POST.get("password"):
 
-            # =====================
-            # Save Temporary File
-            # =====================
+        password = request.POST.get("password")
+        file_path = request.POST.get("file_path")
+        file_name = request.POST.get("file_name")
 
-            extension = os.path.splitext(
-                uploaded_file.name
-            )[1]
+        # ------------------------------------------
+        # File Exists?
+        # ------------------------------------------
 
-            temp_file = tempfile.NamedTemporaryFile(
-                delete=False,
-                suffix=extension
+        if not os.path.exists(file_path):
+
+            return render(
+
+                request,
+
+                "file_result.html",
+
+                {
+
+                    "validation_failed": True,
+
+                    "error_type": "FILE_NOT_FOUND",
+
+                    "error_message": "Temporary file no longer exists.",
+
+                    "recommendation": "Please upload the document again."
+
+                }
+
             )
 
-            for chunk in uploaded_file.chunks():
+        # ------------------------------------------
+        # Authenticate Password
+        # ------------------------------------------
 
-                temp_file.write(
-                    chunk
-                )
+        try:
 
-            temp_file.close()
+            pdf = fitz.open(file_path)
 
-            # =====================
-            # Extract Text
-            # =====================
+            authenticated = pdf.authenticate(password)
 
-            extracted_text = extract_text_from_file(
-                temp_file.name
+            pdf.close()
+
+        except Exception:
+
+            return render(
+
+                request,
+
+                "file_result.html",
+
+                {
+
+                    "validation_failed": True,
+
+                    "error_type": "CORRUPTED_PDF",
+
+                    "error_message": "Unable to open the encrypted document.",
+
+                    "recommendation": "Please upload another PDF."
+
+                }
+
             )
+
+        # ------------------------------------------
+        # Wrong Password
+        # ------------------------------------------
+
+        if not authenticated:
+
+            return render(
+
+                request,
+
+                "file_password.html",
+
+                {
+
+                    "file_name": file_name,
+
+                    "file_path": file_path,
+
+                    "error_message": "This document is password protected.",
+
+                    "password_error": "Incorrect password. Please try again."
+
+                }
+
+            )
+
+        # ------------------------------------------
+        # Correct Password
+        # ------------------------------------------
+
+        validation = {
+
+            "status": "VALID",
+
+            "size": os.path.getsize(file_path),
+
+            "extension": os.path.splitext(file_name)[1].lower()
+
+        }
+
+        try:
+
+            return process_file_scan(
+
+                request=request,
+
+                file_path=file_path,
+
+                file_name=file_name,
+
+                validation_info=validation,
+
+                password=password
+
+            )
+
+        finally:
 
             try:
 
-                os.remove(
-                    temp_file.name
-                )
+                if os.path.exists(file_path):
+
+                    os.remove(file_path)
 
             except:
 
                 pass
 
-            # =====================
-            # Rule-Based Detection
-            # =====================
+    # ==========================================================
+    # FILE UPLOAD
+    # ==========================================================
 
-            score, status, reasons = analyze_email(
-                extracted_text
-            )
+    if request.method == "POST" and request.FILES.get("file"):
 
-            # =====================
-            # Machine Learning
-            # =====================
+        uploaded_file = request.FILES.get("file")
 
-            prediction, confidence = predict_email(
-                extracted_text
-            )
+        extension = os.path.splitext(
 
-            if prediction == 1:
+            uploaded_file.name
 
-                ml_result = "Phishing"
+        )[1]
 
-            else:
+        temp_file = tempfile.NamedTemporaryFile(
 
-                ml_result = "Legitimate"
+            delete=False,
 
-            print("=" * 50)
-            print("FILE SCAN")
-            print("=" * 50)
-            print("File :", uploaded_file.name)
-            print("Rule Status :", status)
-            print("Prediction :", ml_result)
-            print("Confidence :", confidence)
-            print("=" * 50)
+            suffix=extension
 
-            # =====================
-            # AI Security Assistant
-            # =====================
+        )
 
-            ai_explanation = generate_ai_response(
+        for chunk in uploaded_file.chunks():
 
-                scan_type="File",
+            temp_file.write(chunk)
 
-                status=status,
+        temp_file.close()
 
-                risk_score=score,
+        validation = FileValidator.validate(
 
-                ml_prediction=ml_result,
+            temp_file.name
 
-                ml_confidence=round(
-                    confidence * 100,
-                    2
-                ),
+        )
 
-                reasons=reasons
+        # ------------------------------------------
+        # Password Protected
+        # ------------------------------------------
 
-            )
-
-            print("=" * 80)
-            print("AI SECURITY ASSISTANT")
-            print(ai_explanation)
-            print("=" * 80)
-
-            # =====================
-            # Save History
-            # =====================
-
-            ScanHistory.objects.create(
-
-                user=request.user,
-
-                scan_type='FILE',
-
-                input_data='File Scan',
-
-                file_name=uploaded_file.name,
-
-                file_text=extracted_text,
-
-                risk_score=score,
-
-                status=status,
-
-                analysis_reason="\n".join(
-                    reasons
-                ),
-
-                ml_prediction=ml_result,
-
-                ml_confidence=round(
-                    confidence * 100,
-                    2
-                )
-
-            )
-
-            # =====================
-            # Result Context
-            # =====================
-
-            context = {
-
-                'file_name': uploaded_file.name,
-
-                'extracted_text': extracted_text,
-
-                'risk_score': score,
-
-                'status': status,
-
-                'reasons': reasons,
-
-                'ml_prediction': ml_result,
-
-                'ml_confidence': round(
-                    confidence * 100,
-                    2
-                ),
-
-                'ai_explanation': ai_explanation,
-
-            }
+        if validation.get("needs_password"):
 
             return render(
 
                 request,
 
-                'file_result.html',
+                "file_password.html",
 
-                context
+                {
+
+                    "file_name": uploaded_file.name,
+
+                    "file_path": temp_file.name,
+
+                    "error_message": validation["message"]
+
+                }
 
             )
+
+        # ------------------------------------------
+        # Other Validation Errors
+        # ------------------------------------------
+
+        if not validation["valid"]:
+
+            try:
+
+                os.remove(temp_file.name)
+
+            except:
+
+                pass
+
+            return render(
+
+                request,
+
+                "file_result.html",
+
+                {
+
+                    "validation_failed": True,
+
+                    "file_name": uploaded_file.name,
+
+                    "error_type": validation["error"],
+
+                    "error_message": validation["message"],
+
+                    "recommendation": validation["recommendation"]
+
+                }
+
+            )
+
+        # ------------------------------------------
+        # Normal File
+        # ------------------------------------------
+
+        try:
+
+            return process_file_scan(
+
+                request=request,
+
+                file_path=temp_file.name,
+
+                file_name=uploaded_file.name,
+
+                validation_info=validation,
+
+                password=None
+
+            )
+
+        finally:
+
+            try:
+
+                if os.path.exists(temp_file.name):
+
+                    os.remove(temp_file.name)
+
+            except:
+
+                pass
+
+    # ==========================================================
+    # GET REQUEST
+    # ==========================================================
 
     return render(
 
         request,
 
-        'file_scan.html'
+        "file_scan.html"
 
     )
+            
+    
+
+        
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -1478,3 +1889,498 @@ def delete_all_chats(request):
     ).delete()
 
     return redirect("chatbot")
+
+
+from django.shortcuts import render
+from django.core.files.storage import FileSystemStorage
+import os
+
+from .qr_scanner import QRScanner
+
+from .phishing_detector import analyze_url
+from .feature_extractor import extract_features
+from .ml_predictor import predict_url
+from .decision_engine import DecisionEngine
+
+from .upi_analyzer import UPIAnalyzer
+from .wifi_analyzer import WiFiAnalyzer
+from .email_qr_analyzer import EmailQRAnalyzer
+
+from .ai_qr_assistant import AIQRAssistant
+
+@login_required
+def qr_scan(request):
+
+    """
+    SentinelX AI
+    Universal QR Scanner
+    """
+
+    if request.method == "POST":
+
+        image = request.FILES.get("qr_image")
+
+        if not image:
+
+            return render(
+
+                request,
+
+                "qr_scan.html",
+
+                {
+
+                    "success": False,
+
+                    "message": "Please upload a QR image."
+
+                }
+
+            )
+
+        # ==========================================
+        # Save Uploaded Image
+        # ==========================================
+
+        fs = FileSystemStorage()
+
+        filename = fs.save(
+
+            image.name,
+
+            image
+
+        )
+
+        image_path = fs.path(filename)
+
+        # ==========================================
+        # Scan QR
+        # ==========================================
+
+        result = QRScanner.scan_qr(image_path)
+
+        if result["success"]:
+
+            # ==========================================
+            # Default Values
+            # ==========================================
+
+            result.update({
+
+                "risk_score": None,
+
+                "status": None,
+
+                "reasons": [],
+
+                "ml_status": None,
+
+                "ml_confidence": None,
+
+                "final_verdict": None,
+
+                "verdict_color": "secondary",
+
+                "verdict_icon": "ℹ️",
+
+                "verdict_reason": "",
+
+                "ai_report": ""
+
+            })
+
+            # ======================================================
+            # WEBSITE QR
+            # ======================================================
+
+            if result["qr_type"] == "Website URL":
+
+                url = result["data"]
+
+                score, status, reasons = analyze_url(
+
+                    url
+
+                )
+
+                features = extract_features(
+
+                    url
+
+                )
+
+                prediction, confidence = predict_url(
+
+                    features
+
+                )
+
+                ml_status = (
+
+                    "Phishing"
+
+                    if prediction == 1
+
+                    else "Legitimate"
+
+                )
+
+                decision = DecisionEngine.final_verdict(
+
+                    status,
+
+                    ml_status,
+
+                    confidence * 100
+
+                )
+
+                result.update({
+
+                    "risk_score": score,
+
+                    "status": status,
+
+                    "reasons": reasons,
+
+                    "ml_status": ml_status,
+
+                    "ml_confidence": round(
+
+                        confidence * 100,
+
+                        2
+
+                    ),
+
+                    "final_verdict": decision["verdict"],
+
+                    "verdict_color": decision["color"],
+
+                    "verdict_icon": decision["icon"],
+
+                    "verdict_reason": decision["reason"]
+
+                })
+
+                result["ai_report"] = AIQRAssistant.generate_report(
+
+                    qr_type="Website URL",
+
+                    verdict=result["final_verdict"],
+
+                    reasons=result["reasons"],
+
+                    extra_info=f"""
+
+Risk Score : {score}
+
+Rule Engine : {status}
+
+Machine Learning : {ml_status}
+
+Confidence : {round(confidence*100,2)}%
+
+URL : {url}
+
+"""
+
+                )
+                
+                            # ======================================================
+            # UPI PAYMENT QR
+            # ======================================================
+
+            elif result["qr_type"] == "UPI Payment":
+
+                upi = UPIAnalyzer.analyze(
+
+                    result["data"]
+
+                )
+
+                result.update(upi)
+
+                result["final_verdict"] = upi["upi_risk"]
+
+                result["status"] = upi["upi_risk"]
+
+                result["reasons"] = upi["upi_reasons"]
+
+                if upi["upi_risk"] == "Safe":
+
+                    result["verdict_color"] = "success"
+
+                    result["verdict_icon"] = "🟢"
+
+                else:
+
+                    result["verdict_color"] = "warning"
+
+                    result["verdict_icon"] = "🟡"
+
+                result["ai_report"] = AIQRAssistant.generate_report(
+
+                    qr_type="UPI Payment",
+
+                    verdict=upi["upi_risk"],
+
+                    reasons=upi["upi_reasons"],
+
+                    extra_info=f"""
+
+Receiver : {upi['receiver']}
+
+UPI ID : {upi['upi_id']}
+
+Bank : {upi['bank']}
+
+Amount : {upi['amount']}
+
+Payment Note : {upi['note']}
+
+"""
+
+                )
+
+            # ======================================================
+            # WIFI QR
+            # ======================================================
+
+            elif result["qr_type"] == "WiFi Configuration":
+
+                wifi = WiFiAnalyzer.analyze(
+
+                    result["data"]
+
+                )
+
+                result.update(wifi)
+
+                result["final_verdict"] = wifi["wifi_risk"]
+
+                result["status"] = wifi["wifi_risk"]
+
+                result["reasons"] = wifi["wifi_reasons"]
+
+                if wifi["wifi_risk"] == "Safe":
+
+                    result["verdict_color"] = "success"
+
+                    result["verdict_icon"] = "🟢"
+
+                elif wifi["wifi_risk"] == "Suspicious":
+
+                    result["verdict_color"] = "warning"
+
+                    result["verdict_icon"] = "🟡"
+
+                else:
+
+                    result["verdict_color"] = "danger"
+
+                    result["verdict_icon"] = "🔴"
+
+                result["ai_report"] = AIQRAssistant.generate_report(
+
+                    qr_type="WiFi Configuration",
+
+                    verdict=wifi["wifi_risk"],
+
+                    reasons=wifi["wifi_reasons"],
+
+                    extra_info=f"""
+
+SSID : {wifi['ssid']}
+
+Encryption : {wifi['encryption']}
+
+Password : {wifi['password']}
+
+"""
+
+                )
+
+            # ======================================================
+            # EMAIL QR
+            # ======================================================
+
+            elif result["qr_type"] == "Email Address":
+
+                email = EmailQRAnalyzer.analyze(
+
+                    result["data"]
+
+                )
+
+                result.update(email)
+
+                result["final_verdict"] = email["email_risk"]
+
+                result["status"] = email["email_risk"]
+
+                result["reasons"] = email["email_reasons"]
+
+                if email["email_risk"] == "Safe":
+
+                    result["verdict_color"] = "success"
+
+                    result["verdict_icon"] = "🟢"
+
+                else:
+
+                    result["verdict_color"] = "warning"
+
+                    result["verdict_icon"] = "🟡"
+
+                result["ai_report"] = AIQRAssistant.generate_report(
+
+                    qr_type="Email QR",
+
+                    verdict=email["email_risk"],
+
+                    reasons=email["email_reasons"],
+
+                    extra_info=f"""
+
+Recipient : {email['email_to']}
+
+Subject : {email['subject']}
+
+Body : {email['body']}
+
+"""
+
+                )
+                
+                            # ======================================================
+            # UNKNOWN QR TYPE
+            # ======================================================
+
+            else:
+
+                result["final_verdict"] = "UNKNOWN"
+
+                result["status"] = "Unknown"
+
+                result["verdict_color"] = "secondary"
+
+                result["verdict_icon"] = "❓"
+
+                result["verdict_reason"] = "Unsupported QR Code type."
+
+                result["ai_report"] = AIQRAssistant.generate_report(
+
+                    qr_type=result["qr_type"],
+
+                    verdict="Unknown",
+
+                    reasons=[],
+
+                    extra_info=result["data"]
+
+                )
+        # ======================================================
+        # SAVE SCAN HISTORY
+        # ======================================================
+
+        try:
+
+            ScanHistory.objects.create(
+
+                user=request.user,
+
+                scan_type="QR",
+
+                input_data=result.get("data", ""),
+
+                risk_score=result.get("risk_score", 0) or 0,
+
+                status=result.get("status", "Unknown"),
+
+                analysis_reason="\n".join(
+
+                    result.get("reasons", [])
+
+                ),
+
+                ml_prediction=result.get(
+
+                    "ml_status",
+
+                    result.get("final_verdict", "N/A")
+
+                ),
+
+                ml_confidence=result.get(
+
+                    "ml_confidence",
+
+                    0
+
+                )
+
+            )
+
+        except Exception as e:
+
+            print("QR History Save Error:", e)
+
+        # ======================================================
+        # DELETE TEMP IMAGE
+        # ======================================================
+
+        # if os.path.exists(image_path):
+
+        #     os.remove(image_path)
+
+        # ======================================================
+        # SELECT RESULT TEMPLATE
+        # ======================================================
+
+        template_map = {
+
+            "Website URL": "qr_result_website.html",
+
+            "UPI Payment": "qr_result_upi.html",
+
+            "WiFi Configuration": "qr_result_wifi.html",
+
+            "Email Address": "qr_result_email.html",
+
+        }
+
+        template = template_map.get(
+
+            result.get("qr_type"),
+
+            "qr_result_unknown.html"
+
+        )
+
+        # ======================================================
+        # RENDER RESULT
+        # ======================================================
+
+        return render(
+
+            request,
+
+            template,
+
+            result
+
+        )
+
+    # ======================================================
+    # GET REQUEST
+    # ======================================================
+
+    return render(
+
+        request,
+
+        "qr_scan.html"
+
+    )

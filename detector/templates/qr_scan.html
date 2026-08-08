@@ -1,0 +1,723 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <!-- ========================= -->
+    <!-- PAGE TITLE -->
+    <!-- ========================= -->
+
+    <div class="text-center mb-4">
+
+        <h1 class="fw-bold text-info">
+
+            <i class="fa-solid fa-qrcode"></i>
+
+            QR Code Threat Detection
+
+        </h1>
+
+        <p class="text-secondary">
+
+            Upload a QR Code image to perform decoding,
+            phishing detection,
+            AI analysis and threat intelligence.
+
+        </p>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- MAIN CARD -->
+    <!-- ========================= -->
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-body p-4">
+
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  id="uploadForm">
+
+                {% csrf_token %}
+
+                <!-- ========================= -->
+                <!-- FILE INPUT -->
+                <!-- ========================= -->
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+
+                        Select QR Image
+
+                    </label>
+
+                    <input
+
+                        type="file"
+
+                        class="form-control"
+
+                        id="qr_image"
+
+                        name="qr_image"
+
+                        accept="image/*"
+
+                        required
+
+                    >
+
+                </div>
+
+                <!-- ========================= -->
+                <!-- DRAG & DROP -->
+                <!-- ========================= -->
+
+                <div
+
+                    id="dropArea"
+
+                    class="text-center mt-4 mb-4"
+
+                >
+
+                    <div class="upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h3 class="mt-3">
+
+                        Drag & Drop QR Image Here
+
+                    </h3>
+
+                    <p class="text-secondary">
+
+                        or click above to browse your computer
+
+                    </p>
+
+                    <p class="small text-info">
+
+                        You can also press
+
+                        <strong>Ctrl + V</strong>
+
+                        to paste a QR image.
+
+                    </p>
+
+                </div>
+
+                                <!-- ========================= -->
+                <!-- SUPPORTED FEATURES -->
+                <!-- ========================= -->
+
+                <div class="feature-box mt-4">
+
+                    <h6 class="fw-bold mb-3">
+
+                        Supported Features
+
+                    </h6>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <ul class="list-unstyled">
+
+                                <li>
+
+                                    ✅ QR Code Detection
+
+                                </li>
+
+                                <li>
+
+                                    ✅ Website Phishing Detection
+
+                                </li>
+
+                                <li>
+
+                                    ✅ UPI QR Intelligence
+
+                                </li>
+
+                                <li>
+
+                                    ✅ WiFi QR Analysis
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <ul class="list-unstyled">
+
+                                <li>
+
+                                    ✅ Email QR Analysis
+
+                                </li>
+
+                                <li>
+
+                                    ✅ AI Security Assessment
+
+                                </li>
+
+                                <li>
+
+                                    ✅ Machine Learning Classification
+
+                                </li>
+
+                                <li>
+
+                                    ✅ Confidence Score Estimation
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ========================= -->
+                <!-- BUTTONS -->
+                <!-- ========================= -->
+
+                <div class="text-center mt-5">
+
+                    <button
+
+                        type="submit"
+
+                        class="btn btn-info btn-lg px-4"
+
+                    >
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        Scan QR Code
+
+                    </button>
+
+                    <a
+
+                        href="{% url 'dashboard' %}"
+
+                        class="btn btn-secondary btn-lg px-4"
+
+                    >
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Back Dashboard
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+<style>
+
+/* =======================================
+   PAGE TITLE
+======================================= */
+
+.page-title{
+
+    font-size:52px;
+
+    font-weight:700;
+
+    color:#00d9ff;
+
+}
+
+.page-subtitle{
+
+    color:#94a3b8;
+
+    font-size:18px;
+
+}
+
+/* =======================================
+   MAIN CARD
+======================================= */
+
+.card{
+
+    background:#131d33;
+
+    border:1px solid rgba(0,217,255,.15);
+
+    border-radius:22px;
+
+    box-shadow:0 0 35px rgba(0,217,255,.08);
+
+}
+
+/* =======================================
+   FILE INPUT
+======================================= */
+
+.form-control{
+
+    background:#0f172a;
+
+    color:white;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+}
+
+.form-control:focus{
+
+    background:#0f172a;
+
+    color:white;
+
+    border-color:#00d9ff;
+
+    box-shadow:0 0 15px rgba(0,217,255,.20);
+
+}
+
+/* =======================================
+   DRAG DROP BOX
+======================================= */
+
+#dropArea{
+
+    background:#1d2d63;
+
+    border:2px dashed #00d9ff;
+
+    border-radius:20px;
+
+    padding:60px 30px;
+
+    transition:.35s;
+
+    cursor:pointer;
+
+}
+
+#dropArea:hover{
+
+    background:#24356f;
+
+    transform:translateY(-4px);
+
+    box-shadow:0 0 30px rgba(0,217,255,.20);
+
+}
+
+/* =======================================
+   UPLOAD ICON
+======================================= */
+
+.upload-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        #00d9ff,
+        #0099ff
+    );
+
+    color:white;
+
+    font-size:40px;
+
+    box-shadow:0 0 30px rgba(0,217,255,.35);
+
+}
+
+/* =======================================
+   FEATURE BOX
+======================================= */
+
+.feature-box{
+
+    background:#1d2d63;
+
+    border-left:5px solid #00d9ff;
+
+    border-radius:12px;
+
+    padding:20px;
+
+}
+
+.feature-box h6{
+
+    color:white;
+
+}
+
+.feature-box li{
+
+    color:#d1d5db;
+
+    margin-bottom:10px;
+
+}
+
+/* =======================================
+   BUTTONS
+======================================= */
+
+.btn-info{
+
+    background:#00d9ff;
+
+    color:black;
+
+    font-weight:600;
+
+    border:none;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.btn-info:hover{
+
+    background:#00b8db;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-secondary{
+
+    border-radius:10px;
+
+    margin-left:12px;
+
+}
+
+/* =======================================
+   LABEL
+======================================= */
+
+.form-label{
+
+    color:white;
+
+    font-size:17px;
+
+}
+
+/* =======================================
+   ICON ANIMATION
+======================================= */
+
+.upload-icon{
+
+    animation:floatIcon 3s ease-in-out infinite;
+
+}
+
+@keyframes floatIcon{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+/* =======================================
+   RESPONSIVE
+======================================= */
+
+@media(max-width:768px){
+
+    #dropArea{
+
+        padding:40px 15px;
+
+    }
+
+    .page-title{
+
+        font-size:36px;
+
+    }
+
+    .upload-icon{
+
+        width:70px;
+
+        height:70px;
+
+        font-size:30px;
+
+    }
+
+    .btn-lg{
+
+        width:100%;
+
+        margin-bottom:10px;
+
+    }
+
+    .btn-secondary{
+
+        margin-left:0;
+
+    }
+
+}
+
+</style>
+
+<script>
+
+const dropArea = document.getElementById("dropArea");
+
+const fileInput = document.getElementById("qr_image");
+
+
+// =========================================
+// Click anywhere in upload area
+// =========================================
+
+dropArea.addEventListener("click", () => {
+
+    fileInput.click();
+
+});
+
+
+// =========================================
+// Drag Events
+// =========================================
+
+dropArea.addEventListener("dragover", (e) => {
+
+    e.preventDefault();
+
+    dropArea.style.background = "#274690";
+
+    dropArea.style.borderColor = "#00ffff";
+
+});
+
+dropArea.addEventListener("dragleave", () => {
+
+    dropArea.style.background = "#1d2d63";
+
+    dropArea.style.borderColor = "#00d9ff";
+
+});
+
+dropArea.addEventListener("drop", (e) => {
+
+    e.preventDefault();
+
+    dropArea.style.background = "#1d2d63";
+
+    dropArea.style.borderColor = "#00d9ff";
+
+    if(e.dataTransfer.files.length){
+
+        fileInput.files = e.dataTransfer.files;
+
+        updateFileName();
+
+    }
+
+});
+
+
+// =========================================
+// File Selection
+// =========================================
+
+fileInput.addEventListener("change", () => {
+
+    updateFileName();
+
+});
+
+function updateFileName(){
+
+    if(fileInput.files.length){
+
+        const file = fileInput.files[0];
+
+        dropArea.innerHTML = `
+
+            <div class="upload-icon">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+            </div>
+
+            <h3 class="mt-3 text-success">
+
+                ${file.name}
+
+            </h3>
+
+            <p class="text-light">
+
+                Ready for QR Security Analysis
+
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+// =========================================
+// Paste Image (Ctrl + V)
+// =========================================
+
+document.addEventListener("paste", function(e){
+
+    const items = e.clipboardData.items;
+
+    for(let item of items){
+
+        if(item.type.indexOf("image") !== -1){
+
+            const blob = item.getAsFile();
+
+            const dt = new DataTransfer();
+
+            dt.items.add(blob);
+
+            fileInput.files = dt.files;
+
+            updateFileName();
+
+        }
+
+    }
+
+});
+
+
+// =========================================
+// File Validation
+// =========================================
+
+document.getElementById("uploadForm").addEventListener("submit", function(e){
+
+    if(fileInput.files.length === 0){
+
+        e.preventDefault();
+
+        alert("Please select a QR Code image.");
+
+        return;
+
+    }
+
+    const file = fileInput.files[0];
+
+    const allowed = [
+
+        "image/png",
+
+        "image/jpeg",
+
+        "image/jpg",
+
+        "image/webp",
+
+        "image/bmp"
+
+    ];
+
+    if(!allowed.includes(file.type)){
+
+        e.preventDefault();
+
+        alert("Only JPG, JPEG, PNG, BMP and WEBP images are supported.");
+
+    }
+
+});
+
+
+// =========================================
+// Small Upload Animation
+// =========================================
+
+dropArea.addEventListener("mouseenter", () => {
+
+    dropArea.style.transform = "scale(1.02)";
+
+});
+
+dropArea.addEventListener("mouseleave", () => {
+
+    dropArea.style.transform = "scale(1)";
+
+});
+
+</script>

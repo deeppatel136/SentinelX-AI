@@ -62,4 +62,6 @@ path(
     views.delete_all_chats,
     name="delete_all_chats"
 ),
+
+path("qr-scan/", views.qr_scan, name="qr_scan"),
 ]

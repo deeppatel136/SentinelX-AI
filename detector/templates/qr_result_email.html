@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Email Security Intelligence | SentinelX AI
+
+</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+    background:#081321;
+
+    color:white;
+
+}
+
+.container-fluid{
+
+    padding:40px;
+
+}
+
+/* ===========================================
+   HERO
+=========================================== */
+
+.hero{
+
+    background:#17233b;
+
+    border-radius:22px;
+
+    padding:42px;
+
+    border:1px solid rgba(0,217,255,.15);
+
+    box-shadow:0 0 30px rgba(0,217,255,.08);
+
+    margin-bottom:35px;
+
+}
+
+.logo{
+
+    color:#00d9ff;
+
+    font-size:38px;
+
+    font-weight:700;
+
+}
+
+.logo span{
+
+    color:white;
+
+}
+
+.report-title{
+
+    margin-top:18px;
+
+    font-size:46px;
+
+    font-weight:700;
+
+}
+
+.subtitle{
+
+    color:#9fb4c9;
+
+    font-size:20px;
+
+}
+
+/* ===========================================
+   VERDICT
+=========================================== */
+
+.verdict{
+
+    float:right;
+
+    margin-top:-95px;
+
+    padding:12px 30px;
+
+    border-radius:40px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.safe{
+
+    background:#16a34a;
+
+}
+
+.warning{
+
+    background:#f59e0b;
+
+}
+
+.danger{
+
+    background:#ef4444;
+
+}
+
+/* ===========================================
+   INFO CARDS
+=========================================== */
+
+.info-card{
+
+    background:#101a2d;
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    transition:.30s;
+
+    margin-top:25px;
+
+}
+
+.info-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 0 25px rgba(0,217,255,.15);
+
+}
+
+.info-icon{
+
+    font-size:36px;
+
+    color:#00d9ff;
+
+}
+
+.info-title{
+
+    color:#9fb4c9;
+
+    margin-top:15px;
+
+    font-size:18px;
+
+}
+
+.info-value{
+
+    color:white;
+
+    margin-top:12px;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    word-break:break-word;
+
+}
+
+/* ===========================================
+   SECTION
+=========================================== */
+
+.section-card{
+
+    background:#17233b;
+
+    border-radius:22px;
+
+    padding:40px;
+
+    margin-top:35px;
+
+}
+
+.section-title{
+
+    color:#00d9ff;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+/* ===========================================
+   TABLE
+=========================================== */
+
+.table-dark{
+
+    --bs-table-bg:#17233b;
+
+}
+
+.table th{
+
+    color:#7dd3fc;
+
+    width:240px;
+
+    padding:18px;
+
+}
+
+.table td{
+
+    color:white;
+
+    padding:18px;
+
+}
+
+/* ===========================================
+   BADGES
+=========================================== */
+
+.badge-safe{
+
+    background:#16a34a;
+
+    font-size:15px;
+
+    padding:8px 18px;
+
+}
+
+.badge-warning{
+
+    background:#f59e0b;
+
+    color:black;
+
+    font-size:15px;
+
+    padding:8px 18px;
+
+}
+
+.badge-danger{
+
+    background:#ef4444;
+
+    font-size:15px;
+
+    padding:8px 18px;
+
+}
+
+/* ===========================================
+   AI REPORT
+=========================================== */
+
+.ai-report{
+
+    background:#101a2d;
+
+    border-left:5px solid #00d9ff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    color:#f8fafc;
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    white-space:pre-line;
+
+}
+
+/* ===========================================
+   RECOMMENDATIONS
+=========================================== */
+
+.recommend-card{
+
+    background:#10263b;
+
+    border-left:5px solid #22c55e;
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.avoid-card{
+
+    background:#331818;
+
+    border-left:5px solid #ef4444;
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.recommend-card h4{
+
+    color:#22c55e;
+
+    font-weight:700;
+
+}
+
+.avoid-card h4{
+
+    color:#ef4444;
+
+    font-weight:700;
+
+}
+
+.recommend-card li,
+.avoid-card li{
+
+    color:#f8fafc;
+
+    line-height:1.8;
+
+    font-size:16px;
+
+}
+
+/* ===========================================
+   EXECUTIVE SUMMARY
+=========================================== */
+
+.summary-title{
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+}
+
+.summary-number{
+
+    margin-top:15px;
+
+    font-size:36px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+/* ===========================================
+   FOOTER
+=========================================== */
+
+footer{
+
+    margin-top:60px;
+
+    text-align:center;
+
+}
+
+footer hr{
+
+    border-color:#334155;
+
+}
+
+footer p{
+
+    color:#94a3b8;
+
+}
+
+footer small{
+
+    color:#64748b;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+<!-- ====================================================== -->
+<!-- HERO -->
+<!-- ====================================================== -->
+
+<div class="hero">
+
+<div class="logo">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Sentinel<span>X AI</span>
+
+</div>
+
+<div class="report-title">
+
+Email Security Intelligence Report
+
+</div>
+
+<div class="subtitle">
+
+AI Powered Email QR Security Assessment & Threat Intelligence
+
+</div>
+
+<div class="verdict
+
+{% if email_risk == 'Safe' %}
+
+safe
+
+{% elif email_risk == 'Suspicious' %}
+
+warning
+
+{% else %}
+
+danger
+
+{% endif %}">
+
+{{ verdict_icon }}
+
+{{ email_risk }}
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- SUMMARY CARDS -->
+<!-- ====================================================== -->
+
+<div class="row">
+
+<!-- Recipient -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-envelope"></i>
+
+</div>
+
+<div class="info-title">
+
+Recipient
+
+</div>
+
+<div class="info-value text-break">
+
+{{ email_to }}
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Subject -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-file-lines"></i>
+
+</div>
+
+<div class="info-title">
+
+Subject
+
+</div>
+
+<div class="info-value text-break"
+
+style="font-size:22px;">
+
+{% if subject %}
+
+{{ subject }}
+
+{% else %}
+
+No Subject
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Risk -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+</div>
+
+<div class="info-title">
+
+Threat Level
+
+</div>
+
+<div class="info-value">
+
+{% if email_risk == "Safe" %}
+
+<span class="badge badge-safe">
+
+🟢 SAFE
+
+</span>
+
+{% elif email_risk == "Suspicious" %}
+
+<span class="badge badge-warning">
+
+🟡 SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge badge-danger">
+
+🔴 DANGEROUS
+
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Scan -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+</div>
+
+<div class="info-title">
+
+Scan Status
+
+</div>
+
+<div class="info-value"
+
+style="color:#22c55e;">
+
+Completed
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- EMAIL INFORMATION -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-envelope-open-text"></i>
+
+Email Information
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-8">
+
+<table class="table table-dark table-borderless align-middle">
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-at text-info"></i>
+
+Recipient
+
+</th>
+
+<td class="text-break">
+
+{{ email_to }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-heading text-info"></i>
+
+Subject
+
+</th>
+
+<td>
+
+{% if subject %}
+
+{{ subject }}
+
+{% else %}
+
+No Subject
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-message text-info"></i>
+
+Message
+
+</th>
+
+<td class="text-break">
+
+{% if body %}
+
+{{ body }}
+
+{% else %}
+
+No Message
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-shield-halved text-info"></i>
+
+Risk Status
+
+</th>
+
+<td>
+
+{% if email_risk == "Safe" %}
+
+<span class="badge badge-safe">
+
+🟢 SAFE
+
+</span>
+
+{% elif email_risk == "Suspicious" %}
+
+<span class="badge badge-warning">
+
+🟡 SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge badge-danger">
+
+🔴 DANGEROUS
+
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="card"
+
+style="background:#101a2d;
+border:none;
+border-radius:18px;
+padding:30px;
+height:100%;">
+
+<div class="text-center">
+
+<i class="fa-solid fa-envelope-circle-check"
+
+style="font-size:70px;
+color:#00d9ff;"></i>
+
+<h3 class="mt-4">
+
+Email QR
+
+</h3>
+
+<p class="text-secondary">
+
+Email Configuration QR
+
+</p>
+
+<hr>
+
+<p>
+
+<strong>
+
+QR Type
+
+</strong>
+
+</p>
+
+<p>
+
+Email Address
+
+</p>
+
+<p>
+
+<strong>
+
+Analysis Engine
+
+</strong>
+
+</p>
+
+<p>
+
+SentinelX AI
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- EMAIL THREAT ANALYSIS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-user-shield"></i>
+
+Email Threat Analysis
+
+</h2>
+
+<div class="row">
+
+<!-- SAFE FINDINGS -->
+
+<div class="col-lg-6">
+
+<div class="card"
+
+style="background:#101a2d;
+border:none;
+border-radius:18px;
+padding:25px;">
+
+<h4 class="text-success">
+
+<i class="fa-solid fa-circle-check"></i>
+
+Security Findings
+
+</h4>
+
+<hr>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Email QR decoded successfully
+
+</li>
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Recipient address extracted
+
+</li>
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Subject analyzed
+
+</li>
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Email content inspected
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+
+<!-- THREAT INDICATORS -->
+
+<div class="col-lg-6">
+
+<div class="card"
+
+style="background:#101a2d;
+border:none;
+border-radius:18px;
+padding:25px;">
+
+<h4 class="text-warning">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+Threat Indicators
+
+</h4>
+
+<hr>
+
+{% if email_reasons %}
+
+<ul class="list-group list-group-flush">
+
+{% for reason in email_reasons %}
+
+<li class="list-group-item bg-transparent text-white">
+
+⚠ {{ reason }}
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<div class="alert alert-success mb-0">
+
+<i class="fa-solid fa-circle-check"></i>
+
+No suspicious email indicators detected.
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- EMAIL SECURITY INTELLIGENCE -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-shield-virus"></i>
+
+Email Security Intelligence
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-3">
+
+<div class="info-card text-center">
+
+<i class="fa-solid fa-user-secret"
+
+style="font-size:42px;color:#00d9ff;"></i>
+
+<h5 class="mt-3">
+
+Sender Trust
+
+</h5>
+
+<h3>
+
+{% if email_risk == "Safe" %}
+
+Trusted
+
+{% else %}
+
+Verify
+
+{% endif %}
+
+</h3>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-3">
+
+<div class="info-card text-center">
+
+<i class="fa-solid fa-link"
+
+style="font-size:42px;color:#00d9ff;"></i>
+
+<h5 class="mt-3">
+
+Embedded Links
+
+</h5>
+
+<h3>
+
+{% if body %}
+
+Check
+
+{% else %}
+
+None
+
+{% endif %}
+
+</h3>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-3">
+
+<div class="info-card text-center">
+
+<i class="fa-solid fa-paperclip"
+
+style="font-size:42px;color:#00d9ff;"></i>
+
+<h5 class="mt-3">
+
+Attachments
+
+</h5>
+
+<h3>
+
+Not Present
+
+</h3>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-3">
+
+<div class="info-card text-center">
+
+<i class="fa-solid fa-envelope-circle-check"
+
+style="font-size:42px;color:#00d9ff;"></i>
+
+<h5 class="mt-3">
+
+QR Type
+
+</h5>
+
+<h3>
+
+Email
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- GEMINI AI EMAIL ASSESSMENT -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-robot"></i>
+
+Gemini AI Email Assessment
+
+</h2>
+
+{% if ai_report %}
+
+<div class="ai-report">
+
+{{ ai_report }}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-warning">
+
+Gemini AI is currently unavailable.
+
+</div>
+
+{% endif %}
+
+</div>
+
+<!-- ====================================================== -->
+<!-- EMAIL SECURITY RECOMMENDATIONS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-shield-heart"></i>
+
+Email Security Recommendations
+
+</h2>
+
+<div class="row">
+
+<!-- RECOMMENDED -->
+
+<div class="col-lg-6">
+
+<div class="recommend-card">
+
+<h4>
+
+<i class="fa-solid fa-circle-check"></i>
+
+Recommended
+
+</h4>
+
+<hr>
+
+<ul>
+
+<li>Verify the recipient email address before sending.</li>
+
+<li>Check the subject and message carefully.</li>
+
+<li>Be cautious with urgent or unexpected requests.</li>
+
+<li>Confirm suspicious emails through another communication channel.</li>
+
+<li>Use SentinelX AI before interacting with unknown email QR codes.</li>
+
+<li>Enable spam filtering and email security protection.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<!-- AVOID -->
+
+<div class="col-lg-6">
+
+<div class="avoid-card">
+
+<h4>
+
+<i class="fa-solid fa-ban"></i>
+
+Avoid
+
+</h4>
+
+<hr>
+
+<ul>
+
+<li>Do not trust emails requesting passwords or OTPs.</li>
+
+<li>Avoid clicking suspicious links without verification.</li>
+
+<li>Never download unknown attachments.</li>
+
+<li>Don't respond to phishing or scam emails.</li>
+
+<li>Avoid sharing sensitive information over email.</li>
+
+<li>Ignore emails that create unnecessary urgency or fear.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- EXECUTIVE SUMMARY -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Executive Summary
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+
+style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
+
+<i class="fa-solid fa-shield-halved fa-3x text-success mb-3"></i>
+
+<h5 class="summary-title">
+
+Overall Status
+
+</h5>
+
+<h2 class="summary-number">
+
+{{ email_risk }}
+
+</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+
+style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
+
+<i class="fa-solid fa-envelope fa-3x text-info mb-3"></i>
+
+<h5 class="summary-title">
+
+Recipient
+
+</h5>
+
+<h2 class="summary-number"
+
+style="font-size:22px;word-break:break-word;">
+
+{{ email_to }}
+
+</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+
+style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
+
+<i class="fa-solid fa-file-lines fa-3x text-warning mb-3"></i>
+
+<h5 class="summary-title">
+
+Subject
+
+</h5>
+
+<h2 class="summary-number"
+
+style="font-size:22px;word-break:break-word;">
+
+{% if subject %}
+
+{{ subject }}
+
+{% else %}
+
+No Subject
+
+{% endif %}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- ACTION CENTER -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-bolt"></i>
+
+Action Center
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
+
+<a href="{% url 'qr_scan' %}"
+
+class="btn btn-primary w-100 p-3">
+
+<i class="fa-solid fa-qrcode"></i>
+
+Scan Another QR
+
+</a>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<a href="{% url 'dashboard' %}"
+
+class="btn btn-success w-100 p-3">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<button
+
+onclick="window.print()"
+
+class="btn btn-warning w-100 p-3">
+
+<i class="fa-solid fa-print"></i>
+
+Print Report
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- REPORT INFORMATION -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-circle-info"></i>
+
+Report Information
+
+</h2>
+
+<table class="table table-dark table-borderless">
+
+<tr>
+
+<th>
+
+Generated On
+
+</th>
+
+<td>
+
+{% now "d M Y H:i" %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Platform
+
+</th>
+
+<td>
+
+SentinelX AI
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Detection Module
+
+</th>
+
+<td>
+
+Email Security Intelligence Engine
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+AI Engine
+
+</th>
+
+<td>
+
+Google Gemini AI
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Analysis Type
+
+</th>
+
+<td>
+
+Recipient • Subject • Message • Threat Indicators
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+QR Type
+
+</th>
+
+<td>
+
+Email QR Code
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- FOOTER -->
+<!-- ====================================================== -->
+
+<footer>
+
+<hr>
+
+<h3 class="text-info">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+SentinelX AI
+
+</h3>
+
+<p>
+
+AI Powered Multi-Channel Scam & Phishing Detection Platform
+
+</p>
+
+<p>
+
+Email Security • Threat Intelligence • Gemini AI
+
+</p>
+
+<small>
+
+© 2026 SentinelX AI | Secure Every Scan
+
+</small>
+
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

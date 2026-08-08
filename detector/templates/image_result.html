@@ -295,6 +295,140 @@ color:#94A3B8;
 
 <body>
 
+{% if validation_failed %}
+
+<div class="container py-5">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-8">
+
+<div class="card shadow-lg"
+
+style="background:#111827;
+border:none;
+border-radius:22px;">
+
+<div class="card-header"
+
+style="background:#7F1D1D;
+color:white;
+border-radius:22px 22px 0 0;">
+
+<h2 class="mb-0">
+
+🖼 Image Integrity Report
+
+</h2>
+
+</div>
+
+<div class="card-body p-5">
+
+<div class="row text-center">
+
+<div class="col-md-6 mb-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-circle-xmark text-danger"></i>
+
+<h5>
+
+Status
+
+</h5>
+
+<h3 class="text-danger">
+
+Corrupted Image
+
+</h3>
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<div class="info-card">
+
+<i class="fa-solid fa-shield-halved text-warning"></i>
+
+<h5>
+
+Integrity
+
+</h5>
+
+<h3 class="text-warning">
+
+Failed
+
+</h3>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="my-4">
+
+<h4 class="text-info">
+
+<i class="fa-solid fa-circle-info"></i>
+
+Reason
+
+</h4>
+
+<p class="fs-5 text-light">
+
+{{ error_message }}
+
+</p>
+
+<hr class="my-4">
+
+<h4 class="text-info">
+
+<i class="fa-solid fa-lightbulb"></i>
+
+Recommendation
+
+</h4>
+
+<p class="fs-5 text-light">
+
+{{ recommendation }}
+
+</p>
+
+<div class="text-center mt-5">
+
+<a href="{% url 'image_scan' %}"
+
+class="btn btn-info btn-lg">
+
+<i class="fa-solid fa-image"></i>
+
+Upload Another Image
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% else %}
+
 <div class="container">
 
 <div class="header">
@@ -960,6 +1094,8 @@ Always verify QR codes, URLs, payment requests and sensitive information before 
 </div>
 
 </div>
+
+{% endif %}
 
 </body>
 

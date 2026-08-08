@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+
+WiFi Security Intelligence | SentinelX AI
+
+</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+body{
+
+    background:#081321;
+
+    color:#fff;
+
+}
+
+.container-fluid{
+
+    padding:40px;
+
+}
+
+/* ===========================================
+   HERO
+=========================================== */
+
+.hero{
+
+    background:#17233b;
+
+    border-radius:22px;
+
+    padding:42px;
+
+    border:1px solid rgba(0,217,255,.15);
+
+    box-shadow:0 0 30px rgba(0,217,255,.08);
+
+    margin-bottom:35px;
+
+}
+
+.logo{
+
+    color:#00d9ff;
+
+    font-size:38px;
+
+    font-weight:700;
+
+}
+
+.logo span{
+
+    color:white;
+
+}
+
+.report-title{
+
+    margin-top:18px;
+
+    font-size:46px;
+
+    font-weight:700;
+
+}
+
+.subtitle{
+
+    color:#9fb4c9;
+
+    font-size:20px;
+
+}
+
+/* ===========================================
+   VERDICT BADGE
+=========================================== */
+
+.verdict{
+
+    float:right;
+
+    margin-top:-95px;
+
+    padding:12px 32px;
+
+    border-radius:40px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.safe{
+
+    background:#16a34a;
+
+}
+
+.warning{
+
+    background:#f59e0b;
+
+}
+
+.danger{
+
+    background:#ef4444;
+
+}
+
+/* ===========================================
+   SUMMARY CARDS
+=========================================== */
+
+.info-card{
+
+    background:#101a2d;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    border:none;
+
+    transition:.30s;
+
+    margin-top:25px;
+
+}
+
+.info-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 0 25px rgba(0,217,255,.15);
+
+}
+
+.info-icon{
+
+    font-size:38px;
+
+    color:#00d9ff;
+
+}
+
+.info-title{
+
+    color:#9fb4c9;
+
+    margin-top:16px;
+
+    font-size:18px;
+
+}
+
+.info-value{
+
+    color:white;
+
+    margin-top:12px;
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+/* ===========================================
+   SECTION CARD
+=========================================== */
+
+.section-card{
+
+    background:#17233b;
+
+    border-radius:22px;
+
+    padding:40px;
+
+    margin-top:35px;
+
+}
+
+.section-title{
+
+    color:#00d9ff;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+/* ===========================================
+   TABLE
+=========================================== */
+
+.table-dark{
+
+    --bs-table-bg:#17233b;
+
+}
+
+.table th{
+
+    color:#7dd3fc;
+
+    width:240px;
+
+    padding:18px;
+
+}
+
+.table td{
+
+    color:white;
+
+    padding:18px;
+
+}
+
+/* ===========================================
+   STATUS BADGES
+=========================================== */
+
+.badge-safe{
+
+    background:#16a34a;
+
+    font-size:15px;
+
+    padding:8px 18px;
+
+}
+
+.badge-warning{
+
+    background:#f59e0b;
+
+    color:black;
+
+    font-size:15px;
+
+    padding:8px 18px;
+
+}
+
+.badge-danger{
+
+    background:#ef4444;
+
+    font-size:15px;
+
+    padding:8px 18px;
+
+}
+
+/* ===========================================
+   AI REPORT
+=========================================== */
+
+.ai-report{
+
+    background:#101a2d;
+
+    border-left:5px solid #00d9ff;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    color:#f8fafc;
+
+    font-size:17px;
+
+    line-height:1.9;
+
+    white-space:pre-line;
+
+}
+
+/* ===========================================
+   RECOMMENDATION BOXES
+=========================================== */
+
+.recommend-card{
+
+    background:#10263b;
+
+    border-left:5px solid #22c55e;
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.avoid-card{
+
+    background:#331818;
+
+    border-left:5px solid #ef4444;
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.recommend-card h4{
+
+    color:#22c55e;
+
+    font-weight:700;
+
+}
+
+.avoid-card h4{
+
+    color:#ef4444;
+
+    font-weight:700;
+
+}
+
+.recommend-card li,
+.avoid-card li{
+
+    color:#f8fafc;
+
+    line-height:1.8;
+
+    font-size:16px;
+
+}
+
+/* ===========================================
+   SUMMARY
+=========================================== */
+
+.summary-title{
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+}
+
+.summary-number{
+
+    margin-top:15px;
+
+    font-size:38px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+/* ===========================================
+   FOOTER
+=========================================== */
+
+footer{
+
+    margin-top:60px;
+
+    text-align:center;
+
+}
+
+footer hr{
+
+    border-color:#334155;
+
+}
+
+footer p{
+
+    color:#94a3b8;
+
+}
+
+footer small{
+
+    color:#64748b;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+<!-- ====================================================== -->
+<!-- HERO -->
+<!-- ====================================================== -->
+
+<div class="hero">
+
+<div class="logo">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+Sentinel<span>X AI</span>
+
+</div>
+
+<div class="report-title">
+
+WiFi Security Intelligence Report
+
+</div>
+
+<div class="subtitle">
+
+AI Powered WiFi QR Security Assessment & Network Risk Analysis
+
+</div>
+
+<div class="verdict
+
+{% if wifi_risk == 'Safe' %}
+
+safe
+
+{% elif wifi_risk == 'Suspicious' %}
+
+warning
+
+{% else %}
+
+danger
+
+{% endif %}">
+
+{{ verdict_icon }}
+
+{{ wifi_risk }}
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- SUMMARY CARDS -->
+<!-- ====================================================== -->
+
+<div class="row">
+
+<!-- SSID -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-wifi"></i>
+
+</div>
+
+<div class="info-title">
+
+WiFi Network
+
+</div>
+
+<div class="info-value text-break">
+
+{{ ssid }}
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Encryption -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-lock"></i>
+
+</div>
+
+<div class="info-title">
+
+Encryption
+
+</div>
+
+<div class="info-value">
+
+{% if encryption %}
+
+{{ encryption }}
+
+{% else %}
+
+Unknown
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Hidden Network -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-eye-slash"></i>
+
+</div>
+
+<div class="info-title">
+
+Hidden SSID
+
+</div>
+
+<div class="info-value">
+
+{% if hidden %}
+
+Yes
+
+{% else %}
+
+No
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Risk -->
+
+<div class="col-lg-3 col-md-6">
+
+<div class="info-card">
+
+<div class="info-icon">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+</div>
+
+<div class="info-title">
+
+Risk Status
+
+</div>
+
+<div class="info-value">
+
+{% if wifi_risk == "Safe" %}
+
+<span class="badge badge-safe">
+
+🟢 SAFE
+
+</span>
+
+{% elif wifi_risk == "Suspicious" %}
+
+<span class="badge badge-warning">
+
+🟡 SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge badge-danger">
+
+🔴 DANGEROUS
+
+</span>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- NETWORK INFORMATION -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-router"></i>
+
+Network Information
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-8">
+
+<table class="table table-dark table-borderless align-middle">
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-wifi text-info"></i>
+
+Network Name (SSID)
+
+</th>
+
+<td>
+
+{{ ssid }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-lock text-info"></i>
+
+Encryption
+
+</th>
+
+<td>
+
+{% if encryption %}
+
+{{ encryption }}
+
+{% else %}
+
+Unknown
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-key text-info"></i>
+
+Password
+
+</th>
+
+<td>
+
+{% if password %}
+
+••••••••••••••
+
+{% else %}
+
+No Password
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-eye-slash text-info"></i>
+
+Hidden Network
+
+</th>
+
+<td>
+
+{% if hidden %}
+
+Yes
+
+{% else %}
+
+No
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+<i class="fa-solid fa-shield-halved text-info"></i>
+
+Security Status
+
+</th>
+
+<td>
+
+{% if wifi_risk == "Safe" %}
+
+<span class="badge badge-safe">
+
+🟢 SAFE
+
+</span>
+
+{% elif wifi_risk == "Suspicious" %}
+
+<span class="badge badge-warning">
+
+🟡 SUSPICIOUS
+
+</span>
+
+{% else %}
+
+<span class="badge badge-danger">
+
+🔴 DANGEROUS
+
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="card"
+
+style="background:#101a2d;
+border:none;
+border-radius:18px;
+padding:30px;
+height:100%;">
+
+<div class="text-center">
+
+<i class="fa-solid fa-network-wired"
+
+style="font-size:70px;
+color:#00d9ff;"></i>
+
+<h3 class="mt-4">
+
+WiFi QR
+
+</h3>
+
+<p class="text-secondary">
+
+Wireless Network Configuration
+
+</p>
+
+<hr>
+
+<p>
+
+<strong>
+
+QR Type
+
+</strong>
+
+</p>
+
+<p>
+
+WiFi Configuration
+
+</p>
+
+<p>
+
+<strong>
+
+Analysis Engine
+
+</strong>
+
+</p>
+
+<p>
+
+SentinelX AI
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- NETWORK SECURITY ANALYSIS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-user-shield"></i>
+
+Network Security Analysis
+
+</h2>
+
+<div class="row">
+
+<!-- SAFE FINDINGS -->
+
+<div class="col-lg-6">
+
+<div class="card"
+
+style="background:#0f172a;
+border:none;
+border-radius:18px;
+padding:25px;">
+
+<h4 class="text-success">
+
+<i class="fa-solid fa-circle-check"></i>
+
+Security Findings
+
+</h4>
+
+<hr>
+
+<ul class="list-group list-group-flush">
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ WiFi QR decoded successfully
+
+</li>
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Network information extracted
+
+</li>
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Encryption identified
+
+</li>
+
+<li class="list-group-item bg-transparent text-white">
+
+✔ Security assessment completed
+
+</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<!-- RISK INDICATORS -->
+
+<div class="col-lg-6">
+
+<div class="card"
+
+style="background:#0f172a;
+border:none;
+border-radius:18px;
+padding:25px;">
+
+<h4 class="text-warning">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+Threat Indicators
+
+</h4>
+
+<hr>
+
+{% if wifi_reasons %}
+
+<ul class="list-group list-group-flush">
+
+{% for reason in wifi_reasons %}
+
+<li class="list-group-item bg-transparent text-white">
+
+⚠ {{ reason }}
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<div class="alert alert-success mb-0">
+
+<i class="fa-solid fa-circle-check"></i>
+
+No suspicious WiFi indicators detected.
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ====================================================== -->
+<!-- GEMINI AI WIFI ASSESSMENT -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-robot"></i>
+
+Gemini AI WiFi Assessment
+
+</h2>
+
+{% if ai_report %}
+
+<div class="ai-report">
+
+{{ ai_report }}
+
+</div>
+
+{% else %}
+
+<div class="alert alert-warning">
+
+Gemini AI is currently unavailable.
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- WIFI SECURITY RECOMMENDATIONS -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-shield-heart"></i>
+
+WiFi Security Recommendations
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-6">
+
+<div class="recommend-card">
+
+<h4>
+
+<i class="fa-solid fa-circle-check"></i>
+
+Recommended
+
+</h4>
+
+<hr>
+
+<ul>
+
+<li>Connect only to trusted WiFi networks.</li>
+
+<li>Prefer WPA2 or WPA3 encrypted networks.</li>
+
+<li>Verify the network name before connecting.</li>
+
+<li>Use a VPN on public WiFi.</li>
+
+<li>Disable Auto-Connect for unknown networks.</li>
+
+<li>Keep your operating system updated.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-6">
+
+<div class="avoid-card">
+
+<h4>
+
+<i class="fa-solid fa-ban"></i>
+
+Avoid
+
+</h4>
+
+<hr>
+
+<ul>
+
+<li>Avoid open WiFi networks whenever possible.</li>
+
+<li>Never enter banking credentials on public WiFi.</li>
+
+<li>Avoid unknown hotspot names.</li>
+
+<li>Do not ignore certificate warnings.</li>
+
+<li>Don't share WiFi passwords publicly.</li>
+
+<li>Disconnect when the network is no longer needed.</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- EXECUTIVE SUMMARY -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Executive Summary
+
+</h2>
+
+<div class="row">
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+
+style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
+
+<i class="fa-solid fa-shield-halved fa-3x text-success mb-3"></i>
+
+<h5 class="summary-title">
+
+Overall Status
+
+</h5>
+
+<h2 class="summary-number">
+
+{{ wifi_risk }}
+
+</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+
+style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
+
+<i class="fa-solid fa-lock fa-3x text-info mb-3"></i>
+
+<h5 class="summary-title">
+
+Encryption
+
+</h5>
+
+<h2 class="summary-number">
+
+{{ encryption }}
+
+</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="card text-center"
+
+style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
+
+<i class="fa-solid fa-eye-slash fa-3x text-warning mb-3"></i>
+
+<h5 class="summary-title">
+
+Hidden Network
+
+</h5>
+
+<h2 class="summary-number">
+
+{% if hidden %}
+
+Yes
+
+{% else %}
+
+No
+
+{% endif %}
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- ACTION CENTER -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-bolt"></i>
+
+Action Center
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
+
+<a href="{% url 'qr_scan' %}"
+
+class="btn btn-primary w-100 p-3">
+
+<i class="fa-solid fa-qrcode"></i>
+
+Scan Another QR
+
+</a>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<a href="{% url 'dashboard' %}"
+
+class="btn btn-success w-100 p-3">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<button
+
+onclick="window.print()"
+
+class="btn btn-warning w-100 p-3">
+
+<i class="fa-solid fa-print"></i>
+
+Print Report
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- REPORT INFORMATION -->
+<!-- ====================================================== -->
+
+<div class="section-card">
+
+<h2 class="section-title">
+
+<i class="fa-solid fa-circle-info"></i>
+
+Report Information
+
+</h2>
+
+<table class="table table-dark table-borderless">
+
+<tr>
+
+<th>Generated On</th>
+
+<td>{% now "d M Y H:i" %}</td>
+
+</tr>
+
+<tr>
+
+<th>Platform</th>
+
+<td>SentinelX AI</td>
+
+</tr>
+
+<tr>
+
+<th>Module</th>
+
+<td>WiFi Security Intelligence Engine</td>
+
+</tr>
+
+<tr>
+
+<th>AI Engine</th>
+
+<td>Google Gemini AI</td>
+
+</tr>
+
+<tr>
+
+<th>Detection</th>
+
+<td>WiFi QR Security Analysis</td>
+
+</tr>
+
+</table>
+
+</div>
+
+
+
+<!-- ====================================================== -->
+<!-- FOOTER -->
+<!-- ====================================================== -->
+
+<footer>
+
+<hr>
+
+<h3 class="text-info">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+SentinelX AI
+
+</h3>
+
+<p>
+
+AI Powered Multi-Channel Scam & Phishing Detection Platform
+
+</p>
+
+<p>
+
+WiFi Security • QR Intelligence • Gemini AI
+
+</p>
+
+<small>
+
+© 2026 SentinelX AI | Secure Every Scan
+
+</small>
+
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
