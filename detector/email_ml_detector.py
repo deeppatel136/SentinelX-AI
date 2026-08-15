@@ -1,31 +1,113 @@
 import os
 import joblib
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "ml_model", "email_model.pkl")
-VECTORIZER_PATH = os.path.join(BASE_DIR, "ml_model", "email_vectorizer.pkl")
 
-# Cached instances
-_model = None
-_vectorizer = None
+# ============================================================
+# BASE DIRECTORY
+# ============================================================
+
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
 
-def get_model_and_vectorizer():
-    global _model, _vectorizer
-    if _model is None or _vectorizer is None:
-        _model = joblib.load(MODEL_PATH)
-        if not hasattr(_model, "multi_class"):
-            _model.multi_class = "auto"
-        _vectorizer = joblib.load(VECTORIZER_PATH)
-    return _model, _vectorizer
+# ============================================================
+# MODEL PATH
+# ============================================================
 
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "ml_model",
+    "email_model.pkl"
+)
+
+
+# ============================================================
+# VECTORIZER PATH
+# ============================================================
+
+VECTORIZER_PATH = os.path.join(
+    BASE_DIR,
+    "ml_model",
+    "email_vectorizer.pkl"
+)
+
+
+# ============================================================
+# LOAD MODEL
+# ============================================================
+
+model = joblib.load(
+    MODEL_PATH
+)
+
+
+# ============================================================
+# COMPATIBILITY FIX
+# ============================================================
+
+# Older versions of scikit-learn stored the
+# 'multi_class' attribute inside LogisticRegression.
+#
+# If the saved model does not contain it,
+# restore the expected value before predict_proba().
+
+if not hasattr(
+    model,
+    "multi_class"
+):
+
+    model.multi_class = "auto"
+
+
+# ============================================================
+# LOAD VECTORIZER
+# ============================================================
+
+vectorizer = joblib.load(
+    VECTORIZER_PATH
+)
+
+
+# ============================================================
+# EMAIL PREDICTION
+# ============================================================
 
 def predict_email(email_text):
-    model, vectorizer = get_model_and_vectorizer()
-    
-    vector = vectorizer.transform([email_text])
-    prediction = model.predict(vector)[0]
-    probabilities = model.predict_proba(vector)[0]
-    confidence = max(probabilities)
+
+    # --------------------------------------------------------
+    # Convert email text into feature vector
+    # --------------------------------------------------------
+
+    vector = vectorizer.transform(
+        [email_text]
+    )
+
+
+    # --------------------------------------------------------
+    # Machine Learning Prediction
+    # --------------------------------------------------------
+
+    prediction = model.predict(
+        vector
+    )[0]
+
+
+    # --------------------------------------------------------
+    # Prediction Confidence
+    # --------------------------------------------------------
+
+    probabilities = model.predict_proba(
+        vector
+    )[0]
+
+    confidence = max(
+        probabilities
+    )
+
+
+    # --------------------------------------------------------
+    # Return Result
+    # --------------------------------------------------------
 
     return prediction, confidence
