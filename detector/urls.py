@@ -64,4 +64,6 @@ path(
 ),
 
 path("qr-scan/", views.qr_scan, name="qr_scan"),
+
+path("health/", views.health_check, name="health_check"),
 ]

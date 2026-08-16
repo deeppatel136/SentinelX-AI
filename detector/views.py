@@ -2384,3 +2384,9 @@ Body : {email['body']}
         "qr_scan.html"
 
     )
+    
+from django.http import JsonResponse
+
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
