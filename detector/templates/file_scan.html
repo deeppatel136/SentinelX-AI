@@ -4,306 +4,1061 @@
 
 <style>
 
-.scan-card{
+/* =========================================================
+   SENTINELX AI - FILE SCANNER
+   ========================================================= */
 
-background:#111827;
-
-border:1px solid #1E3A5F;
-
-border-radius:20px;
-
-padding:40px;
-
-box-shadow:0 0 30px rgba(0,229,255,.08);
-
+.file-page {
+    max-width: 1180px;
+    margin: 0 auto;
 }
 
-.scan-title{
+/* =========================
+   PAGE HEADER
+   ========================= */
 
-font-size:38px;
-
-font-weight:700;
-
-color:#00E5FF;
-
+.file-header {
+    text-align: center;
+    margin-bottom: 38px;
 }
 
-.scan-subtitle{
+.file-header-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px;
 
-color:#94A3B8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-font-size:17px;
+    background: linear-gradient(
+        145deg,
+        rgba(0,229,255,.14),
+        rgba(37,99,235,.14)
+    );
 
+    border: 1px solid rgba(0,229,255,.45);
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 25px rgba(0,229,255,.12);
 }
 
-.upload-box{
-
-margin-top:35px;
-
-padding:45px;
-
-border:2px dashed #00E5FF;
-
-border-radius:18px;
-
-background:#0F172A;
-
-transition:.3s;
-
-text-align:center;
-
+.file-header-icon i {
+    font-size: 31px;
+    color: #00E5FF;
 }
 
-.upload-box:hover{
-
-background:#172554;
-
-border-color:#38BDF8;
-
+.file-title {
+    color: #F8FAFC;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 8px;
 }
 
-.upload-box i{
-
-font-size:65px;
-
-color:#00E5FF;
-
-margin-bottom:20px;
-
+.file-title span {
+    color: #00E5FF;
 }
 
-.upload-box h4{
-
-color:white;
-
-font-weight:600;
-
+.file-subtitle {
+    color: #7F8EA3;
+    font-size: 15px;
+    margin: 0 auto;
+    max-width: 760px;
+    line-height: 1.6;
 }
 
-.upload-box p{
+/* =========================
+   MAIN SCANNER CARD
+   ========================= */
 
-color:#94A3B8;
+.file-scanner-card {
+    background: #0B1729;
+    border: 1px solid #123957;
+    border-radius: 22px;
+    overflow: hidden;
 
+    box-shadow:
+        0 0 35px rgba(0,229,255,.07);
 }
 
-.form-control{
+/* =========================
+   CARD HEADER
+   ========================= */
 
-background:#0F172A;
+.scanner-card-header {
+    min-height: 76px;
+    padding: 18px 25px;
 
-color:white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-border:1px solid #334155;
+    background: linear-gradient(
+        90deg,
+        #0E2035,
+        #0C1A2D
+    );
 
-padding:12px;
-
+    border-bottom: 1px solid #173B57;
 }
 
-.form-control:focus{
-
-background:#0F172A;
-
-color:white;
-
-border-color:#00E5FF;
-
-box-shadow:0 0 15px rgba(0,229,255,.25);
-
+.scanner-header-left {
+    display: flex;
+    align-items: center;
+    gap: 13px;
 }
 
-.form-control::file-selector-button{
+.scanner-header-icon {
+    width: 42px;
+    height: 42px;
 
-background:#00BCD4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-border:none;
-
-color:white;
-
-padding:10px 18px;
-
-margin-right:20px;
-
-border-radius:8px;
-
-cursor:pointer;
-
+    background: rgba(0,229,255,.08);
+    border: 1px solid rgba(0,229,255,.3);
+    border-radius: 12px;
 }
 
-.support-card{
-
-background:#0F172A;
-
-border:1px solid #1E3A5F;
-
-border-radius:15px;
-
-padding:20px;
-
-margin-top:30px;
-
+.scanner-header-icon i {
+    color: #00E5FF;
+    font-size: 18px;
 }
 
-.support-card ul{
-
-margin:0;
-
-padding-left:20px;
-
-color:#CBD5E1;
-
+.scanner-header-title {
+    color: #E5EDF7;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
 }
 
-.btn-scan{
-
-background:#00BCD4;
-
-color:white;
-
-font-weight:bold;
-
-padding:12px 35px;
-
-border-radius:10px;
-
-border:none;
-
-transition:.3s;
-
+.scanner-header-subtitle {
+    color: #64748B;
+    font-size: 12px;
+    margin: 2px 0 0;
 }
 
-.btn-scan:hover{
+.secure-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 
-background:#0891B2;
+    padding: 8px 13px;
 
-transform:translateY(-2px);
+    border: 1px solid rgba(0,229,255,.22);
+    border-radius: 20px;
+
+    background: rgba(0,229,255,.04);
+
+    color: #55DFF0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+.secure-badge i {
+    font-size: 7px;
+}
+
+/* =========================
+   CARD BODY
+   ========================= */
+
+.scanner-card-body {
+    padding: 28px;
+}
+
+/* =========================
+   UPLOAD AREA
+   ========================= */
+
+.upload-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #CBD5E1;
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 10px;
+}
+
+.upload-label i {
+    color: #00E5FF;
+}
+
+.upload-zone {
+    position: relative;
+
+    min-height: 285px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px 25px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,229,255,.045),
+            transparent 55%
+        ),
+        #071321;
+
+    border: 1.5px dashed #24506B;
+    border-radius: 17px;
+
+    text-align: center;
+
+    transition: all .25s ease;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-active {
+    border-color: #00E5FF;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,229,255,.09),
+            transparent 60%
+        ),
+        #081827;
+
+    box-shadow:
+        inset 0 0 25px rgba(0,229,255,.035),
+        0 0 20px rgba(0,229,255,.08);
+}
+
+.upload-icon {
+    width: 68px;
+    height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 17px;
+
+    border-radius: 17px;
+
+    background: rgba(0,229,255,.07);
+    border: 1px solid rgba(0,229,255,.28);
+}
+
+.upload-icon i {
+    font-size: 30px;
+    color: #00E5FF;
+}
+
+.upload-title {
+    color: #E2E8F0;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.upload-description {
+    color: #718096;
+    font-size: 13px;
+    margin-bottom: 17px;
+}
+
+.choose-file-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #0D2A3D;
+    color: #00E5FF;
+
+    border: 1px solid #17627C;
+    border-radius: 9px;
+
+    padding: 9px 17px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+.choose-file-btn:hover {
+    background: #10394F;
+    border-color: #00E5FF;
+}
+
+.choose-file-btn i {
+    font-size: 13px;
+}
+
+.file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* =========================
+   SELECTED FILE
+   ========================= */
+
+.selected-file {
+    display: none;
+
+    margin-top: 14px;
+
+    padding: 13px 16px;
+
+    background: #0A1B2D;
+    border: 1px solid #17425D;
+    border-radius: 12px;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.selected-file-left {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-width: 0;
+}
+
+.selected-file-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,229,255,.08);
+    border-radius: 9px;
+}
+
+.selected-file-icon i {
+    color: #00E5FF;
+}
+
+.selected-file-name {
+    color: #CBD5E1;
+    font-size: 13px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.selected-file-status {
+    color: #22C55E;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* =========================
+   SUPPORTED FILES
+   ========================= */
+
+.file-types-section {
+    margin-top: 22px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #CBD5E1;
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 12px;
+}
+
+.section-title i {
+    color: #00E5FF;
+}
+
+.file-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.file-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 11px;
+
+    background: #0A1B2D;
+    border: 1px solid #173D58;
+    border-radius: 8px;
+
+    color: #8FA3B8;
+    font-size: 11px;
+}
+
+.file-type i {
+    color: #38BDF8;
+    font-size: 12px;
+}
+
+/* =========================
+   SECURITY CHECKS
+   ========================= */
+
+.security-checks {
+    margin-top: 22px;
+
+    padding: 18px;
+
+    background: #081827;
+    border: 1px solid #173B57;
+    border-radius: 14px;
+}
+
+.security-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #CBD5E1;
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 13px;
+}
+
+.security-title i {
+    color: #00E5FF;
+}
+
+.check-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.check-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 10px;
+
+    background: #0B2032;
+    border: 1px solid #17445E;
+    border-radius: 8px;
+
+    color: #91A3B7;
+    font-size: 11px;
+}
+
+.check-item i {
+    color: #22C55E;
+    font-size: 10px;
+}
+
+/* =========================
+   ACTIONS
+   ========================= */
+
+.scanner-actions {
+    display: flex;
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.btn-analyze-file {
+    flex: 1;
+
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #08B9D0,
+        #2563EB
+    );
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: .25s;
+}
+
+.btn-analyze-file:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 25px rgba(37,99,235,.22);
+
+    color: white;
+}
+
+.btn-analyze-file i {
+    font-size: 14px;
+}
+
+.btn-dashboard {
+    min-width: 190px;
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    background: transparent;
+
+    border: 1px solid #33465A;
+    border-radius: 10px;
+
+    color: #A7B5C7;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: .25s;
+}
+
+.btn-dashboard:hover {
+    color: #E2E8F0;
+    border-color: #4B647A;
+    background: #0A1929;
+}
+
+/* =========================
+   SECURITY NOTICE
+   ========================= */
+
+.security-notice {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-top: 17px;
+
+    color: #5F748A;
+    font-size: 11px;
+}
+
+.security-notice i {
+    color: #22C55E;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .file-title {
+        font-size: 30px;
+    }
+
+    .scanner-card-header {
+        padding: 16px 18px;
+    }
+
+    .secure-badge {
+        display: none;
+    }
+
+    .scanner-card-body {
+        padding: 20px;
+    }
+
+    .upload-zone {
+        min-height: 250px;
+    }
+
+    .scanner-actions {
+        flex-direction: column;
+    }
+
+    .btn-dashboard {
+        width: 100%;
+    }
 
 }
 
 </style>
 
-<div class="container py-5">
 
-<div class="text-center mb-5">
+<div class="container py-4">
 
-<h1 class="scan-title">
+    <div class="file-page">
 
-📄 File Scam Detection
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
 
-</h1>
+        <div class="file-header">
 
-<p class="scan-subtitle">
+            <div class="file-header-icon">
 
-Upload a document and let SentinelX AI detect phishing, scams, fraud and malicious content using OCR, Rule-Based Analysis and Machine Learning.
+                <i class="fa-solid fa-file-shield"></i>
 
-</p>
+            </div>
+
+            <h1 class="file-title">
+
+                File <span>Threat Scanner</span>
+
+            </h1>
+
+            <p class="file-subtitle">
+
+                Upload a document and let SentinelX AI analyze it
+                for phishing, scams, fraud and malicious content.
+
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             MAIN SCANNER
+        ====================================================== -->
+
+        <div class="file-scanner-card">
+
+            <!-- CARD HEADER -->
+
+            <div class="scanner-card-header">
+
+                <div class="scanner-header-left">
+
+                    <div class="scanner-header-icon">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+                    <div>
+
+                        <p class="scanner-header-title">
+
+                            File Security Analysis
+
+                        </p>
+
+                        <p class="scanner-header-subtitle">
+
+                            Rule-Based Detection + Machine Learning
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="secure-badge">
+
+                    <i class="fa-solid fa-circle"></i>
+
+                    SECURE ANALYSIS
+
+                </div>
+
+            </div>
+
+
+            <!-- CARD BODY -->
+
+            <div class="scanner-card-body">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="fileScanForm"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- UPLOAD LABEL -->
+
+                    <div class="upload-label">
+
+                        <i class="fa-solid fa-file-arrow-up"></i>
+
+                        Upload File
+
+                    </div>
+
+
+                    <!-- UPLOAD ZONE -->
+
+                    <div
+                        class="upload-zone"
+                        id="uploadZone"
+                    >
+
+                        <div class="upload-icon">
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                        </div>
+
+                        <div class="upload-title">
+
+                            Drop your file here
+
+                        </div>
+
+                        <div class="upload-description">
+
+                            Drag & drop your document or choose a file
+                            from your computer
+
+                        </div>
+
+
+                        <label
+                            for="fileInput"
+                            class="choose-file-btn"
+                        >
+
+                            <i class="fa-solid fa-folder-open"></i>
+
+                            Choose File
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            name="file"
+                            id="fileInput"
+                            class="file-input"
+                            accept=".txt,.pdf,.doc,.docx,.ppt,.pptx"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- SELECTED FILE -->
+
+                    <div
+                        class="selected-file"
+                        id="selectedFile"
+                    >
+
+                        <div class="selected-file-left">
+
+                            <div class="selected-file-icon">
+
+                                <i class="fa-solid fa-file"></i>
+
+                            </div>
+
+                            <span
+                                class="selected-file-name"
+                                id="selectedFileName"
+                            ></span>
+
+                        </div>
+
+
+                        <span class="selected-file-status">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            Ready
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- SUPPORTED FILE TYPES -->
+
+                    <div class="file-types-section">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-file-circle-check"></i>
+
+                            Supported File Types
+
+                        </div>
+
+
+                        <div class="file-type-list">
+
+                            <span class="file-type">
+
+                                <i class="fa-solid fa-file-lines"></i>
+
+                                TXT
+
+                            </span>
+
+                            <span class="file-type">
+
+                                <i class="fa-solid fa-file-pdf"></i>
+
+                                PDF
+
+                            </span>
+
+                            <span class="file-type">
+
+                                <i class="fa-solid fa-file-word"></i>
+
+                                DOC / DOCX
+
+                            </span>
+
+                            <span class="file-type">
+
+                                <i class="fa-solid fa-file-powerpoint"></i>
+
+                                PPT / PPTX
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SECURITY CHECKS -->
+
+                    <div class="security-checks">
+
+                        <div class="security-title">
+
+                            <i class="fa-solid fa-shield-virus"></i>
+
+                            SentinelX AI Security Checks
+
+                        </div>
+
+
+                        <div class="check-list">
+
+                            <span class="check-item">
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Text Extraction
+
+                            </span>
+
+                            <span class="check-item">
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Suspicious Keywords
+
+                            </span>
+
+                            <span class="check-item">
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Phishing Detection
+
+                            </span>
+
+                            <span class="check-item">
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Rule-Based Analysis
+
+                            </span>
+
+                            <span class="check-item">
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Machine Learning
+
+                            </span>
+
+                            <span class="check-item">
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Confidence Analysis
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTION BUTTONS -->
+
+                    <div class="scanner-actions">
+
+                        <button
+                            type="submit"
+                            class="btn-analyze-file"
+                        >
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            Analyze File
+
+                        </button>
+
+
+                        <a
+                            href="{% url 'dashboard' %}"
+                            class="btn-dashboard"
+                        >
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                            Back to Dashboard
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- SECURITY NOTICE -->
+
+                    <div class="security-notice">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Your uploaded file is analyzed for security
+                        indicators before the result is generated.
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="scan-card">
 
-<form method="POST" enctype="multipart/form-data">
+<script>
 
-{% csrf_token %}
+/* =========================================================
+   FILE SELECTION
+   ========================================================= */
 
-<div class="upload-box">
+const fileInput = document.getElementById("fileInput");
+const uploadZone = document.getElementById("uploadZone");
 
-<i class="fa-solid fa-file-arrow-up"></i>
+const selectedFile = document.getElementById("selectedFile");
+const selectedFileName = document.getElementById("selectedFileName");
 
-<h4>
 
-Choose File
+function showSelectedFile(file) {
 
-</h4>
+    if (!file) {
+        return;
+    }
 
-<p>
+    selectedFileName.textContent = file.name;
 
-Supported formats: TXT, PDF, DOCX, PPTX
+    selectedFile.style.display = "flex";
 
-</p>
+}
 
-<input
 
-type="file"
+/* =========================================================
+   FILE INPUT CHANGE
+   ========================================================= */
 
-name="file"
+fileInput.addEventListener("change", function () {
 
-class="form-control mt-4"
+    const file = this.files[0];
 
-accept=".txt,.pdf,.doc,.docx,.ppt,.pptx"
+    showSelectedFile(file);
 
-required
+});
 
->
 
-</div>
+/* =========================================================
+   DRAG OVER
+   ========================================================= */
 
-<div class="support-card">
+uploadZone.addEventListener("dragover", function (event) {
 
-<h4 class="text-info mb-3">
+    event.preventDefault();
 
-<i class="fa-solid fa-circle-info"></i>
+    uploadZone.classList.add("drag-active");
 
-Supported File Types
+});
 
-</h4>
 
-<ul>
+/* =========================================================
+   DRAG LEAVE
+   ========================================================= */
 
-<li>📄 TXT Documents</li>
+uploadZone.addEventListener("dragleave", function () {
 
-<li>📕 PDF Files</li>
+    uploadZone.classList.remove("drag-active");
 
-<li>📘 Microsoft Word (.doc / .docx)</li>
+});
 
-<li>📙 PowerPoint (.ppt / .pptx)</li>
 
-<li>🤖 Automatic Text Extraction</li>
+/* =========================================================
+   DROP
+   ========================================================= */
 
-<li>🧠 Machine Learning Classification</li>
+uploadZone.addEventListener("drop", function (event) {
 
-<li>🛡 Rule-Based Scam Detection</li>
+    event.preventDefault();
 
-<li>📊 AI Confidence Score</li>
+    uploadZone.classList.remove("drag-active");
 
-</ul>
+    const file = event.dataTransfer.files[0];
 
-</div>
+    if (!file) {
+        return;
+    }
 
-<div class="text-center mt-5">
+    const dataTransfer = new DataTransfer();
 
-<button
+    dataTransfer.items.add(file);
 
-type="submit"
+    fileInput.files = dataTransfer.files;
 
-class="btn btn-scan btn-lg me-3"
+    showSelectedFile(file);
 
->
+});
 
-<i class="fa-solid fa-magnifying-glass"></i>
-
-Analyze File
-
-</button>
-
-<a
-
-href="{% url 'dashboard' %}"
-
-class="btn btn-secondary btn-lg"
-
->
-
-<i class="fa-solid fa-house"></i>
-
-Dashboard
-
-</a>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
+</script>
 
 {% endblock %}

@@ -3,465 +3,876 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>
+    <title>SentinelX AI | Create Account</title>
 
-Register |  SentinelX AI
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
 
-</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+    <style>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-      rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+        body {
 
-body{
+            min-height: 100vh;
 
-min-height:100vh;
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
 
-display:flex;
+            background:
+                radial-gradient(
+                    circle at 10% 15%,
+                    rgba(0,212,255,0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 85%,
+                    rgba(0,119,255,0.13),
+                    transparent 30%
+                ),
+                #020617;
 
-justify-content:center;
+            color: white;
 
-align-items:center;
+            display: flex;
 
-background:
-linear-gradient(
-135deg,
-#020617,
-#07152d,
-#0b1d3a,
-#08111f
-);
+            align-items: center;
 
-font-family:'Segoe UI',sans-serif;
+            justify-content: center;
 
-overflow:hidden;
+            padding: 30px;
 
-position:relative;
+            position: relative;
 
-}
+            overflow: hidden;
+        }
 
-body::before{
 
-content:"";
+        /* GRID */
 
-position:absolute;
+        body::before {
 
-width:100%;
-height:100%;
+            content: "";
 
-background:
+            position: absolute;
 
-radial-gradient(circle at top left,
-rgba(0,255,255,.08),
-transparent 45%),
+            inset: 0;
 
-radial-gradient(circle at bottom right,
-rgba(0,150,255,.08),
-transparent 45%);
+            background-image:
 
-animation:bgMove 12s linear infinite;
+                linear-gradient(
+                    rgba(0,212,255,0.035) 1px,
+                    transparent 1px
+                ),
 
-}
+                linear-gradient(
+                    90deg,
+                    rgba(0,212,255,0.035) 1px,
+                    transparent 1px
+                );
 
-@keyframes bgMove{
+            background-size: 50px 50px;
 
-0%{
-transform:translate(0,0);
-}
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent
+                );
 
-50%{
-transform:translate(-20px,-20px);
-}
+            pointer-events: none;
+        }
 
-100%{
-transform:translate(0,0);
-}
 
-}
+        /* GLOW */
 
-.register-card{
+        .orb {
 
-position:relative;
+            position: absolute;
 
-z-index:10;
+            width: 330px;
 
-width:100%;
-max-width:500px;
+            height: 330px;
 
-background:#081425;
+            border-radius: 50%;
 
-border:1px solid rgba(0,255,255,.18);
+            filter: blur(100px);
 
-border-radius:22px;
+            opacity: 0.15;
 
-overflow:hidden;
+            pointer-events: none;
+        }
 
-box-shadow:
-0 0 25px rgba(0,255,255,.12),
-0 0 80px rgba(0,140,255,.12);
 
-}
+        .orb-one {
 
-.card-header{
+            background: #00d4ff;
 
-background:
-linear-gradient(
-90deg,
-#00d4ff,
-#0077ff
-);
+            top: -170px;
 
-padding:28px;
+            right: -80px;
+        }
 
-text-align:center;
 
-color:white;
+        .orb-two {
 
-}
+            background: #006eff;
 
-.logo{
+            bottom: -180px;
 
-width:78px;
-height:78px;
+            left: -100px;
+        }
 
-margin:auto;
 
-border-radius:50%;
+        /* MAIN */
 
-display:flex;
+        .register-wrapper {
 
-justify-content:center;
+            width: 100%;
 
-align-items:center;
+            max-width: 1080px;
 
-background:white;
+            min-height: 680px;
 
-color:#0077ff;
+            display: grid;
 
-font-size:34px;
+            grid-template-columns: 0.9fr 1.1fr;
 
-margin-bottom:18px;
+            position: relative;
 
-box-shadow:0 0 20px rgba(255,255,255,.4);
+            z-index: 5;
 
-}
+            overflow: hidden;
 
-.card-header h2{
+            border-radius: 28px;
 
-font-weight:700;
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
 
-margin-bottom:6px;
+            background:
+                rgba(5,15,30,0.84);
 
-}
+            backdrop-filter: blur(25px);
 
-.card-header p{
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,0.5);
+        }
 
-margin:0;
 
-opacity:.9;
+        /* LEFT */
 
-font-size:15px;
+        .register-info {
 
-}
+            padding: 55px;
 
-.card-body{
+            display: flex;
 
-padding:35px;
+            flex-direction: column;
 
-background:#081425;
+            justify-content: center;
 
-}
+            background:
+                linear-gradient(
+                    150deg,
+                    rgba(0,212,255,0.09),
+                    rgba(0,119,255,0.015)
+                );
 
-.form-control{
+            border-right:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
 
-height:56px;
 
-background:#0c1d34;
+        .security-icon {
 
-border:1px solid #173b64;
+            width: 72px;
 
-color:white;
+            height: 72px;
 
-border-radius:12px;
+            border-radius: 20px;
 
-}
+            display: flex;
 
-.form-control:focus{
+            align-items: center;
 
-background:#0c1d34;
+            justify-content: center;
 
-color:white;
+            background:
+                linear-gradient(
+                    145deg,
+                    #00d4ff,
+                    #006eff
+                );
 
-border-color:#00d4ff;
+            font-size: 31px;
 
-box-shadow:0 0 15px rgba(0,212,255,.35);
+            margin-bottom: 28px;
 
-}
+            box-shadow:
+                0 0 30px
+                rgba(0,212,255,0.3);
+        }
 
-.form-control::placeholder{
 
-color:#8eb7da;
+        .register-info h1 {
 
-}
+            font-size: 38px;
 
-.input-group-text{
+            font-weight: 800;
 
-background:#0c1d34;
+            margin-bottom: 15px;
 
-border:1px solid #173b64;
+            letter-spacing: -1px;
+        }
 
-color:#00d4ff;
 
-}
+        .register-info h1 span {
 
-.btn-register{
+            color: #00d4ff;
+        }
 
-height:56px;
 
-border:none;
+        .register-info p {
 
-border-radius:12px;
+            color: #8da5bf;
 
-font-weight:700;
+            line-height: 1.7;
 
-font-size:18px;
+            font-size: 15px;
 
-color:white;
+            max-width: 360px;
+        }
 
-background:linear-gradient(
-90deg,
-#00d4ff,
-#0077ff
-);
 
-transition:.35s;
+        /* FEATURES */
 
-}
+        .feature-list {
 
-.btn-register:hover{
+            margin-top: 35px;
 
-transform:translateY(-3px);
+            display: flex;
 
-box-shadow:0 0 18px rgba(0,212,255,.45);
+            flex-direction: column;
 
-}
+            gap: 16px;
+        }
 
-.login-link{
 
-color:#a9d8ff;
+        .feature {
 
-text-decoration:none;
+            display: flex;
 
-font-weight:600;
+            align-items: center;
 
-}
+            gap: 13px;
 
-.login-link:hover{
+            color: #b4c9dd;
 
-color:#00d4ff;
+            font-size: 13px;
+        }
 
-}
 
-.footer-text{
+        .feature-icon {
 
-margin-top:30px;
+            width: 34px;
 
-text-align:center;
+            height: 34px;
 
-font-size:13px;
+            border-radius: 9px;
 
-color:#8eb3d6;
+            display: flex;
 
-}
+            align-items: center;
 
-.footer-text i{
+            justify-content: center;
 
-color:#00d4ff;
+            background:
+                rgba(0,212,255,0.08);
 
-}
+            border:
+                1px solid
+                rgba(0,212,255,0.13);
 
-</style>
+            color: #00d4ff;
+        }
+
+
+        /* FORM AREA */
+
+        .register-form {
+
+            padding: 55px 65px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .form-heading {
+
+            margin-bottom: 28px;
+        }
+
+
+        .form-heading small {
+
+            color: #00d4ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .form-heading h2 {
+
+            font-size: 31px;
+
+            font-weight: 750;
+
+            margin-top: 8px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .form-heading p {
+
+            color: #718aa5;
+
+            font-size: 13px;
+
+            margin: 0;
+        }
+
+
+        /* LABEL */
+
+        .form-label {
+
+            color: #d5e5f4;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* INPUT */
+
+        .input-group {
+
+            margin-bottom: 19px;
+        }
+
+
+        .input-group-text {
+
+            width: 50px;
+
+            height: 53px;
+
+            justify-content: center;
+
+            background:
+                rgba(8,25,45,0.9);
+
+            border:
+                1px solid
+                #183653;
+
+            border-right: none;
+
+            color: #00d4ff;
+        }
+
+
+        .form-control {
+
+            height: 53px;
+
+            background:
+                rgba(8,25,45,0.9);
+
+            border:
+                1px solid
+                #183653;
+
+            color: white;
+
+            font-size: 14px;
+        }
+
+
+        .form-control:focus {
+
+            background:
+                rgba(8,25,45,1);
+
+            color: white;
+
+            border-color: #00d4ff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0,212,255,0.08);
+        }
+
+
+        .form-control::placeholder {
+
+            color: #607c99;
+        }
+
+
+        /* BUTTON */
+
+        .btn-register {
+
+            height: 55px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #00bfe8,
+                    #006eff
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            margin-top: 5px;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,119,255,0.18);
+
+            transition: 0.25s ease;
+        }
+
+
+        .btn-register:hover {
+
+            transform: translateY(-2px);
+
+            color: white;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,119,255,0.28);
+        }
+
+
+        /* LOGIN */
+
+        .login-area {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            font-size: 13px;
+
+            color: #7189a3;
+        }
+
+
+        .login-link {
+
+            color: #00d4ff;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            margin-left: 5px;
+        }
+
+
+        .login-link:hover {
+
+            color: #72eaff;
+        }
+
+
+        /* FOOTER */
+
+        .register-footer {
+
+            text-align: center;
+
+            margin-top: 28px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            color: #506b86;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+        }
+
+
+        .register-footer i {
+
+            color: #00d4ff;
+
+            margin-right: 4px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width: 850px) {
+
+            .register-wrapper {
+
+                grid-template-columns: 1fr;
+
+                max-width: 530px;
+            }
+
+            .register-info {
+
+                display: none;
+            }
+
+            .register-form {
+
+                padding: 45px 35px;
+            }
+        }
+
+
+        @media(max-width: 480px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+            .register-form {
+
+                padding: 35px 25px;
+            }
+
+            .form-heading h2 {
+
+                font-size: 27px;
+            }
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="register-card">
 
-<div class="card-header">
+    <div class="orb orb-one"></div>
 
-<div class="logo">
+    <div class="orb orb-two"></div>
 
-<i class="bi bi-shield-lock-fill"></i>
 
-</div>
+    <div class="register-wrapper">
 
-<h2>
 
-Create Account
+        <!-- =========================
+             SECURITY INFORMATION
+        ========================= -->
 
-</h2>
+        <section class="register-info">
 
-<p>
 
-Join  SentinelX AI Security Platform
+            <div class="security-icon">
 
-</p>
+                <i class="bi bi-shield-lock"></i>
 
-</div>
+            </div>
 
-<div class="card-body">
 
-    <form method="POST">
+            <h1>
 
-{% csrf_token %}
+                Join Sentinel<span>X</span> AI
 
-<div class="mb-3">
+            </h1>
 
-<label class="form-label">
 
-Username
+            <p>
 
-</label>
+                Create your secure account and
+                access intelligent protection against
+                modern digital threats.
 
-<div class="input-group">
+            </p>
 
-<span class="input-group-text">
 
-<i class="bi bi-person-fill"></i>
+            <div class="feature-list">
 
-</span>
 
-<input
-type="text"
-name="username"
-class="form-control"
-placeholder="Enter Username"
-required>
+                <div class="feature">
 
-</div>
+                    <div class="feature-icon">
 
-</div>
+                        <i class="bi bi-link-45deg"></i>
 
-<div class="mb-3">
+                    </div>
 
-<label class="form-label">
+                    AI-powered URL analysis
 
-Email Address
+                </div>
 
-</label>
 
-<div class="input-group">
+                <div class="feature">
 
-<span class="input-group-text">
+                    <div class="feature-icon">
 
-<i class="bi bi-envelope-fill"></i>
+                        <i class="bi bi-envelope-exclamation"></i>
 
-</span>
+                    </div>
 
-<input
-type="email"
-name="email"
-class="form-control"
-placeholder="Enter Email Address"
-required>
+                    Suspicious email detection
 
-</div>
+                </div>
 
-</div>
 
-<div class="mb-4">
+                <div class="feature">
 
-<label class="form-label">
+                    <div class="feature-icon">
 
-Password
+                        <i class="bi bi-qr-code"></i>
 
-</label>
+                    </div>
 
-<div class="input-group">
+                    QR & malicious content scanning
 
-<span class="input-group-text">
+                </div>
 
-<i class="bi bi-lock-fill"></i>
 
-</span>
+                <div class="feature">
 
-<input
-type="password"
-name="password"
-class="form-control"
-placeholder="Create Password"
-required>
+                    <div class="feature-icon">
 
-</div>
+                        <i class="bi bi-clock-history"></i>
 
-</div>
+                    </div>
 
-<button
-type="submit"
-class="btn btn-register w-100">
+                    Security scan history
 
-<i class="bi bi-person-plus-fill"></i>
+                </div>
 
-Create Account
 
-</button>
+            </div>
 
-</form>
+        </section>
 
-<div class="text-center mt-4">
 
-<a
-href="{% url 'login' %}"
-class="login-link">
+        <!-- =========================
+             REGISTRATION FORM
+        ========================= -->
 
-<i class="bi bi-box-arrow-in-right"></i>
+        <section class="register-form">
 
-Already have an account? Login
 
-</a>
+            <div class="form-heading">
 
-</div>
+                <small>Secure Enrollment</small>
 
-<div class="footer-text">
+                <h2>Create your account</h2>
 
-<hr class="border-secondary">
+                <p>
 
-<i class="bi bi-shield-lock-fill"></i>
+                    Start protecting your digital
+                    environment with SentinelX AI.
 
-Powered by
+                </p>
 
-<strong>
+            </div>
 
-SentinelX AI
 
-</strong>
+            <form method="POST">
 
-<br>
+                {% csrf_token %}
 
-AI-Powered Multi-Channel Scam Detection Platform
 
-</div>
+                <!-- USERNAME -->
 
-</div>
+                <label class="form-label">
 
-</div>
+                    Username
+
+                </label>
+
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+
+                        <i class="bi bi-person"></i>
+
+                    </span>
+
+
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="Choose a username"
+                        required>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <label class="form-label">
+
+                    Email Address
+
+                </label>
+
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+
+                        <i class="bi bi-envelope"></i>
+
+                    </span>
+
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Enter your email address"
+                        required>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <label class="form-label">
+
+                    Password
+
+                </label>
+
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+
+                        <i class="bi bi-lock"></i>
+
+                    </span>
+
+
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Create a secure password"
+                        required>
+
+                </div>
+
+
+                <!-- REGISTER -->
+
+                <button
+                    type="submit"
+                    class="btn btn-register w-100">
+
+                    <i class="bi bi-shield-plus me-2"></i>
+
+                    Create Secure Account
+
+                </button>
+
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-area">
+
+                Already have an account?
+
+                <a
+                    href="{% url 'login' %}"
+                    class="login-link">
+
+                    Sign in
+
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="register-footer">
+
+                <i class="bi bi-shield-check"></i>
+
+                SentinelX AI Security Platform
+
+                <br>
+
+                AI-Powered Multi-Channel Scam Detection
+
+            </div>
+
+
+        </section>
+
+    </div>
+
 
 </body>
 

@@ -3,1036 +3,2396 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SentinelX AI | Security Assistant</title>
+
+    <!-- =====================================================
+         BOOTSTRAP
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ====================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
 
-<title>
+        body {
+            background: #07111f;
+            color: #e2e8f0;
+            overflow: hidden;
+        }
 
-SentinelX AI Chatbot
+        a {
+            text-decoration: none;
+        }
 
-</title>
+        button,
+        textarea {
+            font-family: inherit;
+        }
 
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
 
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        /* =====================================================
+           MAIN APPLICATION
+        ====================================================== */
 
-<link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+        .chat-wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 70% 20%,
+                    rgba(0, 229, 255, 0.035),
+                    transparent 35%
+                ),
+                #07111f;
+        }
 
-<style>
 
-*{
+        /* =====================================================
+           SIDEBAR
+        ====================================================== */
 
-margin:0;
+        .sidebar {
+            width: 285px;
+            height: 100vh;
 
-padding:0;
+            display: flex;
+            flex-direction: column;
 
-box-sizing:border-box;
+            background: #030b16;
 
-font-family:Poppins,sans-serif;
+            border-right: 1px solid #173653;
 
-}
+            flex-shrink: 0;
+        }
 
-body{
 
-background:#081120;
+        /* =====================================================
+           BRAND
+        ====================================================== */
 
-height:100vh;
+        .logo {
+            padding: 25px 22px 23px;
 
-overflow:hidden;
+            border-bottom: 1px solid #173653;
 
-color:white;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0, 229, 255, 0.035),
+                    transparent
+                );
+        }
 
-}
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
 
-/* ========================= */
+        .brand-icon {
+            width: 44px;
+            height: 44px;
 
-.chat-wrapper{
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-display:flex;
+            border-radius: 13px;
 
-height:100vh;
+            color: #00e5ff;
 
-}
+            background: rgba(0, 229, 255, 0.08);
 
-/* ========================= */
-/* Sidebar */
-/* ========================= */
+            border: 1px solid rgba(0, 229, 255, 0.25);
 
-.sidebar{
+            box-shadow:
+                0 0 18px rgba(0, 229, 255, 0.08);
 
-width:280px;
+            font-size: 19px;
+        }
 
-background:#020B16;
+        .logo h3 {
+            margin: 0;
 
-border-right:1px solid #173B64;
+            color: #00e5ff;
 
-display:flex;
+            font-size: 20px;
 
-flex-direction:column;
+            font-weight: 700;
 
-}
+            letter-spacing: 0.2px;
+        }
 
-.logo{
+        .logo h3 span {
+            color: #ffffff;
+        }
 
-padding:28px;
+        .logo p {
+            margin: 3px 0 0;
 
-text-align:center;
+            color: #64748b;
 
-border-bottom:1px solid #173B64;
+            font-size: 10px;
 
-}
+            letter-spacing: 0.8px;
 
-.logo h3{
+            text-transform: uppercase;
+        }
 
-color:#00E5FF;
 
-font-weight:700;
+        /* =====================================================
+           NEW CHAT
+        ====================================================== */
 
-margin-top:15px;
+        .new-chat {
+            padding: 18px 18px 10px;
+        }
 
-}
+        .new-chat button {
+            width: 100%;
+            height: 48px;
 
-.logo p{
+            border: 1px solid rgba(0, 229, 255, 0.3);
 
-color:#94A3B8;
+            border-radius: 12px;
 
-font-size:14px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #00b8d9,
+                    #00e5ff
+                );
 
-margin-top:8px;
+            color: #00131a;
 
-}
+            font-size: 14px;
 
-.new-chat{
+            font-weight: 700;
 
-margin:20px;
+            transition: 0.25s ease;
 
-}
+            cursor: pointer;
 
-.new-chat button{
+            box-shadow:
+                0 5px 20px rgba(0, 229, 255, 0.08);
+        }
 
-width:100%;
+        .new-chat button:hover {
+            transform: translateY(-2px);
 
-height:50px;
+            box-shadow:
+                0 8px 25px rgba(0, 229, 255, 0.18);
+        }
 
-border:none;
+        .new-chat button i {
+            margin-right: 8px;
+        }
 
-border-radius:12px;
 
-background:#00C2FF;
+        /* =====================================================
+           HISTORY HEADER
+        ====================================================== */
 
-font-weight:600;
+        .history {
+            flex: 1;
 
-color:white;
+            min-height: 0;
 
-transition:.3s;
+            overflow-y: auto;
 
-}
+            padding: 16px 15px 20px;
+        }
 
-.new-chat button:hover{
+        .history::-webkit-scrollbar {
+            width: 5px;
+        }
 
-background:#009ED1;
+        .history::-webkit-scrollbar-track {
+            background: transparent;
+        }
 
-transform:translateY(-2px);
+        .history::-webkit-scrollbar-thumb {
+            background: #173653;
+            border-radius: 20px;
+        }
 
-}
+        .history-header {
+            display: flex;
 
-.history{
+            align-items: center;
 
-flex:1;
+            justify-content: space-between;
 
-overflow-y:auto;
+            padding: 0 5px;
 
-padding:20px;
+            margin-bottom: 12px;
+        }
 
-}
+        .history h6 {
+            margin: 0;
 
-.history h6{
+            color: #00e5ff;
 
-color:#00E5FF;
+            font-size: 11px;
 
-margin-bottom:15px;
+            font-weight: 700;
 
-font-weight:600;
+            text-transform: uppercase;
 
-}
+            letter-spacing: 1px;
+        }
 
-.history-item{
+        .history-count {
+            color: #475569;
 
-background:#0F172A;
+            font-size: 10px;
+        }
 
-border:1px solid #173B64;
 
-border-radius:12px;
+        /* =====================================================
+           HISTORY ITEM
+        ====================================================== */
 
-padding:14px;
+        .history-item {
+            display: flex;
 
-margin-bottom:12px;
+            align-items: center;
 
-cursor:pointer;
+            gap: 10px;
 
-transition:.3s;
+            width: 100%;
 
-}
+            padding: 12px 11px;
 
-.history-item:hover{
+            margin-bottom: 8px;
 
-background:#12223C;
+            background: #091525;
 
-border-color:#00E5FF;
+            border: 1px solid #15304a;
 
-}
+            border-radius: 11px;
 
-.history-item small{
+            color: #cbd5e1;
 
-display:block;
+            cursor: pointer;
 
-color:#94A3B8;
+            transition: 0.25s ease;
 
-margin-top:6px;
+            position: relative;
+        }
 
-}
+        .history-item:hover {
+            background: #0d1d31;
 
-/* ========================= */
-/* Chat Area */
-/* ========================= */
+            border-color: rgba(0, 229, 255, 0.3);
 
-.chat-container{
+            transform: translateX(2px);
+        }
 
-flex:1;
+        .history-item.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0, 229, 255, 0.08),
+                    rgba(0, 229, 255, 0.025)
+                );
 
-display:flex;
+            border-color: rgba(0, 229, 255, 0.4);
+        }
 
-flex-direction:column;
+        .history-item.active::before {
+            content: "";
 
-background:#081120;
+            position: absolute;
 
-}
+            left: -1px;
 
-/* ========================= */
-/* Header */
-/* ========================= */
+            top: 9px;
 
-.chat-header{
+            bottom: 9px;
 
-height:75px;
+            width: 3px;
 
-background:#020B16;
+            border-radius: 4px;
 
-border-bottom:1px solid #173B64;
+            background: #00e5ff;
 
-display:flex;
+            box-shadow:
+                0 0 8px rgba(0, 229, 255, 0.7);
+        }
 
-align-items:center;
+        .history-chat-icon {
+            width: 31px;
+            height: 31px;
 
-justify-content:space-between;
+            display: flex;
 
-padding:0 30px;
+            align-items: center;
+            justify-content: center;
 
-}
+            flex-shrink: 0;
 
-.chat-header h4{
+            border-radius: 9px;
 
-margin:0;
+            color: #38bdf8;
 
-color:#00E5FF;
+            background: rgba(56, 189, 248, 0.07);
 
-font-weight:700;
+            border: 1px solid rgba(56, 189, 248, 0.12);
 
-}
+            font-size: 12px;
+        }
 
-.chat-header span{
+        .history-content {
+            min-width: 0;
 
-color:#94A3B8;
+            flex: 1;
+        }
 
-font-size:14px;
+        .history-question {
+            display: block;
 
-}
+            overflow: hidden;
 
-.online{
+            white-space: nowrap;
 
-width:10px;
+            text-overflow: ellipsis;
 
-height:10px;
+            color: #cbd5e1;
 
-background:#00FF84;
+            font-size: 12px;
 
-border-radius:50%;
+            font-weight: 500;
+        }
 
-display:inline-block;
+        .history-item small {
+            display: block;
 
-margin-right:8px;
+            margin-top: 3px;
 
-}
+            color: #475569;
 
-/* ========================= */
-/* Messages */
-/* ========================= */
+            font-size: 9px;
+        }
 
-.chat-body{
+        .delete-chat {
+            width: 28px;
+            height: 28px;
 
-flex:1;
+            display: flex;
 
-overflow-y:auto;
+            align-items: center;
+            justify-content: center;
 
-padding:40px;
+            flex-shrink: 0;
 
-scroll-behavior:smooth;
+            border-radius: 8px;
 
-}
+            color: #64748b;
 
-.welcome{
+            font-size: 11px;
 
-text-align:center;
+            transition: 0.2s ease;
+        }
 
-margin-top:80px;
+        .delete-chat:hover {
+            color: #fb7185;
 
-}
+            background: rgba(244, 63, 94, 0.1);
+        }
 
-.welcome i{
 
-font-size:70px;
+        /* =====================================================
+           EMPTY HISTORY
+        ====================================================== */
 
-color:#00E5FF;
+        .empty-history {
+            padding: 28px 10px;
 
-margin-bottom:25px;
+            text-align: center;
 
-}
+            color: #475569;
 
-.welcome h2{
+            font-size: 11px;
+        }
 
-font-weight:700;
+        .empty-history i {
+            display: block;
 
-margin-bottom:15px;
+            margin-bottom: 10px;
 
-}
+            color: #1e3a5f;
 
-.welcome p{
+            font-size: 25px;
+        }
 
-color:#94A3B8;
 
-font-size:18px;
+        /* =====================================================
+           SIDEBAR FOOTER
+        ====================================================== */
 
-max-width:700px;
+        .sidebar-footer {
+            padding: 15px 18px;
 
-margin:auto;
+            border-top: 1px solid #173653;
 
-line-height:1.8;
+            background: #020914;
+        }
 
-}
+        .sidebar-security {
+            display: flex;
 
-.message{
+            align-items: center;
 
-display:flex;
+            gap: 9px;
 
-margin-bottom:25px;
+            color: #64748b;
 
-align-items:flex-start;
+            font-size: 10px;
+        }
 
-}
+        .sidebar-security i {
+            color: #34d399;
 
-.message.user{
+            font-size: 12px;
+        }
 
-justify-content:flex-end;
 
-}
+        /* =====================================================
+           CHAT CONTAINER
+        ====================================================== */
 
-.avatar{
+        .chat-container {
+            flex: 1;
 
-width:45px;
+            min-width: 0;
 
-height:45px;
+            height: 100vh;
 
-border-radius:50%;
+            display: flex;
 
-display:flex;
+            flex-direction: column;
 
-align-items:center;
+            background: #07111f;
+        }
 
-justify-content:center;
 
-font-size:20px;
+        /* =====================================================
+           CHAT HEADER
+        ====================================================== */
 
-margin-right:15px;
+        .chat-header {
+            min-height: 76px;
 
-flex-shrink:0;
+            display: flex;
 
-}
+            align-items: center;
 
-.ai-avatar{
+            justify-content: space-between;
 
-background:#00C2FF;
+            padding: 0 30px;
 
-color:white;
+            background: #030b16;
 
-}
+            border-bottom: 1px solid #173653;
 
-.user-avatar{
+            flex-shrink: 0;
+        }
 
-background:#4F46E5;
+        .chat-header-left {
+            display: flex;
 
-color:white;
+            align-items: center;
 
-margin-left:15px;
+            gap: 13px;
+        }
 
-margin-right:0;
+        .assistant-icon {
+            width: 42px;
+            height: 42px;
 
-}
+            display: flex;
 
-.bubble{
+            align-items: center;
+            justify-content: center;
 
-max-width:70%;
+            border-radius: 12px;
 
-padding:18px 22px;
+            color: #00e5ff;
 
-border-radius:18px;
+            background: rgba(0, 229, 255, 0.08);
 
-line-height:1.8;
+            border: 1px solid rgba(0, 229, 255, 0.25);
 
-font-size:15px;
+            font-size: 18px;
+        }
 
-word-break:break-word;
+        .chat-header h4 {
+            margin: 0;
 
-}
+            color: #f8fafc;
 
-.ai-bubble{
+            font-size: 16px;
 
-background:#111827;
+            font-weight: 700;
+        }
 
-border:1px solid #173B64;
+        .chat-header-subtitle {
+            margin-top: 3px;
 
-color:#E2E8F0;
+            color: #64748b;
 
-}
+            font-size: 10px;
+        }
 
-.user-bubble{
+        .online {
+            width: 7px;
+            height: 7px;
 
-background:#00C2FF;
+            display: inline-block;
 
-color:white;
+            margin-right: 6px;
 
-}
+            border-radius: 50%;
 
-.time{
+            background: #22c55e;
 
-font-size:12px;
+            box-shadow:
+                0 0 8px rgba(34, 197, 94, 0.8);
+        }
 
-margin-top:8px;
+        .header-actions {
+            display: flex;
 
-color:#94A3B8;
+            align-items: center;
 
-}
+            gap: 12px;
+        }
 
-</style>
+        .header-action {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: #64748b;
+
+            background: #091525;
+
+            border: 1px solid #15304a;
+
+            transition: 0.2s ease;
+        }
+
+        .header-action:hover {
+            color: #00e5ff;
+
+            border-color: rgba(0, 229, 255, 0.35);
+
+            background: #0d1d31;
+        }
+
+
+        /* =====================================================
+           CHAT BODY
+        ====================================================== */
+
+        .chat-body {
+            flex: 1;
+
+            min-height: 0;
+
+            overflow-y: auto;
+
+            padding: 35px 7% 40px;
+
+            scroll-behavior: smooth;
+        }
+
+        .chat-body::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: #173653;
+
+            border-radius: 20px;
+        }
+
+
+        /* =====================================================
+           WELCOME
+        ====================================================== */
+
+        .welcome {
+            width: min(700px, 90%);
+
+            margin: 9vh auto 0;
+
+            text-align: center;
+
+            padding: 45px 35px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15, 23, 42, 0.95),
+                    rgba(8, 20, 35, 0.95)
+                );
+
+            border: 1px solid #173653;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-icon {
+            width: 72px;
+            height: 72px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 20px;
+
+            border-radius: 20px;
+
+            color: #00e5ff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 229, 255, 0.13),
+                    rgba(59, 130, 246, 0.08)
+                );
+
+            border: 1px solid rgba(0, 229, 255, 0.25);
+
+            box-shadow:
+                0 0 30px rgba(0, 229, 255, 0.08);
+
+            font-size: 31px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 10px;
+
+            color: #f8fafc;
+
+            font-size: 25px;
+
+            font-weight: 700;
+        }
+
+        .welcome h2 span {
+            color: #00e5ff;
+        }
+
+        .welcome p {
+            max-width: 620px;
+
+            margin: 0 auto;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.8;
+        }
+
+        .welcome-tags {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 24px;
+        }
+
+        .welcome-tag {
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            color: #7dd3fc;
+
+            background: rgba(14, 165, 233, 0.05);
+
+            border: 1px solid rgba(14, 165, 233, 0.12);
+
+            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ====================================================== */
+
+        .message {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            width: 100%;
+
+            margin-bottom: 25px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+        }
+
+        .ai-avatar {
+            color: #00e5ff;
+
+            background: rgba(0, 229, 255, 0.08);
+
+            border: 1px solid rgba(0, 229, 255, 0.22);
+        }
+
+        .user-avatar {
+            color: #e2e8f0;
+
+            background: #17233a;
+
+            border: 1px solid #29415e;
+        }
+
+
+        /* =====================================================
+           MESSAGE CONTENT
+        ====================================================== */
+
+        .message-content {
+            max-width: min(78%, 850px);
+        }
+
+        .message-label {
+            margin: 0 0 6px 3px;
+
+            color: #475569;
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+        }
+
+        .user .message-label {
+            text-align: right;
+
+            margin-right: 3px;
+        }
+
+
+        /* =====================================================
+           BUBBLES
+        ====================================================== */
+
+        .bubble {
+            padding: 14px 17px;
+
+            border-radius: 16px;
+
+            font-size: 13px;
+
+            line-height: 1.75;
+
+            word-break: break-word;
+        }
+
+        .ai-bubble {
+            background:
+                linear-gradient(
+                    145deg,
+                    #0d1b2d,
+                    #0b1829
+                );
+
+            border: 1px solid #193955;
+
+            color: #dbeafe;
+
+            box-shadow:
+                0 7px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .user-bubble {
+            background:
+                linear-gradient(
+                    135deg,
+                    #008ca8,
+                    #007f9b
+                );
+
+            border: 1px solid rgba(0, 229, 255, 0.2);
+
+            color: #ffffff;
+
+            border-radius: 16px 16px 4px 16px;
+
+            box-shadow:
+                0 7px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .user .avatar {
+            order: 2;
+        }
+
+
+        /* =====================================================
+           AI RESPONSE TEXT
+        ====================================================== */
+
+        .ai-text {
+            margin: 0;
+
+            color: #dbeafe;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            white-space: pre-wrap;
+
+            overflow-x: auto;
+        }
+
+        .ai-text::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .ai-text::-webkit-scrollbar-thumb {
+            background: #1e4a67;
+
+            border-radius: 10px;
+        }
+
+
+        /* =====================================================
+           COPY BUTTON
+        ====================================================== */
+
+        .ai-actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 11px;
+
+            padding-top: 9px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.045);
+        }
+
+        .copy-btn {
+            padding: 5px 9px;
+
+            border: 1px solid #23425d;
+
+            border-radius: 7px;
+
+            background: #091827;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            transition: 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            color: #00e5ff;
+
+            border-color: rgba(0, 229, 255, 0.35);
+
+            background: #0d1d31;
+        }
+
+
+        /* =====================================================
+           INPUT AREA
+        ====================================================== */
+
+        .chat-input-area {
+            padding: 15px 7% 17px;
+
+            background: #030b16;
+
+            border-top: 1px solid #173653;
+
+            flex-shrink: 0;
+        }
+
+        .input-shell {
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 8px;
+
+            padding: 7px 7px 7px 15px;
+
+            background: #091525;
+
+            border: 1px solid #1b3a56;
+
+            border-radius: 15px;
+
+            transition: 0.25s ease;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.14);
+        }
+
+        .input-shell:focus-within {
+            border-color: rgba(0, 229, 255, 0.45);
+
+            box-shadow:
+                0 0 0 3px rgba(0, 229, 255, 0.04),
+                0 8px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .message-textarea {
+            flex: 1;
+
+            min-height: 42px;
+
+            max-height: 130px;
+
+            padding: 11px 3px;
+
+            border: none;
+
+            outline: none;
+
+            resize: none;
+
+            overflow-y: auto;
+
+            background: transparent;
+
+            color: #f1f5f9;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .message-textarea::placeholder {
+            color: #475569;
+        }
+
+        .message-textarea::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .message-textarea::-webkit-scrollbar-thumb {
+            background: #1e3a5f;
+
+            border-radius: 10px;
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: #00c8e6;
+
+            color: #00131a;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .send-btn:hover {
+            background: #00e5ff;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 18px rgba(0, 229, 255, 0.18);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            box-shadow: none;
+        }
+
+        .input-note {
+            max-width: 1000px;
+
+            margin: 8px auto 0;
+
+            text-align: center;
+
+            color: #334155;
+
+            font-size: 9px;
+        }
+
+        .input-note i {
+            margin-right: 4px;
+
+            color: #475569;
+        }
+
+
+        /* =====================================================
+           LOADING
+        ====================================================== */
+
+        .thinking {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+        .thinking-dots {
+            display: inline-flex;
+
+            gap: 3px;
+        }
+
+        .thinking-dots span {
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: #00e5ff;
+
+            animation: thinking 1.2s infinite;
+        }
+
+        .thinking-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .thinking-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes thinking {
+            0%,
+            60%,
+            100% {
+                opacity: 0.25;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+
+        /* =====================================================
+           ERROR MESSAGE
+        ====================================================== */
+
+        .error-bubble {
+            color: #fecdd3;
+
+            border-color: rgba(244, 63, 94, 0.25);
+
+            background:
+                rgba(127, 29, 29, 0.12);
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 235px;
+            }
+
+            .chat-body,
+            .chat-input-area {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .message-content {
+                max-width: 82%;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            body {
+                overflow: auto;
+            }
+
+            .chat-wrapper {
+                height: 100vh;
+            }
+
+            .sidebar {
+                width: 72px;
+            }
+
+            .logo {
+                padding: 18px 10px;
+            }
+
+            .brand-row {
+                justify-content: center;
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo h3,
+            .logo p,
+            .new-chat span,
+            .history-header,
+            .history-content,
+            .delete-chat,
+            .sidebar-footer {
+                display: none;
+            }
+
+            .new-chat {
+                padding: 15px 10px;
+            }
+
+            .new-chat button {
+                width: 48px;
+                height: 48px;
+
+                padding: 0;
+            }
+
+            .new-chat button i {
+                margin: 0;
+            }
+
+            .history {
+                padding: 10px 9px;
+            }
+
+            .history-item {
+                justify-content: center;
+
+                padding: 9px;
+
+                margin-bottom: 7px;
+            }
+
+            .history-chat-icon {
+                width: 38px;
+                height: 38px;
+            }
+
+            .chat-header {
+                padding: 0 15px;
+            }
+
+            .chat-header-subtitle {
+                display: none;
+            }
+
+            .chat-header h4 {
+                font-size: 14px;
+            }
+
+            .assistant-icon {
+                width: 38px;
+                height: 38px;
+            }
+
+            .chat-body {
+                padding: 25px 15px;
+            }
+
+            .chat-input-area {
+                padding: 10px 12px 12px;
+            }
+
+            .message-content {
+                max-width: 84%;
+            }
+
+            .bubble,
+            .ai-text {
+                font-size: 12px;
+            }
+
+            .welcome {
+                width: 100%;
+
+                margin-top: 5vh;
+
+                padding: 30px 20px;
+            }
+
+            .welcome h2 {
+                font-size: 21px;
+            }
+
+            .header-action {
+                width: 35px;
+                height: 35px;
+            }
+
+        }
+
+    </style>
 
 </head>
+
 
 <body>
 
 <div class="chat-wrapper">
 
-<!-- Sidebar -->
 
-<div class="sidebar">
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-<div class="logo">
+    <aside class="sidebar">
 
-<i
-class="fa-solid fa-shield-halved"
-style="font-size:65px;color:#00E5FF;">
-</i>
 
-<h3>
+        <!-- BRAND -->
 
-SentinelX AI
+        <div class="logo">
 
-</h3>
+            <div class="brand-row">
 
-<p>
+                <div class="brand-icon">
 
-Cybersecurity AI Assistant
+                    <i class="fa-solid fa-shield-halved"></i>
 
-</p>
+                </div>
+
+                <div>
+
+                    <h3>
+
+                        Sentinel<span>X</span> AI
+
+                    </h3>
+
+                    <p>
+
+                        Security Intelligence
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW CHAT -->
+
+        <div class="new-chat">
+
+            <button
+                type="button"
+                id="newChat"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                <span>New Security Chat</span>
+
+            </button>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div class="history">
+
+            <div class="history-header">
+
+                <h6>
+
+                    <i class="fa-solid fa-clock-rotate-left me-1"></i>
+
+                    Chat History
+
+                </h6>
+
+                <span class="history-count">
+
+                    {% if chats %}
+                        {{ chats|length }}
+                    {% else %}
+                        0
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            {% for chat in chats %}
+
+                <div
+                    class="history-item {% if selected_chat.id == chat.id %}active{% endif %}"
+                >
+
+                    <a
+                        href="{% url 'chat_detail' chat.id %}"
+                        class="d-flex align-items-center gap-2 flex-grow-1"
+                        style="min-width:0;color:inherit;"
+                    >
+
+                        <div class="history-chat-icon">
+
+                            <i class="fa-solid fa-message"></i>
+
+                        </div>
+
+                        <div class="history-content">
+
+                            <span class="history-question">
+
+                                {{ chat.question }}
+
+                            </span>
+
+                            <small>
+
+                                <i class="fa-regular fa-clock"></i>
+
+                                {{ chat.created_at|date:"d M Y, H:i" }}
+
+                            </small>
+
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="{% url 'delete_chat' chat.id %}"
+                        class="delete-chat"
+                        title="Delete Chat"
+                        onclick="return confirm('Delete this chat?');"
+                    >
+
+                        <i class="fa-solid fa-trash-can"></i>
+
+                    </a>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-history">
+
+                    <i class="fa-regular fa-comments"></i>
+
+                    No conversations yet.
+
+                    <br>
+
+                    Start a security conversation.
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-security">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <span>
+
+                    Conversations secured to your account
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CHAT
+    ====================================================== -->
+
+    <main class="chat-container">
+
+
+        <!-- HEADER -->
+
+        <header class="chat-header">
+
+            <div class="chat-header-left">
+
+                <div class="assistant-icon">
+
+                    <i class="fa-solid fa-robot"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+
+                        SentinelX AI Security Assistant
+
+                    </h4>
+
+                    <div class="chat-header-subtitle">
+
+                        <span class="online"></span>
+
+                        Online • Powered by Gemini AI
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="header-action"
+                    title="Dashboard"
+                >
+
+                    <i class="fa-solid fa-house"></i>
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CHAT BODY
+        ================================================== -->
+
+        <section
+            class="chat-body"
+            id="chatBody"
+        >
+
+
+            {% if selected_chat %}
+
+
+                <!-- USER MESSAGE -->
+
+                <div class="message user">
+
+                    <div class="message-content">
+
+                        <div class="message-label">
+
+                            You
+
+                        </div>
+
+                        <div class="bubble user-bubble">
+
+                            {{ selected_chat.question }}
+
+                        </div>
+
+                    </div>
+
+                    <div class="avatar user-avatar">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AI RESPONSE -->
+
+                <div class="message">
+
+                    <div class="avatar ai-avatar">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-label">
+
+                            SentinelX AI
+
+                        </div>
+
+                        <div class="bubble ai-bubble">
+
+                            <pre class="ai-text">{{ selected_chat.answer }}</pre>
+
+                            <div class="ai-actions">
+
+                                <button
+                                    type="button"
+                                    class="copy-btn"
+                                >
+
+                                    <i class="fa-regular fa-copy"></i>
+
+                                    Copy Response
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- WELCOME -->
+
+                <div class="welcome">
+
+                    <div class="welcome-icon">
+
+                        <i class="fa-solid fa-robot"></i>
+
+                    </div>
+
+                    <h2>
+
+                        Welcome to
+
+                        <span>SentinelX AI</span>
+
+                    </h2>
+
+                    <p>
+
+                        Your AI-powered cybersecurity assistant.
+
+                        Ask questions about phishing, malware,
+
+                        social engineering, password security,
+
+                        ransomware, network attacks,
+
+                        digital forensics, ethical hacking,
+
+                        or general cyber awareness.
+
+                    </p>
+
+
+                    <div class="welcome-tags">
+
+                        <span class="welcome-tag">
+
+                            <i class="fa-solid fa-link"></i>
+
+                            Phishing
+
+                        </span>
+
+                        <span class="welcome-tag">
+
+                            <i class="fa-solid fa-bug"></i>
+
+                            Malware
+
+                        </span>
+
+                        <span class="welcome-tag">
+
+                            <i class="fa-solid fa-network-wired"></i>
+
+                            Network Security
+
+                        </span>
+
+                        <span class="welcome-tag">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            Cyber Awareness
+
+                        </span>
+
+                        <span class="welcome-tag">
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            Digital Forensics
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+        <!-- =================================================
+             INPUT
+        ================================================== -->
+
+        <div class="chat-input-area">
+
+            <form id="chatForm">
+
+                {% csrf_token %}
+
+                <div class="input-shell">
+
+                    <textarea
+                        name="message"
+                        id="message"
+                        class="message-textarea"
+                        rows="1"
+                        placeholder="Ask SentinelX AI anything about cybersecurity..."
+                        autocomplete="off"
+                        required
+                    ></textarea>
+
+
+                    <button
+                        type="submit"
+                        class="send-btn"
+                        id="sendButton"
+                        title="Send Message"
+                    >
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="input-note">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                SentinelX AI may produce inaccurate information.
+                Verify important cybersecurity decisions.
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
 
-<div class="new-chat">
 
-<button
-id="newChat">
-
-<i class="fa-solid fa-plus"></i>
-
-New Chat
-
-</button>
-
-</div>
-
-<div class="history">
-
-<div class="d-flex justify-content-between align-items-center mb-3">
-
-<h6 class="mb-0 text-info">
-
-Recent Chats
-
-</h6>
-
-<a
-
-href="{% url 'delete_all_chats' %}"
-
-style="
-color:white;
-text-decoration:none;
-font-size:18px;
-"
-
-onclick="return confirm('Delete all chat history?');"
-
->
-
-<i class="fa-solid fa-trash"></i>
-
-</a>
-
-</div>
-
-{% for chat in chats %}
-
-<a
-href="{% url 'chat_detail' chat.id %}"
-style="text-decoration:none;color:inherit;"
->
-<div
-class="history-item d-flex justify-content-between align-items-center">
-
-<div style="width:85%;">
-
-<strong>
-
-{{ chat.question|truncatechars:28 }}
-
-</strong>
-
-<small>
-
-{{ chat.created_at|date:"d M Y H:i" }}
-
-</small>
-
-</div>
-
-<a
-
-href="{% url 'delete_chat' chat.id %}"
-
-style="
-color:white;
-text-decoration:none;
-"
-
-onclick="return confirm('Delete this conversation?');"
-
-title="Delete Chat"
-
->
-
-<i class="fa-solid fa-trash"></i>
-
-</a>
-
-</div>
-
-</a>
-
-{% empty %}
-
-<p class="text-secondary">
-
-No chat history yet.
-
-</p>
-
-{% endfor %}
-
-</div>
-
-</div>
-
-<!-- Chat Area -->
-
-<div class="chat-container">
-
-<div class="chat-header">
-
-<div>
-
-<h4>
-
-SentinelX AI Assistant
-
-</h4>
-
-<span>
-
-<span class="online"></span>
-
-Online • Powered by Gemini AI
-
-</span>
-
-</div>
-
-<div class="d-flex align-items-center gap-3">
-
-<a
-href="{% url 'dashboard' %}"
-class="text-info"
-title="Dashboard">
-
-<i
-class="fa-solid fa-house"
-style="font-size:26px;">
-</i>
-
-</a>
-
-<i
-class="fa-solid fa-robot"
-style="font-size:28px;color:#00E5FF;">
-</i>
-
-</div>
-
-</div>
-
-<div
-class="chat-body"
-id="chatBody">
-
-{% if selected_chat %}<div class="message user">
-
-<div>
-
-<div class="bubble user-bubble">
-
-{{ selected_chat.question }}
-
-</div>
-
-</div>
-
-<div class="avatar user-avatar">
-
-<i class="fa-solid fa-user"></i>
-
-</div>
-
-</div>
-
-<div class="message">
-
-<div class="avatar ai-avatar">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-</div>
-
-<div>
-
-<div class="bubble ai-bubble">
-
-<pre
-
-class="ai-text"
-
-style="
-margin:0;
-white-space:pre-wrap;
-font-family:Poppins,sans-serif;
-color:#E2E8F0;
-">
-
-{{ selected_chat.answer }}
-
-</pre>
-
-<div class="text-end mt-2">
-
-<button
-
-type="button"
-
-class="btn btn-sm btn-outline-info copy-btn"
-
->
-
-<i class="fa-solid fa-copy"></i>
-
-Copy
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-{% else %}
-
-<div class="welcome">
-
-<i class="fa-solid fa-robot"></i>
-
-<h2>
-
-Welcome to SentinelX AI
-
-</h2>
-
-<p>
-
-Ask anything related to cybersecurity, phishing detection, malware,
-social engineering, password security, ransomware,
-network attacks, digital forensics, ethical hacking,
-or general cyber awareness.
-
-</p>
-
-</div>
-
-{% endif %}
-
-</div>
-
-<!-- ========================= -->
-<!-- Chat Input -->
-<!-- ========================= -->
-
-<div
-style="
-padding:25px;
-background:#020B16;
-border-top:1px solid #173B64;
-">
-
-<form
-id="chatForm">
-
-{% csrf_token %}
-
-<div class="input-group">
-
-<textarea
-
-name="message"
-
-id="message"
-
-class="form-control"
-
-rows="1"
-
-placeholder="Ask SentinelX AI anything about Cybersecurity..."
-
-style="
-background:#0F172A;
-color:white;
-border:1px solid #173B64;
-border-radius:15px 0 0 15px;
-padding:18px;
-resize:none;
-font-size:15px;
-"
-
-required
-
-></textarea>
-
-<button
-
-class="btn btn-info"
-
-type="submit"
-
-style="
-width:75px;
-border-radius:0 15px 15px 0;
-"
-
->
-
-<i
-class="fa-solid fa-paper-plane">
-</i>
-
-</button>
-
-</div>
-
-</form>
-
-<div
-class="text-center mt-3">
-
-<small
-style="color:#94A3B8;">
-
-SentinelX AI may produce inaccurate information. Always verify important cybersecurity decisions.
-
-</small>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
 
 <script>
 
-const form=document.getElementById("chatForm");
+    const form = document.getElementById("chatForm");
 
-const textarea=document.getElementById("message");
+    const textarea = document.getElementById("message");
 
-const chatBody=document.getElementById("chatBody");
+    const chatBody = document.getElementById("chatBody");
 
-const csrf=document.querySelector(
-"[name=csrfmiddlewaretoken]"
-).value;
+    const sendButton = document.getElementById("sendButton");
 
-chatBody.scrollTop=chatBody.scrollHeight;
+    const csrfInput = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+    );
 
-textarea.addEventListener("input",function(){
 
-this.style.height="auto";
+    /* =====================================================
+       CSRF
+    ====================================================== */
 
-this.style.height=this.scrollHeight+"px";
+    const csrf = csrfInput
+        ? csrfInput.value
+        : "";
 
-});
 
-textarea.addEventListener("keydown",function(e){
+    /* =====================================================
+       AUTO SCROLL
+    ====================================================== */
 
-if(e.key==="Enter" && !e.shiftKey){
+    function scrollToBottom() {
 
-e.preventDefault();
+        chatBody.scrollTop = chatBody.scrollHeight;
 
-form.dispatchEvent(new Event("submit"));
+    }
 
-}
 
-});
+    scrollToBottom();
 
-form.addEventListener("submit",async function(e){
 
-e.preventDefault();
+    /* =====================================================
+       TEXTAREA AUTO RESIZE
+    ====================================================== */
 
-const message=textarea.value.trim();
+    textarea.addEventListener(
+        "input",
+        function () {
 
-if(message==="") return;
+            this.style.height = "auto";
 
-chatBody.innerHTML+=`
+            this.style.height =
+                Math.min(
+                    this.scrollHeight,
+                    130
+                ) + "px";
 
-<div class="message user">
+        }
+    );
 
-<div>
 
-<div class="bubble user-bubble">
+    /* =====================================================
+       ENTER TO SEND
+    ====================================================== */
 
-${message}
+    textarea.addEventListener(
+        "keydown",
+        function (event) {
 
-</div>
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
 
-</div>
+                event.preventDefault();
 
-<div class="avatar user-avatar">
+                form.requestSubmit();
 
-<i class="fa-solid fa-user"></i>
+            }
 
-</div>
+        }
+    );
 
-</div>
 
-`;
+    /* =====================================================
+       ESCAPE HTML
+    ====================================================== */
 
-chatBody.innerHTML+=`
+    function escapeHtml(text) {
 
-<div id="loading" class="message">
+        const div = document.createElement("div");
 
-<div class="avatar ai-avatar">
+        div.textContent = text;
 
-<i class="fa-solid fa-shield-halved"></i>
+        return div.innerHTML;
 
-</div>
+    }
 
-<div>
 
-<div class="bubble ai-bubble">
+    /* =====================================================
+       ADD USER MESSAGE
+    ====================================================== */
 
-<div class="spinner-border spinner-border-sm text-info me-2"></div>
+    function addUserMessage(message) {
 
-SentinelX AI is thinking...
+        chatBody.innerHTML += `
 
-</div>
+            <div class="message user">
 
-</div>
+                <div class="message-content">
 
-</div>
+                    <div class="message-label">
 
-`;
+                        You
 
-chatBody.scrollTop=chatBody.scrollHeight;
+                    </div>
 
-textarea.value="";
+                    <div class="bubble user-bubble">
 
-const response=await fetch("{% url 'send_message' %}",{
+                        ${escapeHtml(message)}
 
-method:"POST",
+                    </div>
 
-headers:{
+                </div>
 
-"X-CSRFToken":csrf,
+                <div class="avatar user-avatar">
 
-"X-Requested-With":"XMLHttpRequest"
+                    <i class="fa-solid fa-user"></i>
 
-},
+                </div>
 
-body:new URLSearchParams({
+            </div>
 
-message:message
+        `;
 
-})
+    }
 
-});
 
-const data=await response.json();
+    /* =====================================================
+       ADD THINKING MESSAGE
+    ====================================================== */
 
-document.getElementById("loading").remove();
+    function addThinkingMessage() {
 
-if(data.success){
+        chatBody.innerHTML += `
 
-chatBody.innerHTML+=`
+            <div
+                id="loadingMessage"
+                class="message"
+            >
 
-<div class="message">
+                <div class="avatar ai-avatar">
 
-<div class="avatar ai-avatar">
+                    <i class="fa-solid fa-shield-halved"></i>
 
-<i class="fa-solid fa-shield-halved"></i>
+                </div>
 
-</div>
+                <div class="message-content">
 
-<div>
+                    <div class="message-label">
 
-<div class="bubble ai-bubble">
+                        SentinelX AI
 
-<pre style="margin:0;white-space:pre-wrap;font-family:Poppins,sans-serif;color:#E2E8F0;">
+                    </div>
 
-${data.answer}
+                    <div class="bubble ai-bubble">
 
-</pre>
+                        <div class="thinking">
 
-</div>
+                            <span>
 
-</div>
+                                Analyzing your request
 
-</div>
+                            </span>
 
-`;
+                            <span class="thinking-dots">
 
-}
+                                <span></span>
+                                <span></span>
+                                <span></span>
 
-else{
+                            </span>
 
-chatBody.innerHTML+=`
+                        </div>
 
-<div class="message">
+                    </div>
 
-<div class="avatar ai-avatar">
+                </div>
 
-<i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
 
-</div>
+        `;
 
-<div>
+    }
 
-<div class="bubble ai-bubble">
 
-${data.error}
+    /* =====================================================
+       ADD AI RESPONSE
+    ====================================================== */
 
-</div>
+    function addAIMessage(answer) {
 
-</div>
+        chatBody.innerHTML += `
 
-</div>
+            <div class="message">
 
-`;
+                <div class="avatar ai-avatar">
 
-}
+                    <i class="fa-solid fa-shield-halved"></i>
 
-chatBody.scrollTop=chatBody.scrollHeight;
+                </div>
 
-});
+                <div class="message-content">
 
-document.getElementById("newChat").onclick=function(){
+                    <div class="message-label">
 
-window.location.href="{% url 'chatbot' %}";
+                        SentinelX AI
 
-};
+                    </div>
 
-// ==========================
-// Copy AI Response
-// ==========================
+                    <div class="bubble ai-bubble">
 
-document.addEventListener(
+                        <pre class="ai-text">${escapeHtml(answer)}</pre>
 
-"click",
+                        <div class="ai-actions">
 
-function(e){
+                            <button
+                                type="button"
+                                class="copy-btn"
+                            >
 
-const button = e.target.closest(".copy-btn");
+                                <i class="fa-regular fa-copy"></i>
 
-if(!button) return;
+                                Copy Response
 
-const text = button
+                            </button>
 
-.closest(".ai-bubble")
+                        </div>
 
-.querySelector(".ai-text")
+                    </div>
 
-.innerText;
+                </div>
 
-navigator.clipboard.writeText(text);
+            </div>
 
-const original = button.innerHTML;
+        `;
 
-button.innerHTML =
+    }
 
-'<i class="fa-solid fa-check"></i> Copied';
 
-setTimeout(function(){
+    /* =====================================================
+       ADD ERROR
+    ====================================================== */
 
-button.innerHTML = original;
+    function addErrorMessage(error) {
 
-},1500);
+        chatBody.innerHTML += `
 
-}
+            <div class="message">
 
-);
+                <div class="avatar ai-avatar">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+                <div class="message-content">
+
+                    <div class="message-label">
+
+                        SentinelX AI
+
+                    </div>
+
+                    <div class="bubble ai-bubble error-bubble">
+
+                        ${escapeHtml(error)}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       SEND MESSAGE
+    ====================================================== */
+
+    form.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const message =
+                textarea.value.trim();
+
+
+            if (!message) {
+
+                return;
+
+            }
+
+
+            addUserMessage(message);
+
+            addThinkingMessage();
+
+            scrollToBottom();
+
+
+            textarea.value = "";
+
+            textarea.style.height = "42px";
+
+            sendButton.disabled = true;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "{% url 'send_message' %}",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "X-CSRFToken": csrf,
+
+                                "X-Requested-With":
+                                    "XMLHttpRequest",
+
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded;charset=UTF-8"
+
+                            },
+
+                            body:
+                                new URLSearchParams({
+
+                                    message: message
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                const loading =
+                    document.getElementById(
+                        "loadingMessage"
+                    );
+
+
+                if (loading) {
+
+                    loading.remove();
+
+                }
+
+
+                if (data.success) {
+
+                    addAIMessage(
+                        data.answer
+                    );
+
+                }
+                else {
+
+                    addErrorMessage(
+                        data.error ||
+                        "Unable to process your request."
+                    );
+
+                }
+
+
+            }
+            catch (error) {
+
+                const loading =
+                    document.getElementById(
+                        "loadingMessage"
+                    );
+
+
+                if (loading) {
+
+                    loading.remove();
+
+                }
+
+
+                addErrorMessage(
+                    "Unable to connect to SentinelX AI. Please try again."
+                );
+
+                console.error(error);
+
+            }
+            finally {
+
+                sendButton.disabled = false;
+
+                textarea.focus();
+
+                scrollToBottom();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       NEW CHAT
+    ====================================================== */
+
+    document
+        .getElementById("newChat")
+        .addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "{% url 'chatbot' %}";
+
+            }
+        );
+
+
+    /* =====================================================
+       COPY AI RESPONSE
+    ====================================================== */
+
+    document.addEventListener(
+        "click",
+        async function (event) {
+
+            const button =
+                event.target.closest(
+                    ".copy-btn"
+                );
+
+
+            if (!button) {
+
+                return;
+
+            }
+
+
+            const bubble =
+                button.closest(
+                    ".ai-bubble"
+                );
+
+
+            if (!bubble) {
+
+                return;
+
+            }
+
+
+            const textElement =
+                bubble.querySelector(
+                    ".ai-text"
+                );
+
+
+            if (!textElement) {
+
+                return;
+
+            }
+
+
+            const text =
+                textElement.innerText;
+
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    text
+                );
+
+
+                const original =
+                    button.innerHTML;
+
+
+                button.innerHTML = `
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Copied
+
+                `;
+
+
+                button.style.color =
+                    "#34d399";
+
+
+                button.style.borderColor =
+                    "rgba(52,211,153,.35)";
+
+
+                setTimeout(
+                    function () {
+
+                        button.innerHTML =
+                            original;
+
+                        button.style.color =
+                            "";
+
+                        button.style.borderColor =
+                            "";
+
+                    },
+                    1500
+                );
+
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Copy failed:",
+                    error
+                );
+
+            }
+
+        }
+    );
 
 </script>
+
 
 </body>
 

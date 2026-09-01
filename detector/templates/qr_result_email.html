@@ -1,1601 +1,912 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>
-
-Email Security Intelligence | SentinelX AI
-
-</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+{% block content %}
 
 <style>
 
-*{
+/* =========================================================
+   QR EMAIL RESULT — SENTINELX CYBER UI
+========================================================= */
 
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
-    font-family:'Poppins',sans-serif;
-
+.qr-result-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-body{
-
-    background:#081321;
-
-    color:white;
-
+/* Header */
+.result-header {
+    text-align: center;
+    margin-bottom: 32px;
 }
 
-.container-fluid{
+.result-header-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 16px;
 
-    padding:40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.30);
+    border-radius: 18px;
+
+    color: #00e5ff;
+    font-size: 30px;
+
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.10);
 }
 
-/* ===========================================
-   HERO
-=========================================== */
-
-.hero{
-
-    background:#17233b;
-
-    border-radius:22px;
-
-    padding:42px;
-
-    border:1px solid rgba(0,217,255,.15);
-
-    box-shadow:0 0 30px rgba(0,217,255,.08);
-
-    margin-bottom:35px;
-
+.result-header h1 {
+    color: #00e5ff;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 8px;
 }
 
-.logo{
-
-    color:#00d9ff;
-
-    font-size:38px;
-
-    font-weight:700;
-
+.result-header p {
+    color: #94a3b8;
+    margin: 0;
 }
 
-.logo span{
+/* Main Card */
+.result-card {
+    background: #111827;
+    border: 1px solid #1e3a5f;
+    border-radius: 22px;
+    overflow: hidden;
 
-    color:white;
-
+    box-shadow:
+        0 0 30px rgba(0, 229, 255, 0.07),
+        0 15px 40px rgba(0, 0, 0, 0.20);
 }
 
-.report-title{
+/* Result Banner */
+.result-banner {
+    padding: 28px 30px;
 
-    margin-top:18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 
-    font-size:46px;
+    background: linear-gradient(
+        135deg,
+        #0b1d34,
+        #09172a
+    );
 
-    font-weight:700;
-
+    border-bottom: 1px solid #1e3a5f;
 }
 
-.subtitle{
-
-    color:#9fb4c9;
-
-    font-size:20px;
-
+.result-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-/* ===========================================
-   VERDICT
-=========================================== */
+.result-banner-icon {
+    width: 48px;
+    height: 48px;
 
-.verdict{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    float:right;
+    border-radius: 13px;
 
-    margin-top:-95px;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.25);
 
-    padding:12px 30px;
-
-    border-radius:40px;
-
-    font-size:20px;
-
-    font-weight:700;
-
+    color: #00e5ff;
+    font-size: 20px;
 }
 
-.safe{
-
-    background:#16a34a;
-
+.result-banner h3 {
+    margin: 0;
+    color: #f1f5f9;
+    font-size: 20px;
+    font-weight: 700;
 }
 
-.warning{
-
-    background:#f59e0b;
-
+.result-banner p {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 13px;
 }
 
-.danger{
+/* Verdict */
+.verdict-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
-    background:#ef4444;
+    padding: 9px 16px;
 
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+
+    white-space: nowrap;
 }
 
-/* ===========================================
-   INFO CARDS
-=========================================== */
-
-.info-card{
-
-    background:#101a2d;
-
-    border:none;
-
-    border-radius:18px;
-
-    padding:30px;
-
-    transition:.30s;
-
-    margin-top:25px;
-
+.verdict-dangerous {
+    color: #f87171;
+    background: rgba(239, 68, 68, .08);
+    border: 1px solid rgba(239, 68, 68, .25);
 }
 
-.info-card:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:0 0 25px rgba(0,217,255,.15);
-
+.verdict-suspicious {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, .08);
+    border: 1px solid rgba(245, 158, 11, .25);
 }
 
-.info-icon{
-
-    font-size:36px;
-
-    color:#00d9ff;
-
+.verdict-safe {
+    color: #34d399;
+    background: rgba(16, 185, 129, .08);
+    border: 1px solid rgba(16, 185, 129, .25);
 }
 
-.info-title{
-
-    color:#9fb4c9;
-
-    margin-top:15px;
-
-    font-size:18px;
-
+/* Body */
+.result-body {
+    padding: 28px 30px 32px;
 }
 
-.info-value{
-
-    color:white;
-
-    margin-top:12px;
-
-    font-size:28px;
-
-    font-weight:700;
-
-    word-break:break-word;
-
+/* Score Grid */
+.score-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 25px;
 }
 
-/* ===========================================
-   SECTION
-=========================================== */
-
-.section-card{
-
-    background:#17233b;
-
-    border-radius:22px;
-
-    padding:40px;
-
-    margin-top:35px;
-
+.score-card {
+    background: #0b182b;
+    border: 1px solid #17324b;
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 105px;
 }
 
-.section-title{
-
-    color:#00d9ff;
-
-    font-size:32px;
-
-    font-weight:700;
-
-    margin-bottom:30px;
-
+.score-card:hover {
+    border-color: rgba(0, 229, 255, .35);
 }
 
-/* ===========================================
-   TABLE
-=========================================== */
+.score-icon {
+    width: 35px;
+    height: 35px;
 
-.table-dark{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    --bs-table-bg:#17233b;
+    border-radius: 9px;
 
+    background: rgba(0, 229, 255, .07);
+    color: #00e5ff;
+
+    margin-bottom: 12px;
 }
 
-.table th{
+.score-label {
+    display: block;
 
-    color:#7dd3fc;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
 
-    width:240px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
 
-    padding:18px;
-
+    margin-bottom: 5px;
 }
 
-.table td{
-
-    color:white;
-
-    padding:18px;
-
+.score-value {
+    color: #e2e8f0;
+    font-size: 20px;
+    font-weight: 700;
 }
 
-/* ===========================================
-   BADGES
-=========================================== */
-
-.badge-safe{
-
-    background:#16a34a;
-
-    font-size:15px;
-
-    padding:8px 18px;
-
+.score-value.warning {
+    color: #fbbf24;
 }
 
-.badge-warning{
-
-    background:#f59e0b;
-
-    color:black;
-
-    font-size:15px;
-
-    padding:8px 18px;
-
+.score-value.danger {
+    color: #f87171;
 }
 
-.badge-danger{
-
-    background:#ef4444;
-
-    font-size:15px;
-
-    padding:8px 18px;
-
+.score-value.success {
+    color: #34d399;
 }
 
-/* ===========================================
-   AI REPORT
-=========================================== */
-
-.ai-report{
-
-    background:#101a2d;
-
-    border-left:5px solid #00d9ff;
-
-    border-radius:18px;
-
-    padding:30px;
-
-    color:#f8fafc;
-
-    font-size:17px;
-
-    line-height:1.9;
-
-    white-space:pre-line;
-
+.score-value.info {
+    color: #38bdf8;
 }
 
-/* ===========================================
-   RECOMMENDATIONS
-=========================================== */
+/* Section */
+.result-section {
+    margin-top: 22px;
 
-.recommend-card{
+    background: #0b182b;
+    border: 1px solid #17324b;
+    border-radius: 16px;
 
-    background:#10263b;
-
-    border-left:5px solid #22c55e;
-
-    border-radius:18px;
-
-    padding:25px;
-
+    overflow: hidden;
 }
 
-.avoid-card{
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
 
-    background:#331818;
+    padding: 16px 20px;
 
-    border-left:5px solid #ef4444;
-
-    border-radius:18px;
-
-    padding:25px;
-
+    background: #0d1d32;
+    border-bottom: 1px solid #17324b;
 }
 
-.recommend-card h4{
-
-    color:#22c55e;
-
-    font-weight:700;
-
+.section-header-icon {
+    color: #00e5ff;
+    font-size: 16px;
 }
 
-.avoid-card h4{
-
-    color:#ef4444;
-
-    font-weight:700;
-
+.section-header h4 {
+    margin: 0;
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 700;
 }
 
-.recommend-card li,
-.avoid-card li{
-
-    color:#f8fafc;
-
-    line-height:1.8;
-
-    font-size:16px;
-
+.section-content {
+    padding: 20px;
 }
 
-/* ===========================================
-   EXECUTIVE SUMMARY
-=========================================== */
+/* QR Email Content */
+.email-box {
+    background: #081426;
+    border: 1px solid #17324b;
+    border-radius: 12px;
 
-.summary-title{
+    padding: 16px 18px;
 
-    color:#cbd5e1;
+    color: #cbd5e1;
 
-    font-size:18px;
+    font-size: 14px;
+    line-height: 1.7;
 
+    word-break: break-word;
 }
 
-.summary-number{
-
-    margin-top:15px;
-
-    font-size:36px;
-
-    font-weight:700;
-
-    color:white;
-
+.email-box strong {
+    color: #38bdf8;
 }
 
-/* ===========================================
-   FOOTER
-=========================================== */
-
-footer{
-
-    margin-top:60px;
-
-    text-align:center;
-
+/* Indicators */
+.indicator-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-footer hr{
+.indicator-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
 
-    border-color:#334155;
+    padding: 13px 15px;
 
+    background: #081426;
+    border: 1px solid #17324b;
+
+    border-radius: 11px;
+
+    color: #cbd5e1;
+    font-size: 13px;
 }
 
-footer p{
-
-    color:#94a3b8;
-
+.indicator-item i {
+    color: #fbbf24;
+    margin-top: 3px;
 }
 
-footer small{
+/* Empty Indicators */
+.no-indicators {
+    text-align: center;
+    padding: 22px;
 
-    color:#64748b;
+    color: #34d399;
+    background: rgba(16, 185, 129, .04);
 
+    border: 1px solid rgba(16, 185, 129, .15);
+    border-radius: 12px;
+}
+
+.no-indicators i {
+    margin-right: 7px;
+}
+
+/* AI Explanation */
+.ai-box {
+    background: linear-gradient(
+        135deg,
+        rgba(0, 229, 255, .05),
+        rgba(30, 41, 59, .30)
+    );
+
+    border: 1px solid rgba(0, 229, 255, .18);
+    border-radius: 14px;
+
+    padding: 20px;
+
+    color: #cbd5e1;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.ai-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #00e5ff;
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+/* ML Information */
+.ml-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.ml-item {
+    background: #081426;
+    border: 1px solid #17324b;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.ml-item-label {
+    display: block;
+
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: .6px;
+
+    margin-bottom: 6px;
+}
+
+.ml-item-value {
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Actions */
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+.btn-cyber {
+    padding: 11px 24px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: .25s;
+}
+
+.btn-cyber:hover {
+    transform: translateY(-2px);
+}
+
+/* Security Footer */
+.security-footer {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 14px 16px;
+
+    background: rgba(16, 185, 129, .04);
+
+    border: 1px solid rgba(16, 185, 129, .16);
+
+    border-radius: 12px;
+
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.security-footer i {
+    color: #34d399;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .result-header h1 {
+        font-size: 28px;
+    }
+
+    .result-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
+    }
+
+    .result-body {
+        padding: 20px;
+    }
+
+    .score-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ml-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-actions {
+        flex-direction: column;
+    }
+
+    .result-actions .btn {
+        width: 100%;
+    }
 }
 
 </style>
 
-</head>
 
-<body>
+<div class="container py-5">
 
-<div class="container-fluid">
+<div class="qr-result-wrapper">
 
-<!-- ====================================================== -->
-<!-- HERO -->
-<!-- ====================================================== -->
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
 
-<div class="hero">
+    <div class="result-header">
 
-<div class="logo">
+        <div class="result-header-icon">
+            <i class="fa-solid fa-envelope"></i>
+        </div>
 
-<i class="fa-solid fa-shield-halved"></i>
+        <h1>
+            QR Email Security Result
+        </h1>
 
-Sentinel<span>X AI</span>
+        <p>
+            SentinelX AI analysis of the email address extracted from the QR code.
+        </p>
 
-</div>
-
-<div class="report-title">
-
-Email Security Intelligence Report
-
-</div>
-
-<div class="subtitle">
-
-AI Powered Email QR Security Assessment & Threat Intelligence
-
-</div>
-
-<div class="verdict
-
-{% if email_risk == 'Safe' %}
-
-safe
-
-{% elif email_risk == 'Suspicious' %}
-
-warning
-
-{% else %}
-
-danger
-
-{% endif %}">
-
-{{ verdict_icon }}
-
-{{ email_risk }}
-
-</div>
-
-</div>
-
-
-
-<!-- ====================================================== -->
-<!-- SUMMARY CARDS -->
-<!-- ====================================================== -->
-
-<div class="row">
-
-<!-- Recipient -->
-
-<div class="col-lg-3 col-md-6">
-
-<div class="info-card">
-
-<div class="info-icon">
-
-<i class="fa-solid fa-envelope"></i>
-
-</div>
-
-<div class="info-title">
-
-Recipient
-
-</div>
-
-<div class="info-value text-break">
-
-{{ email_to }}
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- Subject -->
-
-<div class="col-lg-3 col-md-6">
-
-<div class="info-card">
-
-<div class="info-icon">
-
-<i class="fa-solid fa-file-lines"></i>
-
-</div>
-
-<div class="info-title">
-
-Subject
-
-</div>
-
-<div class="info-value text-break"
-
-style="font-size:22px;">
-
-{% if subject %}
-
-{{ subject }}
-
-{% else %}
-
-No Subject
-
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- Risk -->
-
-<div class="col-lg-3 col-md-6">
-
-<div class="info-card">
-
-<div class="info-icon">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-</div>
-
-<div class="info-title">
-
-Threat Level
-
-</div>
-
-<div class="info-value">
-
-{% if email_risk == "Safe" %}
-
-<span class="badge badge-safe">
-
-🟢 SAFE
-
-</span>
-
-{% elif email_risk == "Suspicious" %}
-
-<span class="badge badge-warning">
-
-🟡 SUSPICIOUS
-
-</span>
-
-{% else %}
-
-<span class="badge badge-danger">
-
-🔴 DANGEROUS
-
-</span>
-
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- Scan -->
-
-<div class="col-lg-3 col-md-6">
-
-<div class="info-card">
-
-<div class="info-icon">
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-</div>
-
-<div class="info-title">
-
-Scan Status
-
-</div>
-
-<div class="info-value"
-
-style="color:#22c55e;">
-
-Completed
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- ====================================================== -->
-<!-- EMAIL INFORMATION -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
-
-<i class="fa-solid fa-envelope-open-text"></i>
-
-Email Information
-
-</h2>
-
-<div class="row">
-
-<div class="col-lg-8">
-
-<table class="table table-dark table-borderless align-middle">
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-at text-info"></i>
-
-Recipient
-
-</th>
-
-<td class="text-break">
-
-{{ email_to }}
-
-</td>
-
-</tr>
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-heading text-info"></i>
-
-Subject
-
-</th>
-
-<td>
-
-{% if subject %}
-
-{{ subject }}
-
-{% else %}
-
-No Subject
-
-{% endif %}
-
-</td>
-
-</tr>
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-message text-info"></i>
-
-Message
-
-</th>
-
-<td class="text-break">
-
-{% if body %}
-
-{{ body }}
-
-{% else %}
-
-No Message
-
-{% endif %}
-
-</td>
-
-</tr>
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-shield-halved text-info"></i>
-
-Risk Status
-
-</th>
-
-<td>
-
-{% if email_risk == "Safe" %}
-
-<span class="badge badge-safe">
-
-🟢 SAFE
-
-</span>
-
-{% elif email_risk == "Suspicious" %}
-
-<span class="badge badge-warning">
-
-🟡 SUSPICIOUS
-
-</span>
-
-{% else %}
-
-<span class="badge badge-danger">
-
-🔴 DANGEROUS
-
-</span>
-
-{% endif %}
-
-</td>
-
-</tr>
-
-</table>
-
-</div>
-
-
-
-<div class="col-lg-4">
-
-<div class="card"
-
-style="background:#101a2d;
-border:none;
-border-radius:18px;
-padding:30px;
-height:100%;">
-
-<div class="text-center">
-
-<i class="fa-solid fa-envelope-circle-check"
-
-style="font-size:70px;
-color:#00d9ff;"></i>
-
-<h3 class="mt-4">
-
-Email QR
-
-</h3>
-
-<p class="text-secondary">
-
-Email Configuration QR
-
-</p>
-
-<hr>
-
-<p>
-
-<strong>
-
-QR Type
-
-</strong>
-
-</p>
-
-<p>
-
-Email Address
-
-</p>
-
-<p>
-
-<strong>
-
-Analysis Engine
-
-</strong>
-
-</p>
-
-<p>
-
-SentinelX AI
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ====================================================== -->
-<!-- EMAIL THREAT ANALYSIS -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
+    </div>
 
-<i class="fa-solid fa-user-shield"></i>
 
-Email Threat Analysis
+    <!-- =====================================================
+         MAIN RESULT CARD
+    ====================================================== -->
 
-</h2>
+    <div class="result-card">
 
-<div class="row">
+        <!-- Result Banner -->
 
-<!-- SAFE FINDINGS -->
+        <div class="result-banner">
 
-<div class="col-lg-6">
+            <div class="result-banner-left">
 
-<div class="card"
+                <div class="result-banner-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
 
-style="background:#101a2d;
-border:none;
-border-radius:18px;
-padding:25px;">
+                <div>
 
-<h4 class="text-success">
+                    <h3>
+                        Email Threat Analysis
+                    </h3>
 
-<i class="fa-solid fa-circle-check"></i>
+                    <p>
+                        QR Code → Email Address → Security Analysis
+                    </p>
 
-Security Findings
+                </div>
 
-</h4>
+            </div>
 
-<hr>
 
-<ul class="list-group list-group-flush">
+            <!-- Verdict -->
 
-<li class="list-group-item bg-transparent text-white">
+            {% if status == "Dangerous" %}
 
-✔ Email QR decoded successfully
+                <div class="verdict-badge verdict-dangerous">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    Dangerous
+                </div>
 
-</li>
+            {% elif status == "Suspicious" %}
 
-<li class="list-group-item bg-transparent text-white">
+                <div class="verdict-badge verdict-suspicious">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Suspicious
+                </div>
 
-✔ Recipient address extracted
+            {% else %}
 
-</li>
+                <div class="verdict-badge verdict-safe">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Safe
+                </div>
 
-<li class="list-group-item bg-transparent text-white">
+            {% endif %}
 
-✔ Subject analyzed
+        </div>
 
-</li>
 
-<li class="list-group-item bg-transparent text-white">
+        <!-- Body -->
 
-✔ Email content inspected
+        <div class="result-body">
 
-</li>
 
-</ul>
+            <!-- =================================================
+                 SCORE SUMMARY
+            ================================================== -->
 
-</div>
-
-</div>
-
-
-
-<!-- THREAT INDICATORS -->
-
-<div class="col-lg-6">
-
-<div class="card"
-
-style="background:#101a2d;
-border:none;
-border-radius:18px;
-padding:25px;">
-
-<h4 class="text-warning">
-
-<i class="fa-solid fa-triangle-exclamation"></i>
-
-Threat Indicators
-
-</h4>
-
-<hr>
-
-{% if email_reasons %}
-
-<ul class="list-group list-group-flush">
-
-{% for reason in email_reasons %}
-
-<li class="list-group-item bg-transparent text-white">
-
-⚠ {{ reason }}
-
-</li>
-
-{% endfor %}
-
-</ul>
-
-{% else %}
-
-<div class="alert alert-success mb-0">
-
-<i class="fa-solid fa-circle-check"></i>
-
-No suspicious email indicators detected.
-
-</div>
-
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- ====================================================== -->
-<!-- EMAIL SECURITY INTELLIGENCE -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
-
-<i class="fa-solid fa-shield-virus"></i>
-
-Email Security Intelligence
-
-</h2>
-
-<div class="row">
-
-<div class="col-lg-3">
-
-<div class="info-card text-center">
-
-<i class="fa-solid fa-user-secret"
-
-style="font-size:42px;color:#00d9ff;"></i>
-
-<h5 class="mt-3">
-
-Sender Trust
-
-</h5>
-
-<h3>
-
-{% if email_risk == "Safe" %}
-
-Trusted
-
-{% else %}
-
-Verify
-
-{% endif %}
-
-</h3>
-
-</div>
-
-</div>
-
-
-
-<div class="col-lg-3">
-
-<div class="info-card text-center">
-
-<i class="fa-solid fa-link"
-
-style="font-size:42px;color:#00d9ff;"></i>
-
-<h5 class="mt-3">
-
-Embedded Links
-
-</h5>
-
-<h3>
-
-{% if body %}
-
-Check
-
-{% else %}
-
-None
-
-{% endif %}
-
-</h3>
-
-</div>
-
-</div>
-
-
-
-<div class="col-lg-3">
-
-<div class="info-card text-center">
-
-<i class="fa-solid fa-paperclip"
-
-style="font-size:42px;color:#00d9ff;"></i>
-
-<h5 class="mt-3">
-
-Attachments
-
-</h5>
-
-<h3>
-
-Not Present
-
-</h3>
-
-</div>
-
-</div>
-
-
-
-<div class="col-lg-3">
-
-<div class="info-card text-center">
-
-<i class="fa-solid fa-envelope-circle-check"
-
-style="font-size:42px;color:#00d9ff;"></i>
-
-<h5 class="mt-3">
-
-QR Type
-
-</h5>
-
-<h3>
-
-Email
-
-</h3>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+            <div class="score-grid">
 
+                <!-- Risk Score -->
 
-<!-- ====================================================== -->
-<!-- GEMINI AI EMAIL ASSESSMENT -->
-<!-- ====================================================== -->
+                <div class="score-card">
 
-<div class="section-card">
+                    <div class="score-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
 
-<h2 class="section-title">
+                    <span class="score-label">
+                        Risk Score
+                    </span>
 
-<i class="fa-solid fa-robot"></i>
+                    <span class="
+                        score-value
+                        {% if score >= 60 %}
+                            danger
+                        {% elif score >= 30 %}
+                            warning
+                        {% else %}
+                            success
+                        {% endif %}
+                    ">
+                        {{ score }}/100
+                    </span>
 
-Gemini AI Email Assessment
+                </div>
 
-</h2>
 
-{% if ai_report %}
+                <!-- Severity -->
 
-<div class="ai-report">
+                <div class="score-card">
 
-{{ ai_report }}
+                    <div class="score-icon">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
 
-</div>
-
-{% else %}
-
-<div class="alert alert-warning">
-
-Gemini AI is currently unavailable.
-
-</div>
-
-{% endif %}
-
-</div>
-
-<!-- ====================================================== -->
-<!-- EMAIL SECURITY RECOMMENDATIONS -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
-
-<i class="fa-solid fa-shield-heart"></i>
-
-Email Security Recommendations
-
-</h2>
-
-<div class="row">
-
-<!-- RECOMMENDED -->
-
-<div class="col-lg-6">
-
-<div class="recommend-card">
-
-<h4>
-
-<i class="fa-solid fa-circle-check"></i>
-
-Recommended
-
-</h4>
-
-<hr>
-
-<ul>
-
-<li>Verify the recipient email address before sending.</li>
-
-<li>Check the subject and message carefully.</li>
-
-<li>Be cautious with urgent or unexpected requests.</li>
-
-<li>Confirm suspicious emails through another communication channel.</li>
-
-<li>Use SentinelX AI before interacting with unknown email QR codes.</li>
-
-<li>Enable spam filtering and email security protection.</li>
-
-</ul>
-
-</div>
-
-</div>
-
-<!-- AVOID -->
-
-<div class="col-lg-6">
-
-<div class="avoid-card">
-
-<h4>
-
-<i class="fa-solid fa-ban"></i>
-
-Avoid
-
-</h4>
-
-<hr>
-
-<ul>
-
-<li>Do not trust emails requesting passwords or OTPs.</li>
-
-<li>Avoid clicking suspicious links without verification.</li>
-
-<li>Never download unknown attachments.</li>
-
-<li>Don't respond to phishing or scam emails.</li>
-
-<li>Avoid sharing sensitive information over email.</li>
-
-<li>Ignore emails that create unnecessary urgency or fear.</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+                    <span class="score-label">
+                        Severity
+                    </span>
 
+                    <span class="
+                        score-value
+                        {% if severity == 'CRITICAL' or severity == 'HIGH' %}
+                            danger
+                        {% elif severity == 'MEDIUM' %}
+                            warning
+                        {% else %}
+                            success
+                        {% endif %}
+                    ">
+                        {{ severity|default:"INFO" }}
+                    </span>
 
-<!-- ====================================================== -->
-<!-- EXECUTIVE SUMMARY -->
-<!-- ====================================================== -->
+                </div>
 
-<div class="section-card">
 
-<h2 class="section-title">
+                <!-- ML Confidence -->
 
-<i class="fa-solid fa-chart-line"></i>
+                <div class="score-card">
 
-Executive Summary
+                    <div class="score-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
 
-</h2>
+                    <span class="score-label">
+                        ML Confidence
+                    </span>
 
-<div class="row">
+                    <span class="score-value info">
+                        {{ ml_confidence }}%
+                    </span>
 
-<div class="col-lg-4">
+                </div>
 
-<div class="card text-center"
+            </div>
 
-style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
 
-<i class="fa-solid fa-shield-halved fa-3x text-success mb-3"></i>
+            <!-- =================================================
+                 EXTRACTED EMAIL
+            ================================================== -->
 
-<h5 class="summary-title">
+            <div class="result-section">
 
-Overall Status
+                <div class="section-header">
 
-</h5>
+                    <i class="fa-solid fa-envelope section-header-icon"></i>
 
-<h2 class="summary-number">
+                    <h4>
+                        Extracted Email Address
+                    </h4>
 
-{{ email_risk }}
+                </div>
 
-</h2>
+                <div class="section-content">
 
-</div>
-
-</div>
-
-
-
-<div class="col-lg-4">
-
-<div class="card text-center"
-
-style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
-
-<i class="fa-solid fa-envelope fa-3x text-info mb-3"></i>
-
-<h5 class="summary-title">
-
-Recipient
-
-</h5>
-
-<h2 class="summary-number"
-
-style="font-size:22px;word-break:break-word;">
-
-{{ email_to }}
-
-</h2>
-
-</div>
-
-</div>
-
-
-
-<div class="col-lg-4">
-
-<div class="card text-center"
-
-style="background:#101a2d;border:none;border-radius:18px;padding:25px;">
-
-<i class="fa-solid fa-file-lines fa-3x text-warning mb-3"></i>
-
-<h5 class="summary-title">
-
-Subject
-
-</h5>
-
-<h2 class="summary-number"
+                    <div class="email-box">
 
-style="font-size:22px;word-break:break-word;">
+                        <strong>
+                            <i class="fa-solid fa-at"></i>
+                            Email:
+                        </strong>
 
-{% if subject %}
+                        <br>
 
-{{ subject }}
+                        {{ email_to|default:"No email address detected" }}
 
-{% else %}
+                    </div>
 
-No Subject
+                </div>
 
-{% endif %}
+            </div>
 
-</h2>
 
-</div>
-
-</div>
+            <!-- =================================================
+                 THREAT INDICATORS
+            ================================================== -->
 
-</div>
+            <div class="result-section">
 
-</div>
+                <div class="section-header">
 
+                    <i class="fa-solid fa-triangle-exclamation section-header-icon"></i>
 
+                    <h4>
+                        Threat Indicators
+                    </h4>
 
-<!-- ====================================================== -->
-<!-- ACTION CENTER -->
-<!-- ====================================================== -->
+                </div>
 
-<div class="section-card">
+                <div class="section-content">
 
-<h2 class="section-title">
+                    {% if reasons %}
 
-<i class="fa-solid fa-bolt"></i>
+                        <div class="indicator-list">
 
-Action Center
+                            {% for reason in reasons %}
 
-</h2>
+                                <div class="indicator-item">
 
-<div class="row">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
 
-<div class="col-md-4 mb-3">
+                                    <span>
+                                        {{ reason }}
+                                    </span>
 
-<a href="{% url 'qr_scan' %}"
+                                </div>
 
-class="btn btn-primary w-100 p-3">
+                            {% endfor %}
 
-<i class="fa-solid fa-qrcode"></i>
+                        </div>
 
-Scan Another QR
+                    {% else %}
 
-</a>
+                        <div class="no-indicators">
 
-</div>
+                            <i class="fa-solid fa-circle-check"></i>
 
-<div class="col-md-4 mb-3">
+                            No major threat indicators were detected.
 
-<a href="{% url 'dashboard' %}"
+                        </div>
 
-class="btn btn-success w-100 p-3">
+                    {% endif %}
 
-<i class="fa-solid fa-house"></i>
+                </div>
 
-Dashboard
+            </div>
 
-</a>
 
-</div>
+            <!-- =================================================
+                 MACHINE LEARNING
+            ================================================== -->
 
-<div class="col-md-4 mb-3">
+            <div class="result-section">
 
-<button
+                <div class="section-header">
 
-onclick="window.print()"
+                    <i class="fa-solid fa-robot section-header-icon"></i>
 
-class="btn btn-warning w-100 p-3">
+                    <h4>
+                        Machine Learning Analysis
+                    </h4>
 
-<i class="fa-solid fa-print"></i>
+                </div>
 
-Print Report
+                <div class="section-content">
 
-</button>
+                    <div class="ml-grid">
 
-</div>
+                        <div class="ml-item">
 
-</div>
+                            <span class="ml-item-label">
+                                Prediction
+                            </span>
 
-</div>
+                            <span class="ml-item-value">
 
+                                {% if ml_prediction == "Phishing" %}
 
+                                    <span class="text-danger">
+                                        <i class="fa-solid fa-bug"></i>
+                                        Phishing
+                                    </span>
 
-<!-- ====================================================== -->
-<!-- REPORT INFORMATION -->
-<!-- ====================================================== -->
+                                {% else %}
 
-<div class="section-card">
+                                    <span class="text-success">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        Legitimate
+                                    </span>
 
-<h2 class="section-title">
+                                {% endif %}
 
-<i class="fa-solid fa-circle-info"></i>
+                            </span>
 
-Report Information
+                        </div>
 
-</h2>
 
-<table class="table table-dark table-borderless">
+                        <div class="ml-item">
 
-<tr>
+                            <span class="ml-item-label">
+                                Confidence
+                            </span>
 
-<th>
+                            <span class="ml-item-value text-info">
 
-Generated On
+                                <i class="fa-solid fa-chart-line"></i>
 
-</th>
+                                {{ ml_confidence }}%
 
-<td>
+                            </span>
 
-{% now "d M Y H:i" %}
+                        </div>
 
-</td>
+                    </div>
 
-</tr>
+                </div>
 
-<tr>
+            </div>
 
-<th>
 
-Platform
+            <!-- =================================================
+                 AI SECURITY ASSISTANT
+            ================================================== -->
 
-</th>
+            {% if ai_explanation %}
 
-<td>
+            <div class="result-section">
 
-SentinelX AI
+                <div class="section-header">
 
-</td>
+                    <i class="fa-solid fa-wand-magic-sparkles section-header-icon"></i>
 
-</tr>
+                    <h4>
+                        AI Security Assistant
+                    </h4>
 
-<tr>
+                </div>
 
-<th>
+                <div class="section-content">
 
-Detection Module
+                    <div class="ai-box">
 
-</th>
+                        <div class="ai-title">
 
-<td>
+                            <i class="fa-solid fa-robot"></i>
 
-Email Security Intelligence Engine
+                            SentinelX AI Analyst
 
-</td>
+                        </div>
 
-</tr>
+                        {{ ai_explanation|linebreaks }}
 
-<tr>
+                    </div>
 
-<th>
+                </div>
 
-AI Engine
+            </div>
 
-</th>
+            {% endif %}
 
-<td>
 
-Google Gemini AI
+            <!-- =================================================
+                 SECURITY NOTICE
+            ================================================== -->
 
-</td>
+            <div class="security-footer">
 
-</tr>
+                <i class="fa-solid fa-shield-halved"></i>
 
-<tr>
+                <span>
+                    SentinelX analyzes the QR-extracted email using
+                    rule-based indicators, threat scoring and machine
+                    learning classification. Avoid interacting with
+                    suspicious email addresses.
+                </span>
 
-<th>
+            </div>
 
-Analysis Type
 
-</th>
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
 
-<td>
+            <div class="result-actions">
 
-Recipient • Subject • Message • Threat Indicators
+                <a
+                    href="{% url 'qr_scan' %}"
+                    class="btn btn-info btn-cyber"
+                >
 
-</td>
+                    <i class="fa-solid fa-qrcode me-2"></i>
 
-</tr>
+                    Scan Another QR
 
-<tr>
+                </a>
 
-<th>
 
-QR Type
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="btn btn-outline-light btn-cyber"
+                >
 
-</th>
+                    <i class="fa-solid fa-house me-2"></i>
 
-<td>
+                    Dashboard
 
-Email QR Code
+                </a>
 
-</td>
+            </div>
 
-</tr>
+        </div>
 
-</table>
+    </div>
 
 </div>
-
-
-
-<!-- ====================================================== -->
-<!-- FOOTER -->
-<!-- ====================================================== -->
-
-<footer>
-
-<hr>
 
-<h3 class="text-info">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-SentinelX AI
-
-</h3>
-
-<p>
-
-AI Powered Multi-Channel Scam & Phishing Detection Platform
-
-</p>
-
-<p>
-
-Email Security • Threat Intelligence • Gemini AI
-
-</p>
-
-<small>
-
-© 2026 SentinelX AI | Secure Every Scan
-
-</small>
-
-</footer>
-
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
 
-</html>
+{% endblock %}

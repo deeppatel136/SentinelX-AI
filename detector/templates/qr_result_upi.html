@@ -1,1415 +1,1780 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>
-
-UPI Payment Intelligence | SentinelX AI
-
-</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+{% block content %}
 
 <style>
 
-*{
+/* =========================================================
+   SENTINELX UPI RESULT PAGE
+========================================================= */
 
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
-    font-family:'Poppins',sans-serif;
-
+.upi-result-page{
+    max-width:1400px;
+    margin:0 auto;
+    padding:35px 20px 60px;
+    color:#E2E8F0;
 }
 
-body{
+/* =========================================================
+   HERO
+========================================================= */
 
-    background:#081321;
-
-    color:white;
-
+.upi-hero{
+    position:relative;
+    background:
+        linear-gradient(135deg, rgba(0,229,255,.055), transparent 45%),
+        #111827;
+    border:1px solid #1E3A5F;
+    border-radius:24px;
+    padding:32px 36px;
+    box-shadow:
+        0 0 35px rgba(0,229,255,.08),
+        inset 0 1px 0 rgba(255,255,255,.025);
+    overflow:hidden;
 }
 
-.container-fluid{
-
-    padding:40px;
-
+.upi-hero::after{
+    content:"";
+    position:absolute;
+    width:240px;
+    height:240px;
+    right:-90px;
+    top:-110px;
+    border-radius:50%;
+    background:rgba(0,229,255,.05);
+    filter:blur(20px);
 }
 
-/* ================================= */
-
-.hero{
-
-    background:#17233b;
-
-    border-radius:22px;
-
-    padding:40px;
-
-    border:1px solid rgba(0,255,255,.15);
-
-    box-shadow:0 0 30px rgba(0,217,255,.08);
-
-}
-
-/* ================================= */
-
-.logo{
-
-    color:#00d9ff;
-
-    font-size:36px;
-
+.upi-brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:#00E5FF;
+    font-size:24px;
     font-weight:700;
-
-}
-
-.logo span{
-
-    color:white;
-
-}
-
-.report-title{
-
-    margin-top:18px;
-
-    font-size:48px;
-
-    font-weight:700;
-
-}
-
-.subtitle{
-
-    color:#9fb4c9;
-
-    font-size:20px;
-
-}
-
-/* ================================= */
-
-.verdict{
-
-    float:right;
-
-    margin-top:-90px;
-
-    padding:12px 30px;
-
-    border-radius:40px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-}
-
-.safe{
-
-    background:#16a34a;
-
-}
-
-.warning{
-
-    background:#f59e0b;
-
-}
-
-.danger{
-
-    background:#dc2626;
-
-}
-
-/* ================================= */
-
-.info-card{
-
-    background:#101a2d;
-
-    border:none;
-
-    border-radius:18px;
-
-    padding:28px;
-
-    margin-top:35px;
-
-    transition:.3s;
-
-}
-
-.info-card:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:0 0 25px rgba(0,217,255,.12);
-
-}
-
-.info-icon{
-
-    font-size:34px;
-
-    color:#00d9ff;
-
-}
-
-.info-title{
-
-    color:#8aa2bb;
-
-    margin-top:18px;
-
-}
-
-.info-value{
-
-    margin-top:15px;
-
-    font-size:30px;
-
-    font-weight:700;
-
-}
-
-/* ================================= */
-
-.section-card{
-
-    background:#17233b;
-
-    border:none;
-
-    border-radius:22px;
-
-    padding:40px;
-
-    margin-top:40px;
-
-}
-
-.section-title{
-
-    color:#00d9ff;
-
-    font-size:32px;
-
-    font-weight:700;
-
-    margin-bottom:30px;
-
-}
-
-.table-dark{
-
-    --bs-table-bg:#17233b;
-
-}
-
-.table td{
-
-    color:#f8fafc;
-
-    padding:16px;
-
-}
-
-.table th{
-
-    color:#7dd3fc;
-
-    padding:16px;
-
-    width:230px;
-
-}
-
-.badge-safe{
-
-    background:#16a34a;
-
-    font-size:16px;
-
-    padding:8px 16px;
-
-}
-
-.badge-warning{
-
-    background:#f59e0b;
-
-    font-size:16px;
-
-    padding:8px 16px;
-
-}
-
-.badge-danger{
-
-    background:#dc2626;
-
-    font-size:16px;
-
-    padding:8px 16px;
-
-}
-
-/* ================= AI REPORT ================= */
-
-.ai-report{
-
-    color:#f8fafc;
-
-    font-size:17px;
-
-    line-height:1.9;
-
-    white-space:pre-line;
-
     letter-spacing:.3px;
-
 }
 
-/* ================= SUMMARY ================= */
-
-.summary-title{
-
-    color:#cbd5e1;
-
-    font-size:18px;
-
-    font-weight:500;
-
+.upi-brand span{
+    color:#F8FAFC;
 }
 
-.summary-number{
+.upi-brand-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:rgba(0,229,255,.08);
+    border:1px solid rgba(0,229,255,.25);
+}
 
-    color:white;
-
-    font-size:42px;
-
+.upi-report-title{
+    margin:22px 0 7px;
+    color:#F8FAFC;
+    font-size:38px;
     font-weight:700;
-
-    margin-top:12px;
-
+    line-height:1.2;
 }
 
-/* ================= RECOMMENDATION ================= */
+.upi-report-subtitle{
+    margin:0;
+    color:#94A3B8;
+    font-size:15px;
+}
 
-.recommend-card li,
-.avoid-card li{
+/* =========================================================
+   VERDICT
+========================================================= */
 
-    color:#f8fafc;
+.upi-verdict{
+    position:absolute;
+    right:36px;
+    top:36px;
 
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+
+    padding:10px 18px;
+    border-radius:999px;
+
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+
+    z-index:2;
+}
+
+.upi-verdict.safe{
+    color:#34D399;
+    background:rgba(16,185,129,.10);
+    border:1px solid rgba(16,185,129,.30);
+}
+
+.upi-verdict.warning{
+    color:#FBBF24;
+    background:rgba(245,158,11,.10);
+    border:1px solid rgba(245,158,11,.30);
+}
+
+.upi-verdict.danger{
+    color:#F87171;
+    background:rgba(239,68,68,.10);
+    border:1px solid rgba(239,68,68,.30);
+}
+
+.upi-verdict i{
+    font-size:13px;
+}
+
+/* =========================================================
+   TOP INFORMATION CARDS
+========================================================= */
+
+.upi-summary-grid{
+    margin-top:20px;
+}
+
+.upi-info-card{
+    height:100%;
+    background:#111827;
+    border:1px solid #1E3A5F;
+    border-radius:18px;
+    padding:21px;
+    transition:.25s ease;
+}
+
+.upi-info-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(0,229,255,.35);
+    box-shadow:0 10px 28px rgba(0,0,0,.20);
+}
+
+.upi-info-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.upi-info-icon{
+    width:40px;
+    height:40px;
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:rgba(0,229,255,.07);
+    border:1px solid rgba(0,229,255,.18);
+
+    color:#00E5FF;
     font-size:16px;
+}
 
+.upi-info-label{
+    color:#64748B;
+    font-size:11px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+.upi-info-value{
+    margin-top:13px;
+    color:#F8FAFC;
+    font-size:20px;
+    font-weight:700;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.upi-section{
+    margin-top:20px;
+    background:#111827;
+    border:1px solid #1E3A5F;
+    border-radius:21px;
+    padding:27px;
+    box-shadow:0 0 25px rgba(0,229,255,.045);
+}
+
+.upi-section-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:22px;
+}
+
+.upi-section-icon{
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:rgba(0,229,255,.07);
+    border:1px solid rgba(0,229,255,.18);
+
+    color:#00E5FF;
+}
+
+.upi-section-title{
+    margin:0;
+    color:#00E5FF;
+    font-size:21px;
+    font-weight:700;
+}
+
+.upi-section-subtitle{
+    margin:3px 0 0;
+    color:#64748B;
+    font-size:12px;
+}
+
+/* =========================================================
+   PAYMENT INTELLIGENCE
+========================================================= */
+
+.upi-data-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0 8px;
+}
+
+.upi-data-table th,
+.upi-data-table td{
+    border:none;
+    padding:14px 16px;
+    vertical-align:middle;
+}
+
+.upi-data-table th{
+    width:220px;
+    color:#94A3B8;
+    background:#0B1220;
+    font-size:13px;
+    font-weight:600;
+    border-radius:11px 0 0 11px;
+}
+
+.upi-data-table td{
+    color:#F1F5F9;
+    background:#0B1220;
+    font-size:14px;
+    border-radius:0 11px 11px 0;
+}
+
+.upi-data-table th i{
+    width:20px;
+    margin-right:7px;
+    color:#00E5FF;
+}
+
+.upi-qr-module{
+    height:100%;
+    min-height:330px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    background:#0B1220;
+    border:1px solid #17324B;
+    border-radius:17px;
+    padding:28px;
+}
+
+.upi-qr-icon{
+    width:86px;
+    height:86px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:22px;
+
+    color:#00E5FF;
+    background:rgba(0,229,255,.07);
+    border:1px solid rgba(0,229,255,.20);
+
+    font-size:40px;
+}
+
+.upi-qr-module h4{
+    margin:18px 0 5px;
+    color:#F8FAFC;
+    font-size:19px;
+    font-weight:700;
+}
+
+.upi-qr-module p{
+    color:#64748B;
+    font-size:12px;
+}
+
+.upi-module-line{
+    width:100%;
+    height:1px;
+    background:#1E3A5F;
+    margin:15px 0;
+}
+
+.upi-module-detail{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:7px 0;
+    font-size:12px;
+}
+
+.upi-module-detail span:first-child{
+    color:#64748B;
+}
+
+.upi-module-detail span:last-child{
+    color:#CBD5E1;
+    font-weight:600;
+}
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.upi-status{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 12px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.4px;
+}
+
+.upi-status.safe{
+    color:#34D399;
+    background:rgba(16,185,129,.09);
+    border:1px solid rgba(16,185,129,.22);
+}
+
+.upi-status.warning{
+    color:#FBBF24;
+    background:rgba(245,158,11,.09);
+    border:1px solid rgba(245,158,11,.22);
+}
+
+.upi-status.danger{
+    color:#F87171;
+    background:rgba(239,68,68,.09);
+    border:1px solid rgba(239,68,68,.22);
+}
+
+/* =========================================================
+   ANALYSIS CARDS
+========================================================= */
+
+.upi-analysis-card{
+    height:100%;
+    background:#0B1220;
+    border:1px solid #17324B;
+    border-radius:17px;
+    padding:22px;
+}
+
+.upi-analysis-title{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:15px;
+    font-size:16px;
+    font-weight:700;
+}
+
+.upi-analysis-title.verified{
+    color:#34D399;
+}
+
+.upi-analysis-title.warning{
+    color:#FBBF24;
+}
+
+.upi-analysis-line{
+    height:1px;
+    background:#1E3A5F;
+    margin-bottom:13px;
+}
+
+.upi-analysis-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.upi-analysis-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:9px 0;
+    color:#CBD5E1;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.upi-analysis-list li i{
+    margin-top:3px;
+    flex-shrink:0;
+}
+
+.upi-analysis-list.verified-list li i{
+    color:#34D399;
+}
+
+.upi-analysis-list.warning-list li i{
+    color:#FBBF24;
+}
+
+/* =========================================================
+   AI REPORT
+========================================================= */
+
+.upi-ai-box{
+    background:#0B1220;
+    border:1px solid #17324B;
+    border-left:4px solid #00E5FF;
+    border-radius:15px;
+    padding:21px;
+}
+
+.upi-ai-report{
+    color:#CBD5E1;
+    font-size:14px;
     line-height:1.8;
+    white-space:pre-line;
+}
+
+.upi-ai-unavailable{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 15px;
+    color:#FBBF24;
+    background:rgba(245,158,11,.07);
+    border:1px solid rgba(245,158,11,.20);
+    border-radius:11px;
+    font-size:13px;
+}
+
+/* =========================================================
+   SAFETY CARDS
+========================================================= */
+
+.upi-safety-card{
+    height:100%;
+    border-radius:17px;
+    padding:22px;
+}
+
+.upi-safety-card.do-card{
+    background:rgba(16,185,129,.045);
+    border:1px solid rgba(16,185,129,.20);
+    border-left:4px solid #22C55E;
+}
+
+.upi-safety-card.dont-card{
+    background:rgba(239,68,68,.045);
+    border:1px solid rgba(239,68,68,.20);
+    border-left:4px solid #EF4444;
+}
+
+.upi-safety-title{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:16px;
+    font-weight:700;
+}
+
+.upi-safety-title.do-title{
+    color:#34D399;
+}
+
+.upi-safety-title.dont-title{
+    color:#F87171;
+}
+
+.upi-safety-list{
+    margin:16px 0 0;
+    padding-left:19px;
+}
+
+.upi-safety-list li{
+    margin-bottom:9px;
+    color:#CBD5E1;
+    font-size:13px;
+    line-height:1.55;
+}
+
+/* =========================================================
+   EXECUTIVE SUMMARY
+========================================================= */
+
+.upi-executive-card{
+    height:100%;
+    text-align:center;
+    background:#0B1220;
+    border:1px solid #17324B;
+    border-radius:17px;
+    padding:22px;
+}
+
+.upi-executive-icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.upi-executive-label{
+    color:#64748B;
+    font-size:11px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+.upi-executive-value{
+    margin-top:9px;
+    color:#F8FAFC;
+    font-size:22px;
+    font-weight:700;
+
+    word-break:break-word;
+}
+
+/* =========================================================
+   ACTION CENTER
+========================================================= */
+
+.upi-action-btn{
+    min-height:105px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+
+    border-radius:15px !important;
+    font-weight:600;
+    transition:.25s ease;
+}
+
+.upi-action-btn:hover{
+    transform:translateY(-3px);
+}
+
+.upi-action-btn i{
+    font-size:24px;
+}
+
+.upi-action-btn small{
+    font-size:10px;
+    opacity:.75;
+}
+
+/* =========================================================
+   REPORT INFORMATION
+========================================================= */
+
+.upi-report-table{
+    width:100%;
+    margin:0;
+}
+
+.upi-report-table tr{
+    border-bottom:1px solid rgba(30,58,95,.55);
+}
+
+.upi-report-table tr:last-child{
+    border-bottom:none;
+}
+
+.upi-report-table th,
+.upi-report-table td{
+    padding:13px 8px;
+    border:none;
+}
+
+.upi-report-table th{
+    width:230px;
+    color:#64748B;
+    font-size:12px;
+    font-weight:600;
+}
+
+.upi-report-table td{
+    color:#CBD5E1;
+    font-size:13px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.upi-footer{
+    margin-top:35px;
+    padding-top:25px;
+    border-top:1px solid #1E3A5F;
+    text-align:center;
+}
+
+.upi-footer-brand{
+    color:#00E5FF;
+    font-size:20px;
+    font-weight:700;
+}
+
+.upi-footer p{
+    margin:5px 0;
+    color:#64748B;
+    font-size:12px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:992px){
+
+    .upi-verdict{
+        position:static;
+        margin-top:20px;
+    }
+
+    .upi-report-title{
+        font-size:31px;
+    }
 
 }
 
-.recommend-card h4{
+@media(max-width:768px){
 
-    color:#22c55e;
+    .upi-result-page{
+        padding:22px 12px 45px;
+    }
 
-    font-weight:700;
+    .upi-hero{
+        padding:25px 21px;
+    }
 
-}
+    .upi-report-title{
+        font-size:27px;
+    }
 
-.avoid-card h4{
+    .upi-report-subtitle{
+        font-size:13px;
+    }
 
-    color:#ef4444;
+    .upi-section{
+        padding:20px;
+    }
 
-    font-weight:700;
+    .upi-data-table th{
+        width:145px;
+    }
+
+    .upi-data-table th,
+    .upi-data-table td{
+        padding:11px;
+        font-size:12px;
+    }
+
+    .upi-info-value{
+        font-size:17px;
+    }
 
 }
 
 </style>
 
-</head>
 
-<body>
+<div class="upi-result-page">
 
-<div class="container-fluid">
+<!-- =========================================================
+     HERO
+========================================================= -->
 
-<!-- ============================================ -->
+<div class="upi-hero">
 
-<div class="hero">
+    <div class="upi-brand">
 
-<div class="logo">
+        <div class="upi-brand-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
 
-<i class="fa-solid fa-shield-halved"></i>
+        Sentinel<span>X AI</span>
 
-Sentinel<span>X AI</span>
+    </div>
 
-</div>
-
-<div class="report-title">
-
-UPI Payment Intelligence Report
-
-</div>
-
-<div class="subtitle">
-
-AI Powered Payment Fraud Detection & Secure Transaction Analysis
-
-</div>
-
-<div class="verdict
-
-{% if upi_risk == 'Safe' %}
-
-safe
-
-{% elif upi_risk == 'Suspicious' %}
-
-warning
-
-{% else %}
-
-danger
-
-{% endif %}">
-
-{{ verdict_icon }}
-
-{{ upi_risk }}
+    <h1 class="upi-report-title">
+        UPI Payment Intelligence
+    </h1>
 
-</div>
-
-</div>
-
-<!-- ============================================ -->
-
-<div class="row">
-
-<div class="col-lg-3">
-
-<div class="info-card">
-
-<div class="info-icon">
-
-<i class="fa-solid fa-user"></i>
-
-</div>
+    <p class="upi-report-subtitle">
+        AI-powered payment fraud detection and secure transaction analysis
+    </p>
 
-<div class="info-title">
 
-Receiver
+    <div class="upi-verdict
 
-</div>
+        {% if upi_risk == 'Safe' %}
+            safe
+        {% elif upi_risk == 'Suspicious' %}
+            warning
+        {% else %}
+            danger
+        {% endif %}">
 
-<div class="info-value">
+        {{ verdict_icon }}
 
-{{ receiver }}
+        {{ upi_risk }}
 
-</div>
+    </div>
 
 </div>
 
-</div>
 
-<div class="col-lg-3">
+<!-- =========================================================
+     TOP SUMMARY
+========================================================= -->
 
-<div class="info-card">
+<div class="row g-3 upi-summary-grid">
 
-<div class="info-icon">
+    <div class="col-xl-3 col-md-6">
 
-<i class="fa-solid fa-building-columns"></i>
+        <div class="upi-info-card">
 
-</div>
+            <div class="upi-info-top">
 
-<div class="info-title">
+                <div class="upi-info-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
 
-Bank
+                <span class="upi-info-label">
+                    Receiver
+                </span>
 
-</div>
+            </div>
 
-<div class="info-value">
+            <div class="upi-info-value">
+                {{ receiver }}
+            </div>
 
-{{ bank }}
+        </div>
 
-</div>
+    </div>
 
-</div>
 
-</div>
+    <div class="col-xl-3 col-md-6">
 
-<div class="col-lg-3">
+        <div class="upi-info-card">
 
-<div class="info-card">
+            <div class="upi-info-top">
 
-<div class="info-icon">
+                <div class="upi-info-icon">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
 
-<i class="fa-solid fa-indian-rupee-sign"></i>
+                <span class="upi-info-label">
+                    Bank
+                </span>
 
-</div>
+            </div>
 
-<div class="info-title">
+            <div class="upi-info-value">
+                {{ bank }}
+            </div>
 
-Amount
+        </div>
 
-</div>
+    </div>
 
-<div class="info-value">
 
-{% if amount == "Not Specified" %}
+    <div class="col-xl-3 col-md-6">
 
-₹ User Will Enter
+        <div class="upi-info-card">
 
-{% else %}
+            <div class="upi-info-top">
 
-₹ {{ amount }}
+                <div class="upi-info-icon">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                </div>
 
-{% endif %}
+                <span class="upi-info-label">
+                    Amount
+                </span>
 
-</div>
+            </div>
 
-</div>
+            <div class="upi-info-value">
 
-</div>
+                {% if amount == "Not Specified" %}
+                    User Will Enter
+                {% else %}
+                    ₹ {{ amount }}
+                {% endif %}
 
-<div class="col-lg-3">
+            </div>
 
-<div class="info-card">
+        </div>
 
-<div class="info-icon">
+    </div>
 
-<i class="fa-solid fa-shield"></i>
 
-</div>
+    <div class="col-xl-3 col-md-6">
 
-<div class="info-title">
+        <div class="upi-info-card">
 
-Risk Status
+            <div class="upi-info-top">
 
-</div>
+                <div class="upi-info-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
 
-<div class="info-value">
+                <span class="upi-info-label">
+                    Risk Status
+                </span>
 
-{{ upi_risk }}
+            </div>
 
-</div>
+            <div class="upi-info-value">
+                {{ upi_risk }}
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
-
-<!-- ====================================================== -->
-<!-- PAYMENT INTELLIGENCE -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
-
-<i class="fa-solid fa-wallet"></i>
-
-Payment Intelligence
-
-</h2>
-
-<div class="row">
-
-<div class="col-lg-8">
-
-<table class="table table-dark table-borderless align-middle">
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-user text-info"></i>
-
-Receiver Name
-
-</th>
-
-<td>
-
-{{ receiver }}
-
-</td>
-
-</tr>
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-at text-info"></i>
-
-UPI ID
-
-</th>
-
-<td class="text-break">
-
-{{ upi_id }}
-
-</td>
-
-</tr>
-
-<tr>
-
-<th>
-
-<i class="fa-solid fa-building-columns text-info"></i>
 
-Payment Provider
 
-</th>
+<!-- =========================================================
+     PAYMENT INTELLIGENCE
+========================================================= -->
 
-<td>
+<div class="upi-section">
 
-{{ bank }}
+    <div class="upi-section-header">
 
-</td>
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
 
-</tr>
+        <div>
 
-<tr>
+            <h2 class="upi-section-title">
+                Payment Intelligence
+            </h2>
 
-<th>
+            <p class="upi-section-subtitle">
+                Extracted information from the UPI payment payload
+            </p>
 
-<i class="fa-solid fa-indian-rupee-sign text-info"></i>
+        </div>
 
-Payment Amount
+    </div>
 
-</th>
 
-<td>
+    <div class="row g-4">
 
-{% if amount == "Not Specified" %}
+        <div class="col-lg-8">
 
-₹ User Will Enter
+            <div class="table-responsive">
 
-{% else %}
+                <table class="upi-data-table">
 
-₹ {{ amount }}
+                    <tr>
 
-{% endif %}
+                        <th>
+                            <i class="fa-solid fa-user"></i>
+                            Receiver Name
+                        </th>
 
-</td>
+                        <td>
+                            {{ receiver }}
+                        </td>
 
-</tr>
+                    </tr>
 
-<tr>
 
-<th>
+                    <tr>
 
-<i class="fa-solid fa-note-sticky text-info"></i>
+                        <th>
+                            <i class="fa-solid fa-at"></i>
+                            UPI ID
+                        </th>
 
-Payment Note
+                        <td class="text-break">
+                            {{ upi_id }}
+                        </td>
 
-</th>
+                    </tr>
 
-<td>
 
-{{ note }}
+                    <tr>
 
-</td>
+                        <th>
+                            <i class="fa-solid fa-building-columns"></i>
+                            Payment Provider
+                        </th>
 
-</tr>
+                        <td>
+                            {{ bank }}
+                        </td>
 
-<tr>
+                    </tr>
 
-<th>
 
-<i class="fa-solid fa-shield-halved text-info"></i>
+                    <tr>
 
-Risk Status
+                        <th>
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            Payment Amount
+                        </th>
 
-</th>
+                        <td>
 
-<td>
+                            {% if amount == "Not Specified" %}
+                                User Will Enter
+                            {% else %}
+                                ₹ {{ amount }}
+                            {% endif %}
 
-{% if upi_risk == "Safe" %}
+                        </td>
 
-<span class="badge badge-safe">
+                    </tr>
 
-🟢 SAFE
 
-</span>
+                    <tr>
 
-{% elif upi_risk == "Suspicious" %}
+                        <th>
+                            <i class="fa-solid fa-note-sticky"></i>
+                            Payment Note
+                        </th>
 
-<span class="badge badge-warning">
+                        <td>
+                            {{ note }}
+                        </td>
 
-🟡 SUSPICIOUS
+                    </tr>
 
-</span>
 
-{% else %}
+                    <tr>
 
-<span class="badge badge-danger">
+                        <th>
+                            <i class="fa-solid fa-shield-halved"></i>
+                            Risk Status
+                        </th>
 
-🔴 DANGEROUS
+                        <td>
 
-</span>
+                            {% if upi_risk == "Safe" %}
 
-{% endif %}
+                                <span class="upi-status safe">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    SAFE
+                                </span>
 
-</td>
+                            {% elif upi_risk == "Suspicious" %}
 
-</tr>
+                                <span class="upi-status warning">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    SUSPICIOUS
+                                </span>
 
-</table>
+                            {% else %}
 
-</div>
-
-<div class="col-lg-4">
-
-<div class="card"
-
-style="background:#101a2d;
-border:none;
-border-radius:18px;
-padding:30px;
-height:100%;">
+                                <span class="upi-status danger">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                    DANGEROUS
+                                </span>
 
-<div class="text-center">
+                            {% endif %}
 
-<i class="fa-solid fa-money-check-dollar"
+                        </td>
 
-style="font-size:70px;
-color:#00d9ff;"></i>
+                    </tr>
 
-<h3 class="mt-4">
+                </table>
 
-UPI QR
+            </div>
 
-</h3>
+        </div>
 
-<p class="text-secondary">
 
-Unified Payments Interface
+        <div class="col-lg-4">
 
-</p>
+            <div class="upi-qr-module">
 
-<hr>
+                <div class="upi-qr-icon">
+                    <i class="fa-solid fa-qrcode"></i>
+                </div>
 
-<p>
+                <h4>
+                    UPI QR Payment
+                </h4>
 
-<strong>
+                <p>
+                    Unified Payments Interface
+                </p>
 
-Transaction Type
+                <div class="upi-module-line"></div>
 
-</strong>
+                <div class="upi-module-detail">
 
-</p>
+                    <span>
+                        Transaction Type
+                    </span>
 
-<p>
+                    <span>
+                        Payment QR
+                    </span>
 
-Payment QR Code
+                </div>
 
-</p>
+                <div class="upi-module-detail">
 
-<p>
+                    <span>
+                        Detection Engine
+                    </span>
 
-<strong>
+                    <span>
+                        SentinelX AI
+                    </span>
 
-Analysis Engine
+                </div>
 
-</strong>
+                <div class="upi-module-detail">
 
-</p>
+                    <span>
+                        Analysis
+                    </span>
 
-<p>
+                    <span>
+                        Completed
+                    </span>
 
-SentinelX AI
+                </div>
 
-</p>
+            </div>
 
-</div>
-
-</div>
-
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
-
 
 
-<!-- ====================================================== -->
-<!-- PAYMENT FRAUD ANALYSIS -->
-<!-- ====================================================== -->
+<!-- =========================================================
+     PAYMENT FRAUD ANALYSIS
+========================================================= -->
 
-<div class="section-card">
+<div class="upi-section">
 
-<h2 class="section-title">
+    <div class="upi-section-header">
 
-<i class="fa-solid fa-user-shield"></i>
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-user-shield"></i>
+        </div>
 
-Payment Fraud Analysis
+        <div>
 
-</h2>
+            <h2 class="upi-section-title">
+                Payment Fraud Analysis
+            </h2>
 
-<div class="row">
+            <p class="upi-section-subtitle">
+                Security indicators identified during analysis
+            </p>
 
-<div class="col-lg-6">
+        </div>
 
-<div class="card"
+    </div>
 
-style="background:#0f172a;
-border:none;
-border-radius:18px;
-padding:25px;">
 
-<h4 class="text-info">
+    <div class="row g-4">
 
-<i class="fa-solid fa-circle-check"></i>
+        <!-- VERIFIED -->
 
-Verified Information
+        <div class="col-lg-6">
 
-</h4>
+            <div class="upi-analysis-card">
 
-<hr>
+                <div class="upi-analysis-title verified">
 
-<ul class="list-group list-group-flush">
+                    <i class="fa-solid fa-circle-check"></i>
 
-<li class="list-group-item bg-transparent text-white">
+                    Verified Information
 
-✔ Receiver information extracted
+                </div>
 
-</li>
+                <div class="upi-analysis-line"></div>
 
-<li class="list-group-item bg-transparent text-white">
+                <ul class="upi-analysis-list verified-list">
 
-✔ UPI ID detected
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        Receiver information extracted
+                    </li>
 
-</li>
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        UPI ID detected
+                    </li>
 
-<li class="list-group-item bg-transparent text-white">
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        Payment provider identified
+                    </li>
 
-✔ Payment provider identified
+                    <li>
+                        <i class="fa-solid fa-check"></i>
+                        QR successfully decoded
+                    </li>
 
-</li>
+                </ul>
 
-<li class="list-group-item bg-transparent text-white">
+            </div>
 
-✔ QR successfully decoded
+        </div>
 
-</li>
 
-</ul>
+        <!-- FRAUD -->
 
-</div>
+        <div class="col-lg-6">
 
-</div>
+            <div class="upi-analysis-card">
 
-<div class="col-lg-6">
+                <div class="upi-analysis-title warning">
 
-<div class="card"
+                    <i class="fa-solid fa-triangle-exclamation"></i>
 
-style="background:#0f172a;
-border:none;
-border-radius:18px;
-padding:25px;">
+                    Fraud Indicators
 
-<h4 class="text-warning">
+                </div>
 
-<i class="fa-solid fa-triangle-exclamation"></i>
+                <div class="upi-analysis-line"></div>
 
-Fraud Indicators
 
-</h4>
+                {% if upi_reasons %}
 
-<hr>
+                    <ul class="upi-analysis-list warning-list">
 
-{% if upi_reasons %}
+                        {% for reason in upi_reasons %}
 
-<ul class="list-group list-group-flush">
+                            <li>
 
-{% for reason in upi_reasons %}
+                                <i class="fa-solid fa-triangle-exclamation"></i>
 
-<li class="list-group-item bg-transparent text-white">
+                                <span>
+                                    {{ reason }}
+                                </span>
 
-⚠ {{ reason }}
+                            </li>
 
-</li>
+                        {% endfor %}
 
-{% endfor %}
+                    </ul>
 
-</ul>
+                {% else %}
 
-{% else %}
+                    <div class="upi-ai-unavailable"
+                         style="
+                         color:#34D399;
+                         background:rgba(16,185,129,.06);
+                         border-color:rgba(16,185,129,.20);
+                         ">
 
-<div class="alert alert-success mb-0">
+                        <i class="fa-solid fa-circle-check"></i>
 
-<i class="fa-solid fa-circle-check"></i>
+                        No suspicious payment indicators detected.
 
-No suspicious payment indicators detected.
+                    </div>
 
-</div>
+                {% endif %}
 
-{% endif %}
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
 
-</div>
 
-<!-- ====================================================== -->
-<!-- GEMINI AI PAYMENT ASSESSMENT -->
-<!-- ====================================================== -->
+<!-- =========================================================
+     GEMINI AI ASSESSMENT
+========================================================= -->
 
-<div class="section-card">
+<div class="upi-section">
 
-<h2 class="section-title">
+    <div class="upi-section-header">
 
-<i class="fa-solid fa-robot"></i>
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-robot"></i>
+        </div>
 
-Gemini AI Payment Assessment
+        <div>
 
-</h2>
+            <h2 class="upi-section-title">
+                Gemini AI Payment Assessment
+            </h2>
 
-<div class="card"
+            <p class="upi-section-subtitle">
+                AI-generated security interpretation of the payment
+            </p>
 
-style="background:#0f172a;
-border:none;
-border-left:5px solid #00d9ff;
-border-radius:18px;">
+        </div>
 
-<div class="card-body">
+    </div>
 
-{% if ai_report %}
 
-<div class="ai-report">
+    <div class="upi-ai-box">
 
-{{ ai_report }}
+        {% if ai_report %}
 
-</div>
+            <div class="upi-ai-report">
+                {{ ai_report }}
+            </div>
 
-{% else %}
+        {% else %}
 
-<div class="alert alert-warning mb-0">
+            <div class="upi-ai-unavailable">
 
-Gemini AI is currently unavailable.
+                <i class="fa-solid fa-triangle-exclamation"></i>
 
-</div>
+                Gemini AI is currently unavailable.
 
-{% endif %}
+            </div>
 
-</div>
+        {% endif %}
 
-</div>
+    </div>
 
 </div>
 
 
+<!-- =========================================================
+     PAYMENT SAFETY
+========================================================= -->
 
-<!-- ====================================================== -->
-<!-- PAYMENT SAFETY RECOMMENDATIONS -->
-<!-- ====================================================== -->
+<div class="upi-section">
 
-<div class="section-card">
+    <div class="upi-section-header">
 
-<h2 class="section-title">
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-shield-heart"></i>
+        </div>
 
-<i class="fa-solid fa-shield-heart"></i>
+        <div>
 
-UPI Payment Safety Tips
+            <h2 class="upi-section-title">
+                UPI Payment Safety Tips
+            </h2>
 
-</h2>
+            <p class="upi-section-subtitle">
+                Recommended precautions before completing a payment
+            </p>
 
-<div class="row">
+        </div>
 
-<!-- DO -->
+    </div>
 
-<div class="col-lg-6">
 
-<div class="card recommend-card"
+    <div class="row g-4">
 
-style="background:#10263b;
-border-left:5px solid #22c55e;
-border-radius:18px;
-padding:25px;">
+        <!-- ALWAYS DO -->
 
-<h4 class="text-success">
+        <div class="col-lg-6">
 
-<i class="fa-solid fa-circle-check"></i>
+            <div class="upi-safety-card do-card">
 
-Always Do
+                <div class="upi-safety-title do-title">
 
-</h4>
+                    <i class="fa-solid fa-circle-check"></i>
 
-<hr>
+                    Always Do
 
-<ul>
+                </div>
 
-<li>Verify the receiver's name before payment.</li>
+                <ul class="upi-safety-list">
 
-<li>Confirm the UPI ID carefully.</li>
+                    <li>
+                        Verify the receiver's name before payment.
+                    </li>
 
-<li>Check the payment amount.</li>
+                    <li>
+                        Confirm the UPI ID carefully.
+                    </li>
 
-<li>Pay only trusted merchants or individuals.</li>
+                    <li>
+                        Check the payment amount.
+                    </li>
 
-<li>Review the transaction details inside your UPI app.</li>
+                    <li>
+                        Pay only trusted merchants or individuals.
+                    </li>
 
-<li>Use SentinelX AI before scanning unknown QR codes.</li>
+                    <li>
+                        Review transaction details inside your UPI app.
+                    </li>
 
-</ul>
+                    <li>
+                        Use SentinelX AI before scanning unknown QR codes.
+                    </li>
 
-</div>
+                </ul>
 
-</div>
+            </div>
 
-<!-- DON'T -->
+        </div>
 
-<div class="col-lg-6">
 
-<div class="card avoid-card"
+        <!-- NEVER DO -->
 
-style="background:#331818;
-border-left:5px solid #ef4444;
-border-radius:18px;
-padding:25px;">
+        <div class="col-lg-6">
 
-<h4 class="text-danger">
+            <div class="upi-safety-card dont-card">
 
-<i class="fa-solid fa-ban"></i>
+                <div class="upi-safety-title dont-title">
 
-Never Do
+                    <i class="fa-solid fa-ban"></i>
 
-</h4>
+                    Never Do
 
-<hr>
+                </div>
 
-<ul>
+                <ul class="upi-safety-list">
 
-<li>Never scan a QR code to receive money.</li>
+                    <li>
+                        Never scan a QR code to receive money.
+                    </li>
 
-<li>Never trust QR codes sent by unknown people.</li>
+                    <li>
+                        Never trust QR codes sent by unknown people.
+                    </li>
 
-<li>Never share your UPI PIN.</li>
+                    <li>
+                        Never share your UPI PIN.
+                    </li>
 
-<li>Never ignore receiver details.</li>
+                    <li>
+                        Never ignore receiver details.
+                    </li>
 
-<li>Never pay under pressure or urgency.</li>
+                    <li>
+                        Never pay under pressure or urgency.
+                    </li>
 
-<li>Never trust lottery, cashback or reward QR codes.</li>
+                    <li>
+                        Never trust lottery, cashback or reward QR codes.
+                    </li>
 
-</ul>
+                </ul>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
-
-
-
-<!-- ====================================================== -->
-<!-- EXECUTIVE SUMMARY -->
-<!-- ====================================================== -->
 
-<div class="section-card">
 
-<h2 class="section-title">
+<!-- =========================================================
+     EXECUTIVE SUMMARY
+========================================================= -->
 
-<i class="fa-solid fa-chart-line"></i>
+<div class="upi-section">
 
-Executive Summary
+    <div class="upi-section-header">
 
-</h2>
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
 
-<div class="row">
+        <div>
 
-<div class="col-lg-4">
+            <h2 class="upi-section-title">
+                Executive Summary
+            </h2>
 
-<div class="card text-center"
-
-style="background:#0f172a;
-border:none;
-border-radius:18px;
-padding:25px;">
-
-<i class="fa-solid fa-user-shield fa-3x text-success mb-3"></i>
-
-<h5 class="summary-title">
-
-Overall Status
-
-</h5>
-
-<h1 class="summary-number text-success">
-
-{{ upi_risk }}
-
-</h1>
-
-</div>
+            <p class="upi-section-subtitle">
+                High-level overview of the payment analysis
+            </p>
 
-</div>
+        </div>
 
-<div class="col-lg-4">
+    </div>
 
-<div class="card text-center"
 
-style="background:#0f172a;
-border:none;
-border-radius:18px;
-padding:25px;">
+    <div class="row g-3">
 
-<i class="fa-solid fa-building-columns fa-3x text-info mb-3"></i>
+        <div class="col-lg-4">
 
-<h5 class="summary-title">
+            <div class="upi-executive-card">
 
-Bank
+                <div class="upi-executive-icon text-success">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
 
-</h5>
+                <div class="upi-executive-label">
+                    Overall Status
+                </div>
 
-<h2 class="summary-number text-info">
+                <div class="upi-executive-value text-success">
+                    {{ upi_risk }}
+                </div>
 
-{{ bank }}
+            </div>
 
-</h2>
+        </div>
 
-</div>
 
-</div>
+        <div class="col-lg-4">
 
-<div class="col-lg-4">
+            <div class="upi-executive-card">
 
-<div class="card text-center"
+                <div class="upi-executive-icon text-info">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
 
-style="background:#0f172a;
-border:none;
-border-radius:18px;
-padding:25px;">
+                <div class="upi-executive-label">
+                    Payment Bank
+                </div>
 
-<i class="fa-solid fa-indian-rupee-sign fa-3x text-warning mb-3"></i>
+                <div class="upi-executive-value text-info">
+                    {{ bank }}
+                </div>
 
-<h5 class="summary-title">
+            </div>
 
-Amount
+        </div>
 
-</h5>
 
-<h2 class="summary-number text-warning">
+        <div class="col-lg-4">
 
-{% if amount == "Not Specified" %}
+            <div class="upi-executive-card">
 
-₹ User Will Enter
+                <div class="upi-executive-icon text-warning">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                </div>
 
-{% else %}
+                <div class="upi-executive-label">
+                    Payment Amount
+                </div>
 
-₹ {{ amount }}
+                <div class="upi-executive-value text-warning">
 
-{% endif %}
+                    {% if amount == "Not Specified" %}
+                        User Will Enter
+                    {% else %}
+                        ₹ {{ amount }}
+                    {% endif %}
 
-</h2>
+                </div>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
-
-<!-- ====================================================== -->
-<!-- ACTION CENTER -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
-
-<i class="fa-solid fa-bolt"></i>
 
-Action Center
 
-</h2>
+<!-- =========================================================
+     ACTION CENTER
+========================================================= -->
 
-<div class="row">
+<div class="upi-section">
 
-<div class="col-lg-3 mb-3">
+    <div class="upi-section-header">
 
-<a href="{% url 'qr_scan' %}"
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-bolt"></i>
+        </div>
 
-class="btn btn-primary w-100 p-3">
+        <div>
 
-<i class="fa-solid fa-qrcode fa-2x"></i>
+            <h2 class="upi-section-title">
+                Action Center
+            </h2>
 
-<br><br>
+            <p class="upi-section-subtitle">
+                Continue your security investigation
+            </p>
 
-Scan Another QR
+        </div>
 
-</a>
+    </div>
 
-</div>
 
-<div class="col-lg-3 mb-3">
+    <div class="row g-3">
 
-<a href="{% url 'dashboard' %}"
+        <div class="col-xl-3 col-md-6">
 
-class="btn btn-success w-100 p-3">
+            <a href="{% url 'qr_scan' %}"
+               class="btn btn-primary w-100 upi-action-btn">
 
-<i class="fa-solid fa-house fa-2x"></i>
+                <i class="fa-solid fa-qrcode"></i>
 
-<br><br>
+                <span>
+                    Scan Another QR
+                </span>
 
-Dashboard
+            </a>
 
-</a>
+        </div>
 
-</div>
 
-<div class="col-lg-3 mb-3">
+        <div class="col-xl-3 col-md-6">
 
-<button
+            <a href="{% url 'dashboard' %}"
+               class="btn btn-success w-100 upi-action-btn">
 
-onclick="window.print()"
+                <i class="fa-solid fa-house"></i>
 
-class="btn btn-warning w-100 p-3">
+                <span>
+                    Dashboard
+                </span>
 
-<i class="fa-solid fa-print fa-2x"></i>
+            </a>
 
-<br><br>
+        </div>
 
-Print Report
 
-</button>
+        <div class="col-xl-3 col-md-6">
 
-</div>
+            <button onclick="window.print()"
+                    class="btn btn-warning w-100 upi-action-btn">
 
-<div class="col-lg-3 mb-3">
+                <i class="fa-solid fa-print"></i>
 
-<button
+                <span>
+                    Print Report
+                </span>
 
-class="btn btn-info w-100 p-3"
+            </button>
 
-disabled>
+        </div>
 
-<i class="fa-solid fa-file-pdf fa-2x"></i>
 
-<br><br>
+        <div class="col-xl-3 col-md-6">
 
-Download PDF
+            <button class="btn btn-info w-100 upi-action-btn"
+                    disabled>
 
-<small class="d-block">
+                <i class="fa-solid fa-file-pdf"></i>
 
-Coming Soon
+                <span>
+                    Download PDF
+                </span>
 
-</small>
+                <small>
+                    Coming Soon
+                </small>
 
-</button>
+            </button>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </div>
-
-
-
-<!-- ====================================================== -->
-<!-- REPORT INFORMATION -->
-<!-- ====================================================== -->
-
-<div class="section-card">
-
-<h2 class="section-title">
 
-<i class="fa-solid fa-circle-info"></i>
 
-Report Information
+<!-- =========================================================
+     REPORT INFORMATION
+========================================================= -->
 
-</h2>
+<div class="upi-section">
 
-<table class="table table-dark table-borderless">
+    <div class="upi-section-header">
 
-<tr>
+        <div class="upi-section-icon">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
 
-<th>
+        <div>
 
-Report Generated
+            <h2 class="upi-section-title">
+                Report Information
+            </h2>
 
-</th>
+            <p class="upi-section-subtitle">
+                Scan and analysis metadata
+            </p>
 
-<td>
+        </div>
 
-{% now "d M Y" %}
+    </div>
 
-</td>
 
-</tr>
+    <div class="table-responsive">
 
-<tr>
+        <table class="upi-report-table">
 
-<th>
+            <tr>
 
-Scan Time
+                <th>
+                    <i class="fa-regular fa-calendar"></i>
+                    Report Generated
+                </th>
 
-</th>
+                <td>
+                    {% now "d M Y" %}
+                </td>
 
-<td>
+            </tr>
 
-{% now "H:i:s" %}
 
-</td>
+            <tr>
 
-</tr>
+                <th>
+                    <i class="fa-regular fa-clock"></i>
+                    Scan Time
+                </th>
 
-<tr>
+                <td>
+                    {% now "H:i:s" %}
+                </td>
 
-<th>
+            </tr>
 
-Platform
 
-</th>
+            <tr>
 
-<td>
+                <th>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Platform
+                </th>
 
-SentinelX AI
+                <td>
+                    SentinelX AI
+                </td>
 
-</td>
+            </tr>
 
-</tr>
 
-<tr>
+            <tr>
 
-<th>
+                <th>
+                    <i class="fa-solid fa-microchip"></i>
+                    Detection Module
+                </th>
 
-Detection Module
+                <td>
+                    UPI Fraud Intelligence Engine
+                </td>
 
-</th>
+            </tr>
 
-<td>
 
-UPI Fraud Intelligence Engine
+            <tr>
 
-</td>
+                <th>
+                    <i class="fa-solid fa-robot"></i>
+                    AI Engine
+                </th>
 
-</tr>
+                <td>
+                    Google Gemini AI
+                </td>
 
-<tr>
+            </tr>
 
-<th>
 
-AI Engine
+            <tr>
 
-</th>
+                <th>
+                    <i class="fa-solid fa-list-check"></i>
+                    Payment Analysis
+                </th>
 
-<td>
+                <td>
+                    Receiver • UPI ID • Bank • Amount • Fraud Indicators
+                </td>
 
-Google Gemini AI
+            </tr>
 
-</td>
 
-</tr>
+            <tr>
 
-<tr>
+                <th>
+                    <i class="fa-solid fa-qrcode"></i>
+                    Transaction Type
+                </th>
 
-<th>
+                <td>
+                    UPI QR Payment
+                </td>
 
-Payment Analysis
+            </tr>
 
-</th>
+        </table>
 
-<td>
+    </div>
 
-Receiver • UPI ID • Bank • Amount • Fraud Indicators
-
-</td>
-
-</tr>
-
-<tr>
-
-<th>
-
-Transaction Type
-
-</th>
-
-<td>
-
-UPI QR Payment
-
-</td>
-
-</tr>
-
-</table>
-
 </div>
-
-
-
-<!-- ====================================================== -->
-<!-- FOOTER -->
-<!-- ====================================================== -->
-
-<footer class="text-center mt-5 mb-4">
-
-<hr style="border-color:#334155;">
-
-<h3 class="text-info">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-SentinelX AI
 
-</h3>
 
-<p class="text-secondary">
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
-AI Powered Multi-Channel Scam & Phishing Detection Platform
+<footer class="upi-footer">
 
-</p>
+    <div class="upi-footer-brand">
 
-<p class="text-secondary">
+        <i class="fa-solid fa-shield-halved"></i>
 
-UPI Fraud Intelligence • QR Analysis • Google Gemini AI
+        SentinelX AI
 
-</p>
+    </div>
 
-<small class="text-secondary">
+    <p>
+        AI Powered Multi-Channel Scam & Phishing Detection Platform
+    </p>
 
-© 2026 SentinelX AI | Secure Every Scan
+    <p>
+        UPI Fraud Intelligence • QR Analysis • Google Gemini AI
+    </p>
 
-</small>
+    <p>
+        © 2026 SentinelX AI | Secure Every Scan
+    </p>
 
 </footer>
 
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>
+{% endblock %}

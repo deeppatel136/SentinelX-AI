@@ -7,340 +7,1402 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>
 
+        {% block title %}
         SentinelX AI
+        {% endblock %}
 
     </title>
 
+
     <!-- Bootstrap -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
 
     <!-- Font Awesome -->
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 
     <!-- Google Font -->
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
 
     <style>
 
-        *{
-            font-family:'Poppins',sans-serif;
-        }
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
 
-        body{
+        * {
 
-            background:#0f172a;
+            margin: 0;
 
-            color:white;
+            padding: 0;
 
-            padding-top:85px;
-
-        }
-
-        /* ================= NAVBAR ================= */
-
-        .navbar{
-
-            background:#020617;
-
-            box-shadow:0 0 15px rgba(0,255,255,.15);
+            box-sizing: border-box;
 
         }
 
-        .navbar-brand{
 
-            font-size:28px;
+        :root {
 
-            font-weight:700;
+            --bg-main: #020817;
 
-            color:#00e5ff !important;
+            --bg-sidebar: #030b18;
 
-        }
+            --bg-card: #071426;
 
-        .navbar-brand span{
+            --bg-card-2: #09182c;
 
-            color:#ffffff;
+            --border: #1a304c;
 
-        }
+            --border-soft: rgba(103, 143, 190, 0.18);
 
-        .nav-link{
+            --text-main: #f8fafc;
 
-            color:#d1d5db !important;
+            --text-secondary: #a8b8cc;
 
-            font-weight:500;
+            --text-muted: #71839a;
 
-            margin-right:10px;
+            --purple: #7657ff;
 
-            transition:.3s;
+            --purple-light: #9b7cff;
 
-        }
+            --cyan: #36a9ff;
 
-        .nav-link:hover{
+            --green: #35d98b;
 
-            color:#00e5ff !important;
+            --red: #ff5361;
 
-        }
-
-        .btn-login{
-
-            background:#00bcd4;
-
-            color:white;
-
-            border:none;
-
-            font-weight:600;
+            --orange: #f5a623;
 
         }
 
-        .btn-login:hover{
 
-            background:#0097a7;
+        html,
+        body {
 
-        }
-
-        /* ================= MAIN ================= */
-
-        .main-content{
-
-            min-height:85vh;
+            min-height: 100%;
 
         }
 
-        /* ================= CARD ================= */
 
-        .card{
+        body {
 
-            background:#1e293b;
+            background:
 
-            border:none;
+                radial-gradient(
+                    circle at 65% 0%,
+                    rgba(72, 78, 180, 0.10),
+                    transparent 32%
+                ),
 
-            border-radius:15px;
+                linear-gradient(
+                    135deg,
+                    #020817 0%,
+                    #030b17 55%,
+                    #020714 100%
+                );
 
-            color:white;
+            color: var(--text-main);
 
-            box-shadow:0 0 20px rgba(0,255,255,.08);
+            font-family: 'Inter', sans-serif;
 
-        }
-
-        /* ================= BUTTON ================= */
-
-        .btn-primary{
-
-            background:#00bcd4;
-
-            border:none;
-
-        }
-
-        .btn-primary:hover{
-
-            background:#0097a7;
+            overflow-x: hidden;
 
         }
 
-        /* ================= FOOTER ================= */
 
-        footer{
+        a {
 
-            background:#020617;
+            text-decoration: none;
 
-            padding:18px;
+        }
 
-            text-align:center;
 
-            margin-top:60px;
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
 
-            color:#9ca3af;
+        .sidebar {
 
-            font-size:15px;
+            position: fixed;
 
-            border-top:1px solid #1f2937;
+            left: 0;
+
+            top: 0;
+
+            bottom: 0;
+
+            width: 242px;
+
+            background:
+
+                linear-gradient(
+                    180deg,
+                    #030b18 0%,
+                    #020914 100%
+                );
+
+            border-right: 1px solid #17304d;
+
+            z-index: 1000;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow-y: auto;
+
+        }
+
+
+        .sidebar::-webkit-scrollbar {
+
+            width: 4px;
+
+        }
+
+
+        .sidebar::-webkit-scrollbar-thumb {
+
+            background: #243b5a;
+
+            border-radius: 10px;
+
+        }
+
+
+        /* =========================================================
+           LOGO
+        ========================================================= */
+
+        .sidebar-brand {
+
+            padding: 24px 22px 10px;
+
+        }
+
+
+        .brand-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .brand-shield {
+
+            width: 38px;
+
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #9b7cff;
+
+            font-size: 31px;
+
+            filter:
+
+                drop-shadow(
+                    0 0 10px rgba(118, 87, 255, .45)
+                );
+
+        }
+
+
+        .brand-name {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -.5px;
+
+            color: #f8fafc;
+
+        }
+
+
+        .brand-name span {
+
+            color: #8365ff;
+
+        }
+
+
+        .brand-subtitle {
+
+            margin-top: 12px;
+
+            padding-left: 8px;
+
+            color: #8ea0b8;
+
+            font-size: 12px;
+
+            letter-spacing: .1px;
+
+        }
+
+
+        /* =========================================================
+           SIDEBAR NAV
+        ========================================================= */
+
+        .sidebar-nav {
+
+            padding: 28px 14px 18px;
+
+            flex: 1;
+
+        }
+
+
+        .nav-section {
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .nav-divider {
+
+            height: 1px;
+
+            background: rgba(108, 135, 170, .16);
+
+            margin: 20px 7px;
+
+        }
+
+
+        .side-link {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            width: 100%;
+
+            padding: 13px 15px;
+
+            margin-bottom: 5px;
+
+            border-radius: 9px;
+
+            color: #9eafc4;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition: all .25s ease;
+
+        }
+
+
+        .side-link i {
+
+            width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            color: #91a7c3;
+
+        }
+
+
+        .side-link:hover {
+
+            color: #ffffff;
+
+            background: rgba(91, 75, 210, .14);
+
+        }
+
+
+        .side-link:hover i {
+
+            color: #b29cff;
+
+        }
+
+
+        .side-link.active {
+
+            color: #ffffff;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(91, 68, 221, .82),
+                    rgba(67, 52, 173, .82)
+                );
+
+            border: 1px solid rgba(132, 103, 255, .65);
+
+            box-shadow:
+
+                0 7px 25px rgba(82, 57, 220, .20);
+
+        }
+
+
+        .side-link.active i {
+
+            color: #ffffff;
+
+        }
+
+
+        /* =========================================================
+           SIDEBAR STATUS
+        ========================================================= */
+
+        .sidebar-status {
+
+            margin: 0 14px 20px;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(17, 39, 68, .72),
+                    rgba(5, 18, 34, .72)
+                );
+
+            border: 1px solid rgba(70, 105, 143, .25);
+
+        }
+
+
+        .status-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #dce7f4;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+        }
+
+
+        .status-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            background: #35d98b;
+
+            border-radius: 50%;
+
+            box-shadow:
+
+                0 0 9px rgba(53, 217, 139, .7);
+
+        }
+
+
+        .status-text {
+
+            margin-top: 7px;
+
+            color: #72869e;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =========================================================
+           MAIN AREA
+        ========================================================= */
+
+        .app-wrapper {
+
+            margin-left: 242px;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .topbar {
+
+            height: 76px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 28px;
+
+            background:
+
+                rgba(2, 9, 21, .86);
+
+            border-bottom: 1px solid rgba(74, 101, 135, .16);
+
+            backdrop-filter: blur(16px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 900;
+
+        }
+
+
+        .topbar-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            min-width: 0;
+
+        }
+
+
+        /* =========================================================
+           SECURITY QUOTE
+        ========================================================= */
+
+        .security-quote {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #9eafc4;
+
+            min-width: 0;
+
+        }
+
+
+        .security-quote-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            min-width: 38px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #55c7ff;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(54, 169, 255, .13),
+                    rgba(17, 42, 73, .35)
+                );
+
+            border: 1px solid rgba(54, 169, 255, .20);
+
+            font-size: 15px;
+
+        }
+
+
+        .quote-content {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 3px;
+
+        }
+
+
+        .quote-title {
+
+            color: #dce7f4;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: .8px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .quote-text {
+
+            color: #7f93ac;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .quote-text span {
+
+            color: #a995ff;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =========================================================
+           TOPBAR RIGHT
+        ========================================================= */
+
+        .topbar-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .top-icon {
+
+            position: relative;
+
+            width: 38px;
+
+            height: 38px;
+
+            border: none;
+
+            background: transparent;
+
+            color: #91a2b8;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+            transition: all .25s ease;
+
+        }
+
+
+        .top-icon:hover {
+
+            color: #ffffff;
+
+            background: rgba(255, 255, 255, .05);
+
+        }
+
+
+        .notification-badge {
+
+            position: absolute;
+
+            top: 0px;
+
+            right: -1px;
+
+            width: 17px;
+
+            height: 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #ff414d;
+
+            color: white;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            border: 2px solid #020914;
+
+        }
+
+
+        /* =========================================================
+           PROFILE
+        ========================================================= */
+
+        .profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding-left: 14px;
+
+            border-left: 1px solid rgba(90, 113, 143, .22);
+
+        }
+
+
+        .profile-avatar {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    #152845,
+                    #0a172b
+                );
+
+            border: 1px solid #263d59;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #a9b8ca;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+        }
+
+
+        .profile-info {
+
+            line-height: 1.25;
+
+        }
+
+
+        .profile-name {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #f4f7fb;
+
+        }
+
+
+        .profile-role {
+
+            font-size: 9px;
+
+            color: #6f839c;
+
+            margin-top: 3px;
+
+        }
+
+
+        .profile-chevron {
+
+            color: #71849b;
+
+            font-size: 11px;
+
+            margin-left: 4px;
+
+        }
+
+
+        /* =========================================================
+           PAGE CONTENT
+        ========================================================= */
+
+        .page-content {
+
+            padding: 30px;
+
+            max-width: 1500px;
+
+            margin: 0 auto;
+
+        }
+
+
+        /* =========================================================
+           COMMON CARDS
+        ========================================================= */
+
+        .card {
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(8, 23, 42, .96),
+                    rgba(4, 15, 29, .96)
+                );
+
+            border: 1px solid var(--border-soft);
+
+            border-radius: 12px;
+
+            color: white;
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        .mobile-menu {
+
+            display: none;
+
+            border: none;
+
+            background: transparent;
+
+            color: white;
+
+            font-size: 21px;
+
+        }
+
+
+        @media (max-width: 1100px) {
+
+            .sidebar {
+
+                width: 220px;
+
+            }
+
+
+            .app-wrapper {
+
+                margin-left: 220px;
+
+            }
+
+
+            .quote-text {
+
+                max-width: 420px;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform: translateX(-100%);
+
+                transition: transform .3s ease;
+
+            }
+
+
+            .sidebar.show {
+
+                transform: translateX(0);
+
+            }
+
+
+            .app-wrapper {
+
+                margin-left: 0;
+
+            }
+
+
+            .mobile-menu {
+
+                display: block;
+
+            }
+
+
+            .topbar {
+
+                padding: 0 16px;
+
+            }
+
+
+            .quote-content {
+
+                display: none;
+
+            }
+
+
+            .profile-info,
+            .profile-chevron {
+
+                display: none;
+
+            }
+
+
+            .page-content {
+
+                padding: 20px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .topbar {
+
+                height: 68px;
+
+            }
+
+
+            .topbar-right {
+
+                gap: 8px;
+
+            }
+
+
+            .profile {
+
+                border-left: none;
+
+                padding-left: 0;
+
+            }
 
         }
 
     </style>
 
+
+    {% block extra_css %}
+    {% endblock %}
+
 </head>
+
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
 
-    <div class="container">
+<aside
+    class="sidebar"
+    id="sidebar">
 
-        <a class="navbar-brand"
-           href="{% url 'dashboard' %}">
 
-            <i class="fa-solid fa-shield-halved"></i>
+    <div class="sidebar-brand">
 
-            Sentinel<span>X AI</span>
 
-        </a>
+        <div class="brand-row">
 
-        <button class="navbar-toggler"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
 
-            <span class="navbar-toggler-icon"></span>
+            <div class="brand-shield">
 
-        </button>
+                <i class="fa-solid fa-shield-halved"></i>
 
-        <div class="collapse navbar-collapse"
-             id="navbarNav">
+            </div>
 
-            <ul class="navbar-nav ms-auto align-items-center">
 
-                <!-- <li class="nav-item">
+            <div class="brand-name">
 
-                    <a class="nav-link"
-                       href="{% url 'dashboard' %}">
+                SENTINELX <span>AI</span>
 
-                        <i class="fa-solid fa-house"></i>
+            </div>
 
-                        Dashboard
-
-                    </a>
-
-                </li> -->
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       href="{% url 'scan' %}">
-
-                        URL Scan
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       href="{% url 'email_scan' %}">
-
-                        Email Scan
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       href="{% url 'image_scan' %}">
-
-                        Image Scan
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       href="{% url 'file_scan' %}">
-
-                        File Scan
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                    href="{% url 'qr_scan' %}">
-
-                        <!-- <i class="fa-solid fa-qrcode"></i> -->
-
-                        QR Scan
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       href="{% url 'history' %}">
-
-                        History
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-
-                    href="{% url 'chatbot' %}">
-
-                    <!-- <i class="fa-solid fa-robot"></i> -->
-
-                    AI Chatbot
-
-                    </a>
-
-                </li>
-
-                <li class="nav-item ms-2">
-
-                    <a class="btn btn-login"
-                       href="{% url 'logout' %}">
-
-                        <i class="fa-solid fa-right-from-bracket"></i>
-
-                        Logout
-
-                    </a>
-
-                </li>
-
-            </ul>
 
         </div>
 
+
+        <div class="brand-subtitle">
+
+            AI-Powered Threat Detection
+
+        </div>
+
+
     </div>
 
-</nav>
 
-<!-- ================= CONTENT ================= -->
+    <div class="sidebar-nav">
 
-<div class="container main-content">
 
-    {% block content %}
+        <!-- MAIN -->
 
-    {% endblock %}
+        <div class="nav-section">
+
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="side-link">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a
+                href="{% url 'scan' %}"
+                class="side-link">
+
+                <i class="fa-solid fa-link"></i>
+
+                <span>URL Scanner</span>
+
+            </a>
+
+
+            <a
+                href="{% url 'email_scan' %}"
+                class="side-link">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                <span>Email Scanner</span>
+
+            </a>
+
+
+            <a
+                href="{% url 'image_scan' %}"
+                class="side-link">
+
+                <i class="fa-regular fa-image"></i>
+
+                <span>Image Scanner</span>
+
+            </a>
+
+
+            <a
+                href="{% url 'file_scan' %}"
+                class="side-link">
+
+                <i class="fa-regular fa-file-lines"></i>
+
+                <span>File Scanner</span>
+
+            </a>
+
+
+            <!-- <a
+                href="{% url 'qr_scan' %}"
+                class="side-link">
+
+                <i class="fa-solid fa-qrcode"></i>
+
+                <span>QR Scanner</span>
+
+            </a> -->
+
+
+        </div>
+
+
+        <div class="nav-divider"></div>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="nav-section">
+
+
+            <a
+                href="{% url 'history' %}"
+                class="side-link">
+
+                <i class="fa-regular fa-clock"></i>
+
+                <span>Scan History</span>
+
+            </a>
+
+
+            <!-- <a
+                href="#"
+                class="side-link">
+
+                <i class="fa-regular fa-file-lines"></i>
+
+                <span>Reports</span>
+
+            </a> -->
+
+
+            <a
+                href="{% url 'chatbot' %}"
+                class="side-link">
+
+                <i class="fa-regular fa-comments"></i>
+
+                <span>AI Assistant</span>
+
+            </a>
+
+
+            <a 
+                href="{% url 'settings' %}" 
+                class="side-link">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+
+            <a
+                href="{% url 'help_support' %}"
+                class="side-link">
+
+                <i class="fa-regular fa-circle-question"></i>
+
+                <span>Help & Support</span>
+
+            </a>
+
+
+        </div>
+
+
+        <div class="nav-divider"></div>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="side-link">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- STATUS CARD -->
+
+    <div class="sidebar-status">
+
+
+        <div class="status-title">
+
+            <span class="status-dot"></span>
+
+            All Systems Operational
+
+        </div>
+
+
+        <div class="status-text">
+
+            SentinelX AI protection services are running normally.
+
+        </div>
+
+
+    </div>
+
+
+</aside>
+
+
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<div class="app-wrapper">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ===================================================== -->
+
+    <header class="topbar">
+
+
+        <div class="topbar-left">
+
+
+            <button
+                class="mobile-menu"
+                onclick="toggleSidebar()">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+            <!-- SECURITY QUOTE -->
+
+            <div class="security-quote">
+
+
+                <div class="security-quote-icon">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+
+                <div class="quote-content">
+
+
+                    <div class="quote-title">
+
+                        Security Insight
+
+                    </div>
+
+
+                    <div class="quote-text">
+
+                        <span>“</span>
+                        The best defense against evolving threats is awareness before action.
+                        <span>”</span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="topbar-right">
+
+
+            <!-- <button class="top-icon">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span class="notification-badge">
+
+                    3
+
+                </span>
+
+            </button> -->
+
+
+            <!-- <button class="top-icon">
+
+                <i class="fa-regular fa-moon"></i>
+
+            </button> -->
+
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+
+
+                    {% if user.is_authenticated %}
+
+                        {{ user.username|first|upper }}
+
+                    {% else %}
+
+                        D
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <div class="profile-info">
+
+
+                    <div class="profile-name">
+
+
+                        {% if user.is_authenticated %}
+
+                            {{ user.username }}
+
+                        {% else %}
+
+                            User
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <div class="profile-role">
+
+                        Security User
+
+                    </div>
+
+
+                </div>
+
+
+                <i
+                    class="fa-solid fa-chevron-down profile-chevron">
+
+                </i>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+    ===================================================== -->
+
+    <main class="page-content">
+
+
+        {% block content %}
+
+        {% endblock %}
+
+
+    </main>
+
 
 </div>
 
-<!-- ================= FOOTER ================= -->
 
-<footer>
+<script>
 
-    © 2026 SentinelX AI |
-    AI-Powered Multi-Channel Scam & Phishing Detection Platform
+    function toggleSidebar() {
 
-</footer>
+        const sidebar = document.getElementById("sidebar");
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        sidebar.classList.toggle("show");
+
+    }
+
+</script>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+{% block extra_js %}
+{% endblock %}
+
 
 </body>
 
 </html>
-

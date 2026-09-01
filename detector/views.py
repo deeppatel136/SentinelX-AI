@@ -204,40 +204,38 @@ def dashboard(request):
         context
 
     )
-
+from .threat_engine import analyze_threat
 @login_required
 def scan_url(request):
 
     if request.method == "POST":
 
-        url = request.POST['url']
+        url = request.POST.get("url", "").strip()
 
-        # =====================
-        # Rule-Based Detection
-        # =====================
+        # ==========================================================
+        # 1. RULE-BASED URL DETECTION
+        # ==========================================================
 
-        score, status, reasons = analyze_url(
-            url
-        )
+        rule_result = analyze_url(url)
 
-        # =====================
-        # ML Detection
-        # =====================
-
-        features = extract_features(
-            url
-        )
-
-        prediction, confidence = predict_url(
-            features
-        )
+        score = rule_result.risk_score
+        status = rule_result.status
+        reasons = rule_result.indicators
 
         print("=" * 50)
         print("URL:", url)
+        print("Rule Score:", score)
         print("Rule Status:", status)
-        print("Prediction:", prediction)
-        print("Confidence:", confidence)
+        print("Rule Indicators:", reasons)
         print("=" * 50)
+
+        # ==========================================================
+        # 2. MACHINE LEARNING DETECTION
+        # ==========================================================
+
+        features = extract_features(url)
+
+        prediction, confidence = predict_url(features)
 
         if prediction == 1:
 
@@ -247,26 +245,73 @@ def scan_url(request):
 
             ml_result = "Legitimate"
 
-        # =====================
-        # AI Security Assistant
-        # =====================
+        ml_confidence = round(
+            confidence * 100,
+            2
+        )
+
+        print("=" * 50)
+        print("ML Prediction:", ml_result)
+        print("ML Confidence:", ml_confidence)
+        print("=" * 50)
+
+        # ==========================================================
+        # 3. SENTINELX THREAT ENGINE
+        # ==========================================================
+
+        threat_result = analyze_threat(
+
+            scan_type="URL",
+
+            rule_score=score,
+
+            status=status,
+
+            reasons=reasons,
+
+            ml_prediction=ml_result,
+
+            ml_confidence=ml_confidence
+
+        )
+
+        # ==========================================================
+        # 4. EXTRACT FINAL THREAT RESULT
+        # ==========================================================
+
+        final_score = threat_result["risk_score"]
+
+        final_status = threat_result["verdict"]
+
+        final_reasons = threat_result["indicators"]
+
+        final_severity = threat_result["severity"]
+
+        print("=" * 50)
+        print("FINAL THREAT ANALYSIS")
+        print("Risk Score:", final_score)
+        print("Severity:", final_severity)
+        print("Verdict:", final_status)
+        print("Indicators:", final_reasons)
+        print("=" * 50)
+
+        # ==========================================================
+        # 5. AI SECURITY ASSISTANT
+        # ==========================================================
 
         ai_explanation = generate_ai_response(
 
             scan_type="URL",
 
-            status=status,
+            status=final_status,
 
-            risk_score=score,
+            risk_score=final_score,
 
             ml_prediction=ml_result,
 
-            ml_confidence=round(
-                confidence * 100,
-                2
-            ),
+            ml_confidence=ml_confidence,
 
-            reasons=reasons
+            reasons=final_reasons
 
         )
 
@@ -275,55 +320,54 @@ def scan_url(request):
         print(ai_explanation)
         print("=" * 80)
 
-        # =====================
-        # Save Scan History
-        # =====================
+        # ==========================================================
+        # 6. SAVE SCAN HISTORY
+        # ==========================================================
 
         ScanHistory.objects.create(
 
             user=request.user,
 
-            scan_type='URL',
+            scan_type="URL",
 
             input_data=url,
 
-            risk_score=score,
+            risk_score=final_score,
 
-            status=status,
+            status=final_status,
 
-            analysis_reason="\n".join(reasons),
+            analysis_reason="\n".join(
+                str(reason)
+                for reason in final_reasons
+            ),
 
             ml_prediction=ml_result,
 
-            ml_confidence=round(
-                confidence * 100,
-                2
-            )
+            ml_confidence=ml_confidence
 
         )
 
-        # =====================
-        # Result Context
-        # =====================
+        # ==========================================================
+        # 7. RESULT PAGE CONTEXT
+        # ==========================================================
 
         context = {
 
-            'url': url,
+            "url": url,
 
-            'score': score,
+            "score": final_score,
 
-            'status': status,
+            "status": final_status,
 
-            'reasons': reasons,
+            "severity": final_severity,
 
-            'ml_prediction': ml_result,
+            "reasons": final_reasons,
 
-            'ml_confidence': round(
-                confidence * 100,
-                2
-            ),
+            "ml_prediction": ml_result,
 
-            'ai_explanation': ai_explanation
+            "ml_confidence": ml_confidence,
+
+            "ai_explanation": ai_explanation,
 
         }
 
@@ -331,17 +375,21 @@ def scan_url(request):
 
             request,
 
-            'result.html',
+            "result.html",
 
             context
 
         )
 
+    # ==============================================================
+    # GET REQUEST
+    # ==============================================================
+
     return render(
 
         request,
 
-        'scan.html'
+        "scan.html"
 
     )
 
@@ -1998,11 +2046,15 @@ def qr_scan(request):
 
                 url = result["data"]
 
-                score, status, reasons = analyze_url(
+                # =====================
+                # Rule-Based Detection
+                # =====================
 
-                    url
+                rule_result = analyze_url(url)
 
-                )
+                score = rule_result.risk_score
+                status = rule_result.verdict
+                reasons = rule_result.indicators
 
                 features = extract_features(
 
@@ -2390,3 +2442,71 @@ from django.http import JsonResponse
 
 def health_check(request):
     return JsonResponse({"status": "ok"})
+
+def landing_page(request):
+    return render(request, "landing.html")
+
+from django.http import JsonResponse
+from django.utils import timezone
+from datetime import timedelta
+
+@login_required
+def scan_activity_api(request):
+    now = timezone.now()
+
+    activity = []
+
+    for i in range(6, -1, -1):
+        day = now - timedelta(days=i)
+
+        start = day.replace(
+            hour=0,
+            minute=0,
+            second=0,
+            microsecond=0
+        )
+
+        end = start + timedelta(days=1)
+
+        count = ScanHistory.objects.filter(
+            user=request.user,
+            created_at__gte=start,
+            created_at__lt=end
+        ).count()
+
+        activity.append({
+            "date": start.strftime("%a"),
+            "count": count
+        })
+
+    return JsonResponse({
+        "labels": [item["date"] for item in activity],
+        "data": [item["count"] for item in activity]
+    })
+    
+# ============================================================
+# SETTINGS
+# ============================================================
+
+@login_required
+def settings_view(request):
+
+    return render(
+        request,
+        "settings.html"
+    )
+    
+# ==========================================================
+# HELP & SUPPORT
+# ==========================================================
+
+@login_required
+def help_support(request):
+
+    return render(
+
+        request,
+
+        "help_support.html"
+
+    )

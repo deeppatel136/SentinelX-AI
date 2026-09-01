@@ -1,0 +1,1421 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+
+Help & Support | SentinelX AI
+
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+    /* ==========================================
+       SUPPORT PAGE
+    ========================================== */
+
+    .support-page {
+
+        max-width: 1180px;
+
+        margin: 0 auto;
+
+        padding:
+            35px
+            28px
+            50px;
+    }
+
+
+    /* ==========================================
+       PAGE HEADER
+    ========================================== */
+
+    .support-page-header {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 25px;
+
+        margin-bottom: 25px;
+    }
+
+
+    .support-title-section {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 16px;
+    }
+
+
+    .support-title-icon {
+
+        width: 54px;
+        height: 54px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 15px;
+
+        background:
+            rgba(0, 196, 230, 0.08);
+
+        border:
+            1px solid
+            rgba(0, 196, 230, 0.24);
+    }
+
+
+    .support-title-icon i {
+
+        color: #32d2e8;
+
+        font-size: 21px;
+    }
+
+
+    .support-page-title {
+
+        margin: 0 0 5px;
+
+        color: #edf3f8;
+
+        font-size: 28px;
+
+        font-weight: 700;
+
+        letter-spacing: -0.5px;
+    }
+
+
+    .support-page-subtitle {
+
+        margin: 0;
+
+        color: #8fa3ba;
+
+        font-size: 13px;
+    }
+
+
+    .support-insight {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        padding:
+            11px
+            15px;
+
+        border-radius: 10px;
+
+        background:
+            rgba(17, 36, 54, 0.85);
+
+        border:
+            1px solid
+            rgba(39, 89, 120, 0.5);
+
+        color: #8ea4bc;
+
+        font-size: 12px;
+
+        white-space: nowrap;
+    }
+
+
+    .support-insight i {
+
+        color: #35cde6;
+    }
+
+
+    .support-insight span {
+
+        color: #d9e5ef;
+
+        font-weight: 600;
+    }
+
+
+    /* ==========================================
+       SUPPORT HERO
+    ========================================== */
+
+    .support-hero-card {
+
+        margin-bottom: 30px;
+
+        padding: 27px;
+
+        border-radius: 17px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(18, 39, 58, 0.95),
+                rgba(10, 26, 42, 0.95)
+            );
+
+        border:
+            1px solid
+            rgba(38, 100, 136, 0.55);
+    }
+
+
+    .support-hero-content {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 30px;
+    }
+
+
+    .support-hero-left {
+
+        max-width: 720px;
+    }
+
+
+    .support-hero-title {
+
+        margin: 0 0 10px;
+
+        color: #eef4f9;
+
+        font-size: 22px;
+
+        font-weight: 700;
+    }
+
+
+    .support-hero-description {
+
+        margin: 0;
+
+        color: #92a6bc;
+
+        font-size: 13px;
+
+        line-height: 1.8;
+    }
+
+
+    .support-status {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        padding:
+            11px
+            16px;
+
+        border-radius: 10px;
+
+        background:
+            rgba(35, 178, 133, 0.06);
+
+        border:
+            1px solid
+            rgba(53, 217, 139, 0.18);
+
+        color: #73d8ad;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        white-space: nowrap;
+    }
+
+
+    .support-status-dot {
+
+        width: 8px;
+        height: 8px;
+
+        border-radius: 50%;
+
+        background: #35d98b;
+
+        box-shadow:
+            0 0 10px
+            rgba(53, 217, 139, 0.75);
+    }
+
+
+    /* ==========================================
+       SUPPORT SECTION
+    ========================================== */
+
+    .support-section {
+
+        margin-bottom: 32px;
+    }
+
+
+    .support-section-heading {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-bottom: 16px;
+
+        color: #e7eef6;
+
+        font-size: 17px;
+
+        font-weight: 650;
+    }
+
+
+    .support-section-heading i {
+
+        color: #35cde6;
+
+        font-size: 16px;
+    }
+
+
+    /* ==========================================
+       QUICK HELP
+    ========================================== */
+
+    .support-options-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 15px;
+    }
+
+
+    .support-option-card {
+
+        display: block;
+
+        min-height: 225px;
+
+        padding: 21px;
+
+        border-radius: 15px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(18, 35, 53, 0.95),
+                rgba(12, 27, 43, 0.95)
+            );
+
+        border:
+            1px solid
+            rgba(45, 88, 120, 0.55);
+
+        text-decoration: none;
+
+        transition:
+            transform 0.22s ease,
+            border-color 0.22s ease,
+            box-shadow 0.22s ease;
+    }
+
+
+    .support-option-card:hover {
+
+        transform:
+            translateY(-3px);
+
+        border-color:
+            rgba(52, 208, 233, 0.60);
+
+        box-shadow:
+            0 12px 28px
+            rgba(0, 0, 0, 0.18);
+
+        text-decoration: none;
+    }
+
+
+    .support-option-icon {
+
+        width: 46px;
+        height: 46px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 17px;
+
+        border-radius: 13px;
+
+        background:
+            rgba(0, 196, 230, 0.10);
+
+        border:
+            1px solid
+            rgba(0, 196, 230, 0.18);
+    }
+
+
+    .support-option-icon i {
+
+        font-size: 19px;
+
+        color: #32d2e8;
+    }
+
+
+    .support-option-card h3 {
+
+        margin: 0 0 8px;
+
+        color: #eef3f8;
+
+        font-size: 16px;
+
+        font-weight: 650;
+    }
+
+
+    .support-option-card p {
+
+        margin: 0;
+
+        color: #91a4bc;
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    /* ==========================================
+       FAQ
+    ========================================== */
+
+    .faq-container {
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .faq-item {
+
+        overflow: hidden;
+
+        border-radius: 13px;
+
+        background:
+            rgba(19, 34, 53, 0.78);
+
+        border:
+            1px solid
+            rgba(50, 92, 127, 0.52);
+
+        transition:
+            border-color 0.2s ease;
+    }
+
+
+    .faq-item:hover {
+
+        border-color:
+            rgba(52, 208, 233, 0.38);
+    }
+
+
+    .faq-question {
+
+        width: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 20px;
+
+        padding: 19px 21px;
+
+        background: transparent;
+
+        border: none;
+
+        color: #e7edf5;
+
+        font-size: 15px;
+
+        font-weight: 600;
+
+        text-align: left;
+
+        cursor: pointer;
+    }
+
+
+    .faq-question-left {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 13px;
+    }
+
+
+    .faq-question-left i {
+
+        color: #35cde6;
+
+        font-size: 14px;
+    }
+
+
+    .faq-arrow {
+
+        color: #8297b0;
+
+        transition:
+            transform 0.25s ease;
+    }
+
+
+    .faq-item.active .faq-arrow {
+
+        transform:
+            rotate(180deg);
+
+        color: #35d4e8;
+    }
+
+
+    .faq-answer {
+
+        display: none;
+
+        padding:
+            0 48px 20px;
+    }
+
+
+    .faq-item.active .faq-answer {
+
+        display: block;
+    }
+
+
+    .faq-answer p {
+
+        margin: 0;
+
+        color: #91a6be;
+
+        font-size: 13px;
+
+        line-height: 1.8;
+    }
+
+
+    /* ==========================================
+       AI ASSISTANT
+    ========================================== */
+
+    .contact-support-card {
+
+        padding: 27px;
+
+        border-radius: 17px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(19, 38, 57, 0.95),
+                rgba(13, 27, 44, 0.95)
+            );
+
+        border:
+            1px solid
+            rgba(44, 105, 139, 0.55);
+    }
+
+
+    .contact-support-content {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 30px;
+    }
+
+
+    .contact-support-left {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 18px;
+    }
+
+
+    .contact-support-icon {
+
+        width: 52px;
+        height: 52px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background:
+            rgba(111, 92, 255, 0.12);
+
+        border:
+            1px solid
+            rgba(111, 92, 255, 0.28);
+    }
+
+
+    .contact-support-icon i {
+
+        color: #9b88ff;
+
+        font-size: 21px;
+    }
+
+
+    .contact-support-card h3 {
+
+        margin: 0 0 6px;
+
+        color: #edf2f7;
+
+        font-size: 17px;
+    }
+
+
+    .contact-support-card p {
+
+        margin: 0;
+
+        color: #91a4bb;
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    .support-email {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        padding:
+            12px
+            18px;
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #24b8d0,
+                #3473d8
+            );
+
+        color: #ffffff;
+
+        text-decoration: none;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    .support-email:hover {
+
+        transform:
+            translateY(-2px);
+
+        color: #ffffff;
+
+        text-decoration: none;
+
+        box-shadow:
+            0 8px 20px
+            rgba(42, 142, 225, 0.25);
+    }
+
+
+    /* ==========================================
+       RESPONSIVE
+    ========================================== */
+
+    @media (max-width: 1100px) {
+
+        .support-options-grid {
+
+            grid-template-columns:
+                1fr 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 760px) {
+
+        .support-page {
+
+            padding:
+                25px 18px 45px;
+        }
+
+
+        .support-page-header,
+        .support-hero-content,
+        .contact-support-content {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+        }
+
+
+        .support-insight {
+
+            white-space: normal;
+        }
+
+
+        .support-options-grid {
+
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .support-status {
+
+            width: 100%;
+
+            justify-content: center;
+        }
+
+
+        .support-email {
+
+            width: 100%;
+
+            justify-content: center;
+        }
+
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="support-page">
+
+
+    <!-- ======================================
+         PAGE HEADER
+    ======================================= -->
+
+    <div class="support-page-header">
+
+
+        <div class="support-title-section">
+
+
+            <div class="support-title-icon">
+
+                <i class="fa-solid fa-circle-question"></i>
+
+            </div>
+
+
+            <div>
+
+                <h1 class="support-page-title">
+
+                    Help & Support
+
+                </h1>
+
+
+                <p class="support-page-subtitle">
+
+                    Find answers, understand SentinelX AI features,
+                    and get help with your security scans.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="support-insight">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <span>Security Insight:</span>
+
+            Awareness before action is your strongest defense.
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ======================================
+         SUPPORT HERO
+    ======================================= -->
+
+    <div class="support-hero-card">
+
+
+        <div class="support-hero-content">
+
+
+            <div class="support-hero-left">
+
+
+                <h2 class="support-hero-title">
+
+                    How can we help you?
+
+                </h2>
+
+
+                <p class="support-hero-description">
+
+                    SentinelX AI helps you analyze suspicious URLs,
+                    emails, images, files, and QR codes. Use the
+                    information below to better understand how the
+                    platform works and how to interpret your security
+                    scan results.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="support-status">
+
+                <span class="support-status-dot"></span>
+
+                Support System Online
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ======================================
+         QUICK HELP
+    ======================================= -->
+
+    <div class="support-section">
+
+
+        <div class="support-section-heading">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            Quick Help
+
+        </div>
+
+
+        <div class="support-options-grid">
+
+
+            <!-- URL SCANNER -->
+
+            <a
+                href="{% url 'scan' %}"
+                class="support-option-card"
+            >
+
+
+                <div class="support-option-icon">
+
+                    <i class="fa-solid fa-link"></i>
+
+                </div>
+
+
+                <h3>
+
+                    URL Scanner
+
+                </h3>
+
+
+                <p>
+
+                    Enter a website address to analyze security
+                    indicators such as URL structure, HTTPS usage,
+                    suspicious keywords, shortened links, and machine
+                    learning predictions.
+
+                </p>
+
+
+            </a>
+
+
+
+            <!-- EMAIL SCANNER -->
+
+            <a
+                href="{% url 'email_scan' %}"
+                class="support-option-card"
+            >
+
+
+                <div class="support-option-icon">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                </div>
+
+
+                <h3>
+
+                    Email Scanner
+
+                </h3>
+
+
+                <p>
+
+                    Paste suspicious email content to identify phishing
+                    indicators, urgency patterns, fake login requests,
+                    malicious URLs, and other common social engineering
+                    techniques.
+
+                </p>
+
+
+            </a>
+
+
+
+            <!-- IMAGE SCANNER -->
+
+            <a
+                href="{% url 'image_scan' %}"
+                class="support-option-card"
+            >
+
+
+                <div class="support-option-icon">
+
+                    <i class="fa-solid fa-image"></i>
+
+                </div>
+
+
+                <h3>
+
+                    Image Scanner
+
+                </h3>
+
+
+                <p>
+
+                    Upload an image to extract visible text and analyze
+                    suspicious messages, phishing content, malicious
+                    links, and other security indicators.
+
+                </p>
+
+
+            </a>
+
+
+
+            <!-- FILE SCANNER -->
+
+            <a
+                href="{% url 'file_scan' %}"
+                class="support-option-card"
+            >
+
+
+                <div class="support-option-icon">
+
+                    <i class="fa-solid fa-file-shield"></i>
+
+                </div>
+
+
+                <h3>
+
+                    File Scanner
+
+                </h3>
+
+
+                <p>
+
+                    Upload supported files and documents for security
+                    analysis to identify suspicious content and
+                    potential threat indicators.
+
+                </p>
+
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ======================================
+         FAQ
+    ======================================= -->
+
+    <div class="support-section">
+
+
+        <div class="support-section-heading">
+
+            <i class="fa-solid fa-comments"></i>
+
+            Frequently Asked Questions
+
+        </div>
+
+
+        <div class="faq-container">
+
+
+            <!-- FAQ 1 -->
+
+            <div class="faq-item">
+
+
+                <button
+                    type="button"
+                    class="faq-question"
+                >
+
+
+                    <span class="faq-question-left">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                        What can SentinelX AI scan?
+
+                    </span>
+
+
+                    <i
+                        class="fa-solid fa-chevron-down faq-arrow">
+                    </i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        SentinelX AI provides multiple security scanning
+                        features. You can analyze suspicious website URLs,
+                        email content, images containing suspicious text,
+                        files and documents, and QR codes. Each scanner
+                        uses different security checks depending on the
+                        type of content being analyzed.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FAQ 2 -->
+
+            <div class="faq-item">
+
+
+                <button
+                    type="button"
+                    class="faq-question"
+                >
+
+
+                    <span class="faq-question-left">
+
+                        <i class="fa-solid fa-brain"></i>
+
+                        How does SentinelX AI detect suspicious content?
+
+                    </span>
+
+
+                    <i
+                        class="fa-solid fa-chevron-down faq-arrow">
+                    </i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        SentinelX AI combines rule-based security analysis
+                        with machine learning and AI-powered explanations.
+                        The platform checks available security indicators
+                        such as suspicious patterns, unusual structures,
+                        risky keywords, phishing techniques, and other
+                        known threat characteristics. Multiple indicators
+                        are considered together to provide a clearer
+                        assessment of the submitted content.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FAQ 3 -->
+
+            <div class="faq-item">
+
+
+                <button
+                    type="button"
+                    class="faq-question"
+                >
+
+
+                    <span class="faq-question-left">
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        Where can I see my previous scan results?
+
+                    </span>
+
+
+                    <i
+                        class="fa-solid fa-chevron-down faq-arrow">
+                    </i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Your previous scan activity can be viewed from
+                        the <strong>Scan History</strong> section in the
+                        SentinelX AI sidebar. The history is associated
+                        with your authenticated account and allows you
+                        to review previously scanned URLs, emails, files,
+                        images, and QR codes. You can also use available
+                        filters to find specific types of scan results
+                        more easily.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FAQ 4 -->
+
+            <div class="faq-item">
+
+
+                <button
+                    type="button"
+                    class="faq-question"
+                >
+
+
+                    <span class="faq-question-left">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        Does a Safe result guarantee that something is harmless?
+
+                    </span>
+
+
+                    <i
+                        class="fa-solid fa-chevron-down faq-arrow">
+                    </i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        No automated security system can guarantee that
+                        every possible threat will always be detected.
+                        A Safe result means SentinelX AI did not identify
+                        significant threat indicators during the available
+                        analysis. You should still use good security
+                        practices, especially when dealing with unknown
+                        websites, unexpected attachments, login requests,
+                        payment instructions, or messages asking for
+                        personal information.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FAQ 5 -->
+
+            <div class="faq-item">
+
+
+                <button
+                    type="button"
+                    class="faq-question"
+                >
+
+
+                    <span class="faq-question-left">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Is my scan information associated with my account?
+
+                    </span>
+
+
+                    <i
+                        class="fa-solid fa-chevron-down faq-arrow">
+                    </i>
+
+
+                </button>
+
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Scan history is associated with your authenticated
+                        SentinelX AI account so that you can review your
+                        previous security analysis results. However, you
+                        should avoid submitting highly sensitive
+                        information such as passwords, authentication
+                        codes, banking credentials, or other private
+                        credentials into any scanner unless the platform
+                        specifically requests and securely supports that
+                        information.
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ======================================
+         AI ASSISTANT
+    ======================================= -->
+
+    <div class="contact-support-card">
+
+
+        <div class="contact-support-content">
+
+
+            <div class="contact-support-left">
+
+
+                <div class="contact-support-icon">
+
+                    <i class="fa-solid fa-comments"></i>
+
+                </div>
+
+
+                <div>
+
+
+                    <h3>
+
+                        Still need help?
+
+                    </h3>
+
+
+                    <p>
+
+                        Ask the SentinelX AI Assistant about security
+                        scans, suspicious URLs, phishing emails, threat
+                        indicators, or how to use the platform features.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <a
+                href="{% url 'chatbot' %}"
+                class="support-email"
+            >
+
+                <i class="fa-solid fa-robot"></i>
+
+                Open AI Assistant
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ==========================================
+     FAQ JAVASCRIPT
+========================================== -->
+
+<script>
+
+    document
+        .querySelectorAll(
+            ".faq-question"
+        )
+        .forEach(
+            function(question) {
+
+                question.addEventListener(
+                    "click",
+                    function() {
+
+                        const faqItem =
+                            this.parentElement;
+
+
+                        faqItem.classList.toggle(
+                            "active"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+</script>
+
+
+{% endblock %}

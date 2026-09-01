@@ -1,831 +1,2472 @@
 {% extends 'base.html' %}
 
+
 {% block title %}
+
 Dashboard | SentinelX AI
+
 {% endblock %}
 
-{% block content %}
+
+{% block extra_css %}
 
 <style>
 
-.hero{
+    /* =========================================================
+       DASHBOARD HEADER
+    ========================================================= */
 
-    margin-top:30px;
+    .dashboard-header {
 
-    margin-bottom:40px;
+        margin-bottom: 26px;
 
-    text-align:center;
+    }
 
-}
+    .dashboard-title {
 
-.hero h1{
+        font-size: 28px;
 
-    font-size:46px;
+        font-weight: 700;
 
-    font-weight:700;
+        letter-spacing: -.6px;
 
-    color:#00e5ff;
+        color: #f8fafc;
 
-}
+        margin-bottom: 7px;
 
-.hero h5{
+    }
 
-    color:#cbd5e1;
+    .dashboard-welcome {
 
-    margin-top:12px;
+        font-size: 21px;
 
-}
+        font-weight: 600;
 
-.hero p{
+        color: #f8fafc;
 
-    color:#94a3b8;
+        margin-bottom: 4px;
 
-}
+    }
 
-.stat-card{
+    .dashboard-description {
 
-    background:#111827;
+        color: #8295ad;
 
-    border-radius:18px;
+        font-size: 12px;
 
-    padding:28px;
+    }
 
-    border:1px solid #1f2937;
 
-    box-shadow:0 0 18px rgba(0,229,255,.08);
+    /* =========================================================
+       STAT CARDS
+    ========================================================= */
 
-    transition:.35s;
+    .stat-grid {
 
-}
+        display: grid;
 
-.stat-card:hover{
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
 
-    transform:translateY(-8px);
+        gap: 18px;
 
-    box-shadow:0 0 30px rgba(0,229,255,.22);
+        margin-bottom: 18px;
 
-}
+    }
 
-.stat-card i{
+    .stat-card {
 
-    font-size:38px;
+        position: relative;
 
-    margin-bottom:15px;
+        min-height: 167px;
 
-}
+        padding: 21px;
 
-.stat-card h2{
+        overflow: hidden;
 
-    font-size:38px;
+        border-radius: 12px;
 
-    font-weight:700;
+        background:
+            linear-gradient(
+                145deg,
+                #08182b,
+                #061224
+            );
 
-}
+        border: 1px solid #1b3551;
 
-.stat-card h5{
+        transition: .3s ease;
 
-    color:#d1d5db;
+    }
 
-    margin-top:12px;
+    .stat-card:hover {
 
-}
+        transform: translateY(-3px);
 
-.chart-card{
+        border-color: #2c4d70;
 
-    background:#111827;
+        box-shadow:
+            0 12px 30px rgba(0,0,0,.18);
 
-    border-radius:18px;
+    }
 
-    padding:25px;
+    .stat-top {
 
-    border:1px solid #1f2937;
+        display: flex;
 
-    box-shadow:0 0 20px rgba(0,229,255,.08);
+        align-items: flex-start;
 
-}
+        justify-content: space-between;
 
-.table-dark{
+    }
 
-    background:#020617;
+    .stat-label {
 
-}
+        color: #a6b7ca;
 
-.table tbody tr:hover{
+        font-size: 12px;
 
-    background:#1f2937;
+        font-weight: 500;
 
-}
+    }
 
-.badge{
+    .stat-icon {
 
-    padding:8px 15px;
+        width: 43px;
 
-    font-size:13px;
+        height: 43px;
 
-}
+        border-radius: 10px;
 
-.progress{
+        display: flex;
 
-    background:#1e293b;
+        align-items: center;
 
-}
+        justify-content: center;
 
-.progress-bar{
+        font-size: 19px;
 
-    font-weight:600;
+    }
 
-}
+    .icon-purple {
+
+        color: #a17cff;
+
+        background: rgba(101, 71, 217, .16);
+
+    }
+
+    .icon-red {
+
+        color: #ff5965;
+
+        background: rgba(217, 57, 69, .13);
+
+    }
+
+    .icon-green {
+
+        color: #40dc91;
+
+        background: rgba(25, 190, 117, .13);
+
+    }
+
+    .icon-blue {
+
+        color: #39aaff;
+
+        background: rgba(25, 133, 218, .13);
+
+    }
+
+    .stat-number {
+
+        margin-top: 18px;
+
+        font-size: 31px;
+
+        line-height: 1;
+
+        font-weight: 700;
+
+        color: #f8fafc;
+
+    }
+
+    .stat-change {
+
+        margin-top: 12px;
+
+        font-size: 11px;
+
+    }
+
+    .change-positive {
+
+        color: #35d98b;
+
+    }
+
+    .change-negative {
+
+        color: #ff5864;
+
+    }
+
+    .stat-chart {
+
+        position: absolute;
+
+        bottom: -8px;
+
+        left: 0;
+
+        right: 0;
+
+        height: 42px;
+
+        opacity: .8;
+
+        pointer-events: none;
+
+    }
+
+
+    /* =========================================================
+       MAIN ANALYTICS GRID
+    ========================================================= */
+
+    .analytics-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            1.55fr
+            1.25fr
+            1.05fr
+            1.35fr;
+
+        gap: 18px;
+
+        margin-bottom: 18px;
+
+    }
+
+    .dashboard-card {
+
+        background:
+            linear-gradient(
+                145deg,
+                #071629,
+                #051122
+            );
+
+        border: 1px solid #1a304a;
+
+        border-radius: 12px;
+
+        padding: 16px;
+
+        min-width: 0;
+
+    }
+
+    .card-heading {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-bottom: 15px;
+
+    }
+
+    .card-heading h5 {
+
+        margin: 0;
+
+        font-size: 14px;
+
+        font-weight: 650;
+
+        color: #f1f5f9;
+
+    }
+
+    .card-heading span {
+
+        font-size: 10px;
+
+        color: #778ca5;
+
+    }
+
+
+    /* =========================================================
+       LIVE INDICATOR
+    ========================================================= */
+
+    .live-label {
+
+        color: #35d98b !important;
+
+        font-weight: 600;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+    }
+
+    .live-label::before {
+
+        content: "";
+
+        width: 7px;
+
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: #35d98b;
+
+        box-shadow:
+            0 0 8px #35d98b;
+
+        animation: livePulse 1.5s infinite;
+
+    }
+
+    @keyframes livePulse {
+
+        0%,
+        100% {
+
+            opacity: 1;
+
+            transform: scale(1);
+
+        }
+
+        50% {
+
+            opacity: .35;
+
+            transform: scale(.7);
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LINE CHART
+    ========================================================= */
+
+    .activity-chart {
+
+        height: 210px;
+
+        position: relative;
+
+    }
+
+
+    /* =========================================================
+       DONUT
+    ========================================================= */
+
+    .donut-area {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 12px;
+
+        min-height: 210px;
+
+    }
+
+    .donut-wrapper {
+
+        position: relative;
+
+        width: 155px;
+
+        height: 155px;
+
+        flex-shrink: 0;
+
+    }
+
+    .donut-wrapper canvas {
+
+        width: 155px !important;
+
+        height: 155px !important;
+
+    }
+
+    .donut-center {
+
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        pointer-events: none;
+
+    }
+
+    .donut-number {
+
+        font-size: 22px;
+
+        font-weight: 700;
+
+        color: #f8fafc;
+
+    }
+
+    .donut-text {
+
+        color: #7488a0;
+
+        font-size: 10px;
+
+        margin-top: 2px;
+
+    }
+
+    .legend-list {
+
+        list-style: none;
+
+        padding: 0;
+
+        margin: 0;
+
+        width: 100px;
+
+    }
+
+    .legend-list li {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-bottom: 12px;
+
+        color: #a6b5c8;
+
+        font-size: 10px;
+
+    }
+
+    .legend-name {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+    }
+
+    .legend-dot {
+
+        width: 8px;
+
+        height: 8px;
+
+        border-radius: 50%;
+
+    }
+
+
+    /* =========================================================
+       THREAT OVERVIEW
+    ========================================================= */
+
+    .threat-map {
+
+        height: 210px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 8px;
+
+        background:
+            radial-gradient(
+                circle at 50% 45%,
+                rgba(52, 93, 132, .18),
+                transparent 48%
+            ),
+            #061326;
+
+    }
+
+    .threat-map::before {
+
+        content: "";
+
+        position: absolute;
+
+        inset: 0;
+
+        opacity: .28;
+
+        background-image:
+            linear-gradient(
+                rgba(82, 117, 150, .18) 1px,
+                transparent 1px
+            ),
+            linear-gradient(
+                90deg,
+                rgba(82, 117, 150, .18) 1px,
+                transparent 1px
+            );
+
+        background-size: 27px 27px;
+
+    }
+
+    .threat-orb {
+
+        position: absolute;
+
+        width: 12px;
+
+        height: 12px;
+
+        border-radius: 50%;
+
+        box-shadow: 0 0 17px currentColor;
+
+    }
+
+    .orb-red {
+
+        color: #ff5361;
+
+        background: #ff5361;
+
+    }
+
+    .orb-orange {
+
+        color: #f5a623;
+
+        background: #f5a623;
+
+    }
+
+    .orb-green {
+
+        color: #35d98b;
+
+        background: #35d98b;
+
+    }
+
+    .orb-1 {
+
+        left: 25%;
+
+        top: 40%;
+
+    }
+
+    .orb-2 {
+
+        left: 49%;
+
+        top: 30%;
+
+    }
+
+    .orb-3 {
+
+        left: 68%;
+
+        top: 46%;
+
+    }
+
+    .orb-4 {
+
+        left: 39%;
+
+        top: 63%;
+
+    }
+
+    .orb-5 {
+
+        left: 58%;
+
+        top: 62%;
+
+    }
+
+    .threat-legend {
+
+        position: absolute;
+
+        bottom: 10px;
+
+        left: 12px;
+
+        display: flex;
+
+        gap: 13px;
+
+    }
+
+    .threat-legend-item {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        color: #8ea1b8;
+
+        font-size: 9px;
+
+    }
+
+
+    /* =========================================================
+       QUICK SCAN
+    ========================================================= */
+
+    .quick-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 9px;
+
+    }
+
+    .quick-card {
+
+        min-height: 89px;
+
+        border-radius: 9px;
+
+        border: 1px solid;
+
+        padding: 10px;
+
+        text-align: center;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        transition: .25s;
+
+        text-decoration: none;
+
+    }
+
+    .quick-card:hover {
+
+        transform: translateY(-2px);
+
+    }
+
+    .quick-card i {
+
+        font-size: 25px;
+
+        margin-bottom: 6px;
+
+    }
+
+    .quick-card strong {
+
+        font-size: 11px;
+
+        color: #f4f7fb;
+
+    }
+
+    .quick-card span {
+
+        margin-top: 4px;
+
+        color: #71869e;
+
+        font-size: 8px;
+
+        line-height: 1.4;
+
+    }
+
+    .quick-url {
+
+        border-color: #326ba9;
+
+    }
+
+    .quick-url i {
+
+        color: #43a9ff;
+
+    }
+
+    .quick-email {
+
+        border-color: #8638a2;
+
+    }
+
+    .quick-email i {
+
+        color: #d55cff;
+
+    }
+
+    .quick-image {
+
+        border-color: #14886e;
+
+    }
+
+    .quick-image i {
+
+        color: #31d9a0;
+
+    }
+
+    .quick-file {
+
+        border-color: #9a6719;
+
+    }
+
+    .quick-file i {
+
+        color: #ffb02e;
+
+    }
+
+    .quick-qr {
+
+        border-color: #91367e;
+
+    }
+
+    .quick-qr i {
+
+        color: #d955d9;
+
+    }
+
+
+    /* =========================================================
+       RECENT SCANS
+    ========================================================= */
+
+    .recent-card {
+
+        margin-bottom: 20px;
+
+    }
+
+    .view-all {
+
+        color: #8d6cff;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        text-decoration: none;
+
+    }
+
+    .view-all:hover {
+
+        color: #b39cff;
+
+    }
+
+    .scan-table {
+
+        width: 100%;
+
+        border-collapse: collapse;
+
+    }
+
+    .scan-table thead th {
+
+        color: #70849c;
+
+        font-size: 10px;
+
+        font-weight: 500;
+
+        padding: 11px 9px;
+
+        border-bottom: 1px solid #172c45;
+
+        text-align: left;
+
+    }
+
+    .scan-table tbody td {
+
+        color: #c2cfdd;
+
+        font-size: 11px;
+
+        padding: 12px 9px;
+
+        border-bottom: 1px solid rgba(23, 44, 69, .65);
+
+        vertical-align: middle;
+
+    }
+
+    .scan-table tbody tr:hover {
+
+        background: rgba(91, 75, 210, .04);
+
+    }
+
+    .scan-type {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        color: #e6edf5;
+
+        font-weight: 500;
+
+    }
+
+    .scan-type i {
+
+        width: 18px;
+
+        text-align: center;
+
+    }
+
+    .result-badge {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        padding: 5px 9px;
+
+        border-radius: 6px;
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+    }
+
+    .result-danger {
+
+        color: #ff5c68;
+
+        background: rgba(220, 46, 59, .12);
+
+    }
+
+    .result-safe {
+
+        color: #36d88e;
+
+        background: rgba(25, 181, 110, .10);
+
+    }
+
+    .result-warning {
+
+        color: #ffb32e;
+
+        background: rgba(245, 166, 35, .10);
+
+    }
+
+
+    /* =========================================================
+       ML CONFIDENCE
+    ========================================================= */
+
+    .confidence-bar {
+
+        width: 110px;
+
+        height: 5px;
+
+        background: #17283e;
+
+        border-radius: 10px;
+
+        overflow: hidden;
+
+    }
+
+    .confidence-fill {
+
+        height: 100%;
+
+        background:
+            linear-gradient(
+                90deg,
+                #6951ff,
+                #a56bff
+            );
+
+        border-radius: 10px;
+
+    }
+
+    .confidence-value {
+
+        margin-top: 4px;
+
+        font-size: 8px;
+
+        color: #7f92a9;
+
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1250px) {
+
+        .stat-grid {
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+        }
+
+        .analytics-grid {
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+        }
+
+    }
+
+    @media (max-width: 800px) {
+
+        .stat-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .analytics-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+        .dashboard-title {
+
+            font-size: 24px;
+
+        }
+
+        .dashboard-welcome {
+
+            font-size: 18px;
+
+        }
+
+        .scan-table {
+
+            min-width: 760px;
+
+        }
+
+        .recent-card {
+
+            overflow-x: auto;
+
+        }
+
+    }
 
 </style>
 
-<div class="container">
+{% endblock %}
 
-<div class="hero">
 
-<h1>
+{% block content %}
 
-🛡 SentinelX AI
 
-</h1>
+<!-- =========================================================
+     DASHBOARD HEADER
+========================================================= -->
 
-<h5>
+<div class="dashboard-header">
 
-AI-Powered Multi-Channel Scam Detection Platform
+    <div class="dashboard-welcome">
 
-</h5>
+        Welcome back, {{ user.username }} 👋
 
-<p>
+    </div>
 
-Detect • Analyze • Protect
+    <div class="dashboard-description">
 
-</p>
+        Here's what's happening with your security scans.
 
-</div>
-
-<div class="row g-4">
-
-<div class="col-lg-3">
-
-<div class="stat-card text-center">
-
-<i class="fa-solid fa-chart-line text-info"></i>
-
-<h2>{{ total_scans }}</h2>
-
-<h5>Total Scans</h5>
+    </div>
 
 </div>
 
-</div>
 
-<div class="col-lg-3">
+<!-- =========================================================
+     STATISTICS
+========================================================= -->
 
-<div class="stat-card text-center">
+<div class="stat-grid">
 
-<i class="fa-solid fa-shield text-success"></i>
 
-<h2>{{ safe_count }}</h2>
+    <!-- TOTAL SCANS -->
 
-<h5>Safe Records</h5>
+    <div class="stat-card">
 
-</div>
+        <div class="stat-top">
 
-</div>
+            <div class="stat-label">
 
-<div class="col-lg-3">
+                Total Scans
 
-<div class="stat-card text-center">
+            </div>
 
-<i class="fa-solid fa-triangle-exclamation text-warning"></i>
+            <div class="stat-icon icon-purple">
 
-<h2>{{ suspicious_count }}</h2>
+                <i class="fa-solid fa-chart-line"></i>
 
-<h5>Suspicious</h5>
+            </div>
 
-</div>
+        </div>
 
-</div>
+        <div class="stat-number">
 
-<div class="col-lg-3">
+            {{ total_scans }}
 
-<div class="stat-card text-center">
+        </div>
 
-<i class="fa-solid fa-skull-crossbones text-danger"></i>
+        <div class="stat-change change-positive">
 
-<h2>{{ dangerous_count }}</h2>
+            ▲ Security scans performed
 
-<h5>Dangerous</h5>
+        </div>
 
-</div>
+        <canvas
+            class="stat-chart"
+            id="miniTotalChart">
+        </canvas>
 
-</div>
+    </div>
 
-</div>
 
-<div class="row mt-4 g-4">
+    <!-- THREATS -->
 
-<div class="col-md-3">
+    <div class="stat-card">
 
-<div class="stat-card text-center">
+        <div class="stat-top">
 
-<i class="fa-solid fa-globe text-primary"></i>
+            <div class="stat-label">
 
-<h2>
+                Threats Detected
 
-{{ url_scans }}
+            </div>
 
-</h2>
+            <div class="stat-icon icon-red">
 
-<h5>
+                <i class="fa-solid fa-shield-halved"></i>
 
-URL Scans
+            </div>
 
-</h5>
+        </div>
 
-</div>
+        <div class="stat-number">
 
-</div>
+            {{ suspicious_count|add:dangerous_count }}
 
-<div class="col-md-3">
+        </div>
 
-<div class="stat-card text-center">
+        <div class="stat-change change-negative">
 
-<i class="fa-solid fa-envelope text-info"></i>
+            ▼ Requires attention
 
-<h2>
+        </div>
 
-{{ email_scans }}
+        <canvas
+            class="stat-chart"
+            id="miniThreatChart">
+        </canvas>
 
-</h2>
+    </div>
 
-<h5>
 
-Email Scans
+    <!-- SAFE -->
 
-</h5>
+    <div class="stat-card">
 
-</div>
+        <div class="stat-top">
 
-</div>
+            <div class="stat-label">
 
-<div class="col-md-3">
+                Safe Scans
 
-<div class="stat-card text-center">
+            </div>
 
-<i class="fa-solid fa-image text-secondary"></i>
+            <div class="stat-icon icon-green">
 
-<h2>
+                <i class="fa-solid fa-circle-check"></i>
 
-{{ image_scans }}
+            </div>
 
-</h2>
+        </div>
 
-<h5>
+        <div class="stat-number">
 
-Image Scans
+            {{ safe_count }}
 
-</h5>
+        </div>
 
-</div>
+        <div class="stat-change change-positive">
 
-</div>
+            ▲ Successfully cleared
 
-<div class="col-md-3">
+        </div>
 
-<div class="stat-card text-center">
+        <canvas
+            class="stat-chart"
+            id="miniSafeChart">
+        </canvas>
 
-<i class="fa-solid fa-file text-warning"></i>
+    </div>
 
-<h2>
 
-{{ file_scans }}
+    <!-- DETECTION RATE -->
 
-</h2>
+    <div class="stat-card">
 
-<h5>
+        <div class="stat-top">
 
-File Scans
+            <div class="stat-label">
 
-</h5>
+                Detection Rate
 
-</div>
+            </div>
 
-</div>
+            <div class="stat-icon icon-blue">
 
-<div class="col-md-3">
+                <i class="fa-solid fa-bullseye"></i>
 
-<div class="stat-card text-center">
+            </div>
 
-<i class="fa-solid fa-qrcode text-success"></i>
+        </div>
 
-<h2>
+        <div class="stat-number">
 
-{{ qr_scans }}
+            99.7%
 
-</h2>
+        </div>
 
-<h5>
+        <div class="stat-change change-positive">
 
-QR Scans
+            ▲ AI detection engine
 
-</h5>
+        </div>
 
-</div>
+        <canvas
+            class="stat-chart"
+            id="miniRateChart">
+        </canvas>
 
-</div>
-
-</div>
-
-<div class="row mt-4">
-
-<div class="col-lg-6 mx-auto">
-
-<!-- <div class="stat-card text-center">
-
-<i class="fa-solid fa-robot text-danger"></i>
-
-<h2>
-
-{{ phishing_count }}
-
-</h2>
-
-<h5>
-
-AI Detected Threats
-
-</h5>
-
-</div> -->
+    </div>
 
 </div>
 
+
+<!-- =========================================================
+     ANALYTICS
+========================================================= -->
+
+<div class="analytics-grid">
+
+
+    <!-- =====================================================
+         SCAN ACTIVITY - LIVE
+    ====================================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-heading">
+
+            <h5>
+
+                Scan Activity
+
+                <span>
+                    &nbsp;(This Week)
+                </span>
+
+            </h5>
+
+            <span class="live-label">
+
+                LIVE
+
+            </span>
+
+        </div>
+
+        <div class="activity-chart">
+
+            <canvas id="activityChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SCANS BY TYPE
+    ====================================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-heading">
+
+            <h5>
+
+                Scans by Type
+
+            </h5>
+
+        </div>
+
+        <div class="donut-area">
+
+            <div class="donut-wrapper">
+
+                <canvas id="typeChart"></canvas>
+
+                <div class="donut-center">
+
+                    <div class="donut-number">
+
+                        {{ total_scans }}
+
+                    </div>
+
+                    <div class="donut-text">
+
+                        Total
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <ul class="legend-list">
+
+                <li>
+
+                    <span class="legend-name">
+
+                        <span
+                            class="legend-dot"
+                            style="background:#8b5cf6;">
+                        </span>
+
+                        URL
+
+                    </span>
+
+                    <strong>
+
+                        {{ url_scans }}
+
+                    </strong>
+
+                </li>
+
+
+                <li>
+
+                    <span class="legend-name">
+
+                        <span
+                            class="legend-dot"
+                            style="background:#b06cff;">
+                        </span>
+
+                        Email
+
+                    </span>
+
+                    <strong>
+
+                        {{ email_scans }}
+
+                    </strong>
+
+                </li>
+
+
+                <li>
+
+                    <span class="legend-name">
+
+                        <span
+                            class="legend-dot"
+                            style="background:#39b6ee;">
+                        </span>
+
+                        Image
+
+                    </span>
+
+                    <strong>
+
+                        {{ image_scans }}
+
+                    </strong>
+
+                </li>
+
+
+                <li>
+
+                    <span class="legend-name">
+
+                        <span
+                            class="legend-dot"
+                            style="background:#f5a623;">
+                        </span>
+
+                        File
+
+                    </span>
+
+                    <strong>
+
+                        {{ file_scans }}
+
+                    </strong>
+
+                </li>
+
+
+                <li>
+
+                    <span class="legend-name">
+
+                        <span
+                            class="legend-dot"
+                            style="background:#35d98b;">
+                        </span>
+
+                        <!-- QR -->
+
+                    </span>
+
+                    <strong>
+
+                        <!-- {{ qr_scans }} -->
+
+                    </strong>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         THREAT LEVEL
+    ====================================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-heading">
+
+            <h5>
+
+                Threat Level Overview
+
+            </h5>
+
+        </div>
+
+        <div class="threat-map">
+
+            <span class="threat-orb orb-red orb-1"></span>
+
+            <span class="threat-orb orb-orange orb-2"></span>
+
+            <span class="threat-orb orb-red orb-3"></span>
+
+            <span class="threat-orb orb-green orb-4"></span>
+
+            <span class="threat-orb orb-orange orb-5"></span>
+
+
+            <div class="threat-legend">
+
+                <div class="threat-legend-item">
+
+                    <span
+                        class="legend-dot"
+                        style="background:#ff5361;">
+                    </span>
+
+                    High
+
+                </div>
+
+                <div class="threat-legend-item">
+
+                    <span
+                        class="legend-dot"
+                        style="background:#f5a623;">
+                    </span>
+
+                    Medium
+
+                </div>
+
+                <div class="threat-legend-item">
+
+                    <span
+                        class="legend-dot"
+                        style="background:#35d98b;">
+                    </span>
+
+                    Low
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         QUICK SCAN
+    ====================================================== -->
+
+    <div class="dashboard-card">
+
+        <div class="card-heading">
+
+            <div>
+
+                <h5>
+
+                    Quick Scan
+
+                </h5>
+
+                <span>
+
+                    Choose a scan type to get started
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+
+            <a
+                href="{% url 'scan' %}"
+                class="quick-card quick-url">
+
+                <i class="fa-solid fa-link"></i>
+
+                <strong>
+
+                    URL Scanner
+
+                </strong>
+
+                <span>
+
+                    Analyze suspicious URLs
+
+                </span>
+
+            </a>
+
+
+            <a
+                href="{% url 'email_scan' %}"
+                class="quick-card quick-email">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                <strong>
+
+                    Email Scanner
+
+                </strong>
+
+                <span>
+
+                    Detect phishing emails
+
+                </span>
+
+            </a>
+
+
+            <a
+                href="{% url 'image_scan' %}"
+                class="quick-card quick-image">
+
+                <i class="fa-regular fa-image"></i>
+
+                <strong>
+
+                    Image Scanner
+
+                </strong>
+
+                <span>
+
+                    Analyze image threats
+
+                </span>
+
+            </a>
+
+
+            <a
+                href="{% url 'file_scan' %}"
+                class="quick-card quick-file">
+
+                <i class="fa-regular fa-file-lines"></i>
+
+                <strong>
+
+                    File Scanner
+
+                </strong>
+
+                <span>
+
+                    Scan files for threats
+
+                </span>
+
+            </a>
+
+
+            <!-- <a
+                href="{% url 'qr_scan' %}"
+                class="quick-card quick-qr">
+
+                <i class="fa-solid fa-qrcode"></i>
+
+                <!-- <strong>
+
+                    QR Scanner
+
+                </strong> -->
+
+                <!-- <span>
+
+                    Analyze QR codes
+
+                </span> -->
+
+            <!-- </a> --> -->
+
+        </div>
+
+    </div>
+
 </div>
 
-<hr class="my-5" style="border-color:#334155;">
 
-<div class="row">
+<!-- =========================================================
+     RECENT SCANS
+========================================================= -->
 
-<div class="col-lg-6 mb-4">
+<div class="dashboard-card recent-card">
 
-<div class="chart-card">
+    <div class="card-heading">
 
-<h4 class="text-info mb-4">
+        <h5>
 
-<i class="fa-solid fa-chart-pie"></i>
+            Recent Scans
 
-Risk Distribution
+        </h5>
 
-</h4>
+        <a
+            href="{% url 'history' %}"
+            class="view-all">
 
-<canvas id="riskChart"></canvas>
+            View All
+
+        </a>
+
+    </div>
+
+
+    <table class="scan-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Type
+                </th>
+
+                <th>
+                    Target
+                </th>
+
+                <th>
+                    Result
+                </th>
+
+                <th>
+                    ML Result
+                </th>
+
+                <th>
+                    Confidence
+                </th>
+
+                <th>
+                    Time
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        {% for scan in recent_scans %}
+
+            <tr>
+
+
+                <!-- TYPE -->
+
+                <td>
+
+                    <div class="scan-type">
+
+                        {% if scan.scan_type == "URL" %}
+
+                            <i
+                                class="fa-solid fa-link"
+                                style="color:#42a9ff;">
+                            </i>
+
+                            URL
+
+                        {% elif scan.scan_type == "EMAIL" %}
+
+                            <i
+                                class="fa-regular fa-envelope"
+                                style="color:#d75cff;">
+                            </i>
+
+                            Email
+
+                        {% elif scan.scan_type == "IMAGE" %}
+
+                            <i
+                                class="fa-regular fa-image"
+                                style="color:#35d9a1;">
+                            </i>
+
+                            Image
+
+                        {% elif scan.scan_type == "FILE" %}
+
+                            <i
+                                class="fa-regular fa-file-lines"
+                                style="color:#ffb12f;">
+                            </i>
+
+                            File
+
+                        <!-- {% elif scan.scan_type == "QR" %}
+
+                            <i
+                                class="fa-solid fa-qrcode"
+                                style="color:#d956d9;">
+                            </i>
+
+                            QR
+
+                        {% endif %} -->
+
+                    </div>
+
+                </td>
+
+
+                <!-- TARGET -->
+
+                <td>
+
+                    {% if scan.scan_type == "EMAIL" %}
+
+                        Email Analysis
+
+                    {% elif scan.scan_type == "IMAGE" %}
+
+                        {{ scan.image_name }}
+
+                    {% elif scan.scan_type == "FILE" %}
+
+                        {{ scan.file_name }}
+
+                    <!-- {% elif scan.scan_type == "QR" %}
+
+                        QR Code Scan
+
+                    {% else %} -->
+
+                        {{ scan.input_data|truncatechars:45 }}
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- RESULT -->
+
+                <td>
+
+                    {% if scan.status == "Safe" %}
+
+                        <span class="result-badge result-safe">
+
+                            Safe
+
+                        </span>
+
+                    {% elif scan.status == "Suspicious" %}
+
+                        <span class="result-badge result-warning">
+
+                            Suspicious
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="result-badge result-danger">
+
+                            Dangerous
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- ML RESULT -->
+
+                <td>
+
+                    {% if scan.ml_prediction == "Phishing" %}
+
+                        <span class="result-badge result-danger">
+
+                            Phishing
+
+                        </span>
+
+                    {% elif scan.ml_prediction == "Legitimate" %}
+
+                        <span class="result-badge result-safe">
+
+                            Legitimate
+
+                        </span>
+
+                    {% else %}
+
+                        {{ scan.ml_prediction }}
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- CONFIDENCE -->
+
+                <td>
+
+                    <div class="confidence-bar">
+
+                        <div
+                            class="confidence-fill"
+                            style="width: {{ scan.ml_confidence }}%;">
+                        </div>
+
+                    </div>
+
+                    <div class="confidence-value">
+
+                        {{ scan.ml_confidence }}%
+
+                    </div>
+
+                </td>
+
+
+                <!-- TIME -->
+
+                <td>
+
+                    {{ scan.created_at|date:"d M Y H:i" }}
+
+                </td>
+
+
+            </tr>
+
+
+        {% empty %}
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    style="
+                        text-align:center;
+                        padding:35px;
+                        color:#71839a;
+                    ">
+
+                    No Scan History Available
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+
+        </tbody>
+
+    </table>
 
 </div>
 
-</div>
 
-<div class="col-lg-6 mb-4">
+<!-- =========================================================
+     CHART.JS
+========================================================= -->
 
-<div class="chart-card">
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js">
+</script>
 
-<h4 class="text-info mb-4">
-
-<i class="fa-solid fa-chart-column"></i>
-
-Security Analytics
-
-</h4>
-
-<canvas id="barChart"></canvas>
-
-</div>
-
-</div>
-
-</div>
-
-<hr class="my-5" style="border-color:#334155;">
-
-<!-- ================= RECENT THREAT ACTIVITY ================= -->
-
-<div class="row">
-
-<div class="col-12">
-
-<div class="chart-card">
-
-<h4 class="text-info mb-4">
-
-<i class="fa-solid fa-bug"></i>
-
-Recent Threat Activity
-
-</h4>
-
-<div class="table-responsive">
-
-<table class="table table-dark table-hover align-middle">
-
-<thead>
-
-<tr>
-
-<th>Type</th>
-
-<th>Input</th>
-
-<th>Status</th>
-
-<th>ML Result</th>
-
-<th>Confidence</th>
-
-<th>Date</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{% for scan in recent_scans %}
-
-<tr>
-
-<td>
-
-{% if scan.scan_type == "URL" %}
-
-<span class="badge bg-primary">
-
-🌐 URL
-
-</span>
-
-{% elif scan.scan_type == "EMAIL" %}
-
-<span class="badge bg-success">
-
-📧 EMAIL
-
-</span>
-
-{% elif scan.scan_type == "IMAGE" %}
-
-<span class="badge bg-secondary">
-
-🖼 IMAGE
-
-</span>
-
-{% elif scan.scan_type == "FILE" %}
-
-<span class="badge bg-warning text-dark">
-
-📂 FILE
-
-</span>
-
-{% elif scan.scan_type == "QR" %}
-
-<span class="badge bg-info">
-
-📱 QR
-
-</span>
-
-{% endif %}
-
-</td>
-
-<td>
-
-{% if scan.scan_type == "EMAIL" %}
-
-Email Analysis
-
-{% elif scan.scan_type == "IMAGE" %}
-
-{{ scan.image_name }}
-
-{% elif scan.scan_type == "FILE" %}
-
-{{ scan.file_name }}
-
-{% elif scan.scan_type == "QR" %}
-
-QR Code Scan
-
-{% else %}
-
-{{ scan.input_data|truncatechars:45 }}
-
-{% endif %}
-
-</td>
-
-<td>
-
-{% if scan.status == "Safe" %}
-
-<span class="badge bg-success">
-
-Safe
-
-</span>
-
-{% elif scan.status == "Suspicious" %}
-
-<span class="badge bg-warning text-dark">
-
-Suspicious
-
-</span>
-
-{% else %}
-
-<span class="badge bg-danger">
-
-Dangerous
-
-</span>
-
-{% endif %}
-
-</td>
-
-<td>
-
-{% if scan.ml_prediction == "Phishing" %}
-
-<span class="badge bg-danger">
-
-🤖 Phishing
-
-</span>
-
-{% elif scan.ml_prediction == "Legitimate" %}
-
-<span class="badge bg-success">
-
-✅ Legitimate
-
-</span>
-
-{% else %}
-
-{{ scan.ml_prediction }}
-
-{% endif %}
-
-</td>
-
-<td style="width:220px;">
-
-<div class="progress">
-
-<div class="progress-bar bg-info"
-
-role="progressbar"
-
-style="width: {{ scan.ml_confidence }}%;">
-
-{{ scan.ml_confidence }}%
-
-</div>
-
-</div>
-
-</td>
-
-<td>
-
-{{ scan.created_at|date:"d M Y H:i" }}
-
-</td>
-
-</tr>
-
-{% empty %}
-
-<tr>
-
-<td colspan="6" class="text-center">
-
-No Scan History Available
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
-const pieCtx = document.getElementById('riskChart');
+    /* =========================================================
+       CHART DEFAULTS
+    ========================================================= */
 
-new Chart(pieCtx,{
+    Chart.defaults.font.family = "Inter";
 
-type:'doughnut',
+    Chart.defaults.color = "#8194ab";
 
-data:{
 
-labels:[
+    /* =========================================================
+       MINI CHART FUNCTION
+    ========================================================= */
 
-'Safe',
+    function createMiniChart(id, data, borderColor) {
 
-'Suspicious',
+        const canvas =
+            document.getElementById(id);
 
-'Dangerous'
+        if (!canvas) return;
 
-],
+        new Chart(canvas, {
 
-datasets:[{
+            type: "line",
 
-data:[
+            data: {
 
-{{ safe_count }},
+                labels: [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8"
+                ],
 
-{{ suspicious_count }},
+                datasets: [{
 
-{{ dangerous_count }}
+                    data: data,
 
-],
+                    borderColor: borderColor,
 
-backgroundColor:[
+                    borderWidth: 1.5,
 
-'#22c55e',
+                    fill: true,
 
-'#facc15',
+                    backgroundColor:
+                        "rgba(118,87,255,.07)",
 
-'#ef4444'
+                    tension: .45,
 
-],
+                    pointRadius: 0
 
-borderWidth:0
+                }]
 
-}]
+            },
 
-},
+            options: {
 
-options:{
+                responsive: true,
 
-responsive:true,
+                maintainAspectRatio: false,
 
-plugins:{
+                plugins: {
 
-legend:{
+                    legend: {
 
-labels:{
+                        display: false
 
-color:'white'
+                    }
 
-}
+                },
 
-}
+                scales: {
 
-}
+                    x: {
 
-}
+                        display: false
 
-});
+                    },
 
-const barCtx = document.getElementById('barChart');
+                    y: {
 
-new Chart(barCtx,{
+                        display: false
 
-type:'bar',
+                    }
 
-data:{
+                },
 
-labels:[
+                elements: {
 
-'URL',
+                    line: {
 
-'Email',
+                        borderJoinStyle: "round"
 
-'Image',
+                    }
 
-'File',
+                }
 
-'QR'
+            }
 
-],
+        });
 
-datasets:[{
+    }
 
-label:'Records',
 
-data:[
+    createMiniChart(
 
-{{ url_scans }},
+        "miniTotalChart",
 
-{{ email_scans }},
+        [12, 15, 13, 19, 17, 25, 23, 31],
 
-{{ image_scans }},
+        "#8b5cf6"
 
-{{ file_scans }},
+    );
 
-{{ qr_scans }}
 
-],
+    createMiniChart(
 
-backgroundColor:[
+        "miniThreatChart",
 
-'#3b82f6',
+        [5, 7, 6, 10, 8, 13, 10, 15],
 
-'#06b6d4',
+        "#ff5361"
 
-'#8b5cf6',
+    );
 
-'#f59e0b',
 
-'#10b981'
+    createMiniChart(
 
-],
+        "miniSafeChart",
 
-borderRadius:10
+        [10, 12, 11, 15, 13, 20, 18, 24],
 
-}]
+        "#35d98b"
 
-},
+    );
 
-options:{
 
-responsive:true,
+    createMiniChart(
 
-plugins:{
+        "miniRateChart",
 
-legend:{
+        [94, 96, 95, 97, 96, 98, 97, 99],
 
-labels:{
+        "#39aaff"
 
-color:'white'
+    );
 
-}
 
-}
+    /* =========================================================
+       LIVE SCAN ACTIVITY
+    ========================================================= */
 
-},
+    const activityCanvas =
+        document.getElementById("activityChart");
 
-scales:{
+    let activityChart = null;
 
-x:{
 
-ticks:{
+    async function loadScanActivity() {
 
-color:'white'
+        try {
 
-},
+            const response = await fetch(
+                "{% url 'scan_activity_api' %}",
+                {
+                    method: "GET",
 
-grid:{
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
 
-color:'#334155'
+                    cache: "no-store"
+                }
+            );
 
-}
 
-},
+            if (!response.ok) {
 
-y:{
+                throw new Error(
+                    "HTTP error: " +
+                    response.status
+                );
 
-beginAtZero:true,
+            }
 
-ticks:{
 
-color:'white'
+            const result =
+                await response.json();
 
-},
 
-grid:{
+            if (
+                !result.labels ||
+                !result.data
+            ) {
 
-color:'#334155'
+                throw new Error(
+                    "Invalid scan activity response"
+                );
 
-}
+            }
 
-}
 
-}
+            /* =============================================
+               CREATE CHART FIRST TIME
+            ============================================== */
 
-}
+            if (!activityChart) {
 
-});
+                activityChart =
+                    new Chart(
+                        activityCanvas,
+                        {
+
+                            type: "line",
+
+                            data: {
+
+                                labels:
+                                    result.labels,
+
+                                datasets: [{
+
+                                    data:
+                                        result.data,
+
+                                    borderColor:
+                                        "#8b5cf6",
+
+                                    backgroundColor:
+                                        "rgba(139,92,246,.10)",
+
+                                    borderWidth: 2,
+
+                                    fill: true,
+
+                                    tension: .45,
+
+                                    pointRadius: 0,
+
+                                    pointHoverRadius: 4,
+
+                                    pointHoverBackgroundColor:
+                                        "#8b5cf6",
+
+                                    pointHoverBorderColor:
+                                        "#ffffff",
+
+                                    pointHoverBorderWidth:
+                                        2
+
+                                }]
+
+                            },
+
+
+                            options: {
+
+                                responsive: true,
+
+                                maintainAspectRatio:
+                                    false,
+
+                                animation: {
+
+                                    duration: 500
+
+                                },
+
+
+                                interaction: {
+
+                                    intersect: false,
+
+                                    mode: "index"
+
+                                },
+
+
+                                plugins: {
+
+                                    legend: {
+
+                                        display: false
+
+                                    },
+
+                                    tooltip: {
+
+                                        backgroundColor:
+                                            "#08182b",
+
+                                        borderColor:
+                                            "#304967",
+
+                                        borderWidth: 1,
+
+                                        titleColor:
+                                            "#f8fafc",
+
+                                        bodyColor:
+                                            "#a6b7ca",
+
+                                        displayColors:
+                                            false,
+
+                                        callbacks: {
+
+                                            label:
+                                                function(context) {
+
+                                                    return (
+                                                        " Scans: " +
+                                                        context.parsed.y
+                                                    );
+
+                                                }
+
+                                        }
+
+                                    }
+
+                                },
+
+
+                                scales: {
+
+                                    x: {
+
+                                        grid: {
+
+                                            color:
+                                                "rgba(49,72,99,.30)"
+
+                                        },
+
+                                        ticks: {
+
+                                            color:
+                                                "#73869e",
+
+                                            font: {
+
+                                                size: 9
+
+                                            }
+
+                                        }
+
+                                    },
+
+
+                                    y: {
+
+                                        beginAtZero: true,
+
+                                        ticks: {
+
+                                            color:
+                                                "#73869e",
+
+                                            font: {
+
+                                                size: 9
+
+                                            },
+
+                                            precision: 0
+
+                                        },
+
+                                        grid: {
+
+                                            color:
+                                                "rgba(49,72,99,.30)"
+
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                    );
+
+            }
+
+
+            /* =============================================
+               UPDATE EXISTING CHART
+            ============================================== */
+
+            else {
+
+                activityChart.data.labels =
+                    result.labels;
+
+                activityChart.data.datasets[0].data =
+                    result.data;
+
+
+                activityChart.update(
+                    "none"
+                );
+
+            }
+
+
+        }
+
+
+        catch (error) {
+
+            console.error(
+                "Scan activity update failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       FIRST LOAD
+    ========================================================= */
+
+    if (activityCanvas) {
+
+        loadScanActivity();
+
+
+        /* =====================================================
+           REFRESH EVERY 5 SECONDS
+        ===================================================== */
+
+        setInterval(
+
+            loadScanActivity,
+
+            5000
+
+        );
+
+    }
+
+
+    /* =========================================================
+       TYPE DONUT
+    ========================================================= */
+
+    const typeCanvas =
+        document.getElementById("typeChart");
+
+    if (typeCanvas) {
+
+        new Chart(typeCanvas, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+
+                    "URL",
+                    "Email",
+                    "Image",
+                    "File",
+                    // "QR"
+
+                ],
+
+                datasets: [{
+
+                    data: [
+
+                        {{ url_scans }},
+                        {{ email_scans }},
+                        {{ image_scans }},
+                        {{ file_scans }},
+                        // {{ qr_scans }}
+
+                    ],
+
+                    backgroundColor: [
+
+                        "#8b5cf6",
+                        "#b06cff",
+                        "#39b6ee",
+                        "#f5a623",
+                        // "#35d98b"
+
+                    ],
+
+                    borderWidth: 0,
+
+                    spacing: 2
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "70%",
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
 
 </script>
+
 
 {% endblock %}

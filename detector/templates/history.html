@@ -4,907 +4,1338 @@
 
 <style>
 
-.page-title{
+/* =========================================================
+   PAGE
+========================================================= */
 
-font-size:42px;
-
-font-weight:700;
-
-color:#00E5FF;
-
+.history-page {
+    padding-top: 42px;
+    padding-bottom: 50px;
 }
 
-.page-subtitle{
-
-color:#94A3B8;
-
-font-size:17px;
-
+.page-title {
+    font-size: 38px;
+    font-weight: 700;
+    color: #00E5FF;
+    margin-bottom: 8px;
 }
 
-.filter-card{
-
-background:#111827;
-
-border:1px solid #1E3A5F;
-
-border-radius:20px;
-
-padding:30px;
-
-box-shadow:0 0 25px rgba(0,229,255,.08);
-
-margin-bottom:35px;
-
+.page-subtitle {
+    color: #94A3B8;
+    font-size: 15px;
+    margin-bottom: 0;
 }
 
-.table-card{
 
-background:#111827;
+/* =========================================================
+   FILTER CARD
+========================================================= */
 
-border:1px solid #1E3A5F;
+.filter-card {
+    background: #111827;
+    border: 1px solid #1E3A5F;
+    border-radius: 18px;
+    padding: 22px;
+    margin-top: 30px;
+    margin-bottom: 24px;
 
-border-radius:20px;
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, 0.06);
+}
 
-padding:25px;
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
 
-box-shadow:0 0 25px rgba(0,229,255,.08);
+.filter-header i {
+    color: #00E5FF;
+    font-size: 17px;
+}
 
-overflow-x:auto;
-
+.filter-header h4 {
+    margin: 0;
+    color: #00E5FF;
+    font-size: 17px;
+    font-weight: 650;
 }
 
 .form-control,
-
-.form-select{
-
-background:#0F172A;
-
-color:#E2E8F0;
-
-border:1px solid #334155;
-
+.form-select {
+    height: 44px;
+    background: #0F172A !important;
+    color: #E2E8F0 !important;
+    border: 1px solid #334155 !important;
+    border-radius: 10px;
+    font-size: 14px;
 }
 
 .form-control:focus,
+.form-select:focus {
+    background: #0F172A !important;
+    color: #fff !important;
+    border-color: #00E5FF !important;
 
-.form-select:focus{
-
-background:#0F172A;
-
-color:white;
-
-border-color:#00E5FF;
-
-box-shadow:0 0 15px rgba(0,229,255,.25);
-
+    box-shadow:
+        0 0 12px rgba(0, 229, 255, 0.20) !important;
 }
 
-.form-select option{
-
-background:#0F172A;
-
-color:white;
-
+.form-select option {
+    background: #0F172A;
+    color: #fff;
 }
 
-/* TABLE */
+.btn-filter {
+    height: 44px;
+    border-radius: 10px;
 
-.table{
+    background: #06B6D4;
+    color: #fff;
 
-background:#0F172A !important;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
 
-color:#E2E8F0 !important;
-
-border-color:#334155 !important;
-
-margin-bottom:0;
-
+    transition: .25s ease;
 }
 
-.table thead tr{
-
-background:#111827 !important;
-
+.btn-filter:hover {
+    background: #0891B2;
+    color: #fff;
+    transform: translateY(-1px);
 }
 
-.table thead th{
 
-background:#111827 !important;
+/* =========================================================
+   TABLE CARD
+========================================================= */
 
-color:#00E5FF !important;
+.table-card {
+    background: #111827;
+    border: 1px solid #1E3A5F;
+    border-radius: 18px;
+    padding: 22px;
 
-border-color:#334155 !important;
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, 0.06);
 
-font-weight:600;
-
+    overflow-x: auto;
 }
 
-.table tbody tr{
+.records-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-background:#0F172A !important;
-
-transition:.3s;
-
+    margin-bottom: 18px;
 }
 
-.table tbody td{
-
-background:#0F172A !important;
-
-color:#E2E8F0 !important;
-
-border-color:#334155 !important;
-
-vertical-align:middle;
-
+.records-header i {
+    color: #00E5FF;
+    font-size: 17px;
 }
 
-.table-hover>tbody>tr:hover>*{
-
-background:#172554 !important;
-
-color:white !important;
-
+.records-header h4 {
+    margin: 0;
+    color: #00E5FF;
+    font-size: 17px;
+    font-weight: 650;
 }
 
-.table-bordered{
 
-border-color:#334155 !important;
+/* =========================================================
+   TABLE
+========================================================= */
 
+.history-table {
+    width: 100%;
+    min-width: 1050px;
+
+    background: #0F172A !important;
+    color: #E2E8F0 !important;
+
+    border-color: #26384D !important;
+    margin-bottom: 0;
 }
 
-.badge{
+.history-table thead th {
+    background: #0B1424 !important;
+    color: #00E5FF !important;
 
-font-size:13px;
+    border-color: #26384D !important;
 
-padding:8px 12px;
+    font-size: 12px;
+    font-weight: 700;
 
+    text-transform: uppercase;
+    letter-spacing: .4px;
+
+    padding: 13px 12px;
+    white-space: nowrap;
 }
 
-.btn-filter{
-
-background:#06B6D4;
-
-color:white;
-
-font-weight:600;
-
-border:none;
-
+.history-table tbody tr {
+    background: #0F172A !important;
+    transition: .2s ease;
 }
 
-.btn-filter:hover{
+.history-table tbody td {
+    background: #0F172A !important;
+    color: #CBD5E1 !important;
 
-background:#0891B2;
+    border-color: #26384D !important;
 
-color:white;
+    padding: 13px 12px;
+    vertical-align: middle;
 
+    font-size: 13px;
 }
 
-.reason-cell{
-
-max-width:300px;
-
-white-space:pre-line;
-
-word-break:break-word;
-
+.history-table tbody tr:hover td {
+    background: #172554 !important;
+    color: #fff !important;
 }
 
-.progress{
 
-height:22px;
+/* =========================================================
+   TYPE BADGES
+========================================================= */
 
-background:#1E293B;
+.scan-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 
+    padding: 7px 10px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
 }
 
-.progress-bar{
-
-font-weight:600;
-
+.scan-type i {
+    font-size: 11px;
 }
 
-::-webkit-scrollbar{
-
-height:10px;
-
-width:8px;
-
+.type-url {
+    background: rgba(59, 130, 246, .13);
+    color: #60A5FA;
+    border: 1px solid rgba(59, 130, 246, .25);
 }
 
-::-webkit-scrollbar-thumb{
-
-background:#06B6D4;
-
-border-radius:10px;
-
+.type-email {
+    background: rgba(16, 185, 129, .13);
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, .25);
 }
 
-::-webkit-scrollbar-track{
+.type-image {
+    background: rgba(245, 158, 11, .13);
+    color: #FBBF24;
+    border: 1px solid rgba(245, 158, 11, .25);
+}
 
-background:#111827;
+.type-file {
+    background: rgba(6, 182, 212, .13);
+    color: #22D3EE;
+    border: 1px solid rgba(6, 182, 212, .25);
+}
+
+.type-qr {
+    background: rgba(139, 92, 246, .13);
+    color: #A78BFA;
+    border: 1px solid rgba(139, 92, 246, .25);
+}
+
+
+/* =========================================================
+   INPUT / TARGET
+========================================================= */
+
+.target-cell {
+    max-width: 250px;
+}
+
+.target-value {
+    display: block;
+
+    max-width: 250px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #E2E8F0;
+    font-weight: 600;
+}
+
+.target-value.url {
+    color: #38BDF8;
+}
+
+.target-value.email {
+    color: #34D399;
+}
+
+.target-value.image {
+    color: #FBBF24;
+}
+
+.target-value.file {
+    color: #22D3EE;
+}
+
+.target-value.qr {
+    color: #A78BFA;
+}
+
+
+/* =========================================================
+   RISK
+========================================================= */
+
+.risk-score {
+    font-size: 18px;
+    font-weight: 700;
+    color: #00E5FF;
+}
+
+.risk-label {
+    display: block;
+    color: #64748B;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.status-safe {
+    background: rgba(16, 185, 129, .12);
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, .25);
+}
+
+.status-suspicious {
+    background: rgba(245, 158, 11, .12);
+    color: #FBBF24;
+    border: 1px solid rgba(245, 158, 11, .25);
+}
+
+.status-dangerous {
+    background: rgba(239, 68, 68, .12);
+    color: #F87171;
+    border: 1px solid rgba(239, 68, 68, .25);
+}
+
+
+/* =========================================================
+   REASONS
+========================================================= */
+
+.reason-cell {
+    max-width: 280px;
+    min-width: 220px;
+
+    white-space: pre-line;
+    word-break: break-word;
+
+    color: #94A3B8 !important;
+    font-size: 12px !important;
+    line-height: 1.5;
+}
+
+.no-reason {
+    color: #64748B;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   ML BADGES
+========================================================= */
+
+.ml-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 7px 10px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.ml-phishing {
+    background: rgba(239, 68, 68, .12);
+    color: #F87171;
+    border: 1px solid rgba(239, 68, 68, .25);
+}
+
+.ml-legitimate {
+    background: rgba(16, 185, 129, .12);
+    color: #34D399;
+    border: 1px solid rgba(16, 185, 129, .25);
+}
+
+.ml-na {
+    background: rgba(100, 116, 139, .12);
+    color: #94A3B8;
+    border: 1px solid rgba(100, 116, 139, .25);
+}
+
+
+/* =========================================================
+   CONFIDENCE
+========================================================= */
+
+.confidence-wrapper {
+    min-width: 145px;
+}
+
+.confidence-value {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+
+    font-size: 11px;
+    color: #94A3B8;
+}
+
+.progress {
+    height: 8px;
+
+    background: #1E293B;
+
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    border-radius: 999px;
+    font-size: 0;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.date-cell {
+    white-space: nowrap;
+}
+
+.date-main {
+    color: #E2E8F0;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.date-time {
+    color: #64748B;
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+    padding: 55px 20px !important;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: rgba(0, 229, 255, .07);
+    border: 1px solid rgba(0, 229, 255, .18);
+
+    color: #00E5FF;
+    font-size: 22px;
+}
+
+.empty-state h4 {
+    color: #94A3B8;
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    color: #64748B;
+    font-size: 13px;
+    margin: 0;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.history-actions {
+    margin-top: 22px;
+}
+
+.action-btn {
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: .25s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.history-footer {
+    margin-top: 38px;
+    padding-top: 25px;
+
+    border-top: 1px solid #1E3A5F;
+
+    text-align: center;
+}
+
+.footer-logo {
+    color: #00E5FF;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.footer-text {
+    color: #64748B;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.footer-description {
+    max-width: 650px;
+    margin: 10px auto 0;
+
+    color: #64748B;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOOTER TAGS
+========================================================= */
+
+.footer-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+.footer-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 7px;
+
+    background: #0F172A;
+    border: 1px solid #1E3A5F;
+
+    color: #94A3B8;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #06B6D4;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0B1220;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .history-page {
+        padding-top: 30px;
+    }
+
+    .page-title {
+        font-size: 30px;
+    }
+
+    .page-subtitle {
+        font-size: 13px;
+    }
+
+    .filter-card,
+    .table-card {
+        padding: 17px;
+    }
+
+    .filter-header {
+        margin-bottom: 14px;
+    }
+
+    .history-actions .col-lg-6 {
+        margin-bottom: 10px;
+    }
 
 }
 
 </style>
 
-<div class="container py-5">
 
-<div class="text-center mb-5">
+<div class="container history-page">
 
-<h1 class="page-title">
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
 
-📜 Scan History
+    <div class="text-center">
 
-</h1>
+        <h1 class="page-title">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            Scan History
+        </h1>
 
-<p class="page-subtitle">
+        <p class="page-subtitle">
+            Review and analyze your previous SentinelX AI security scans.
+        </p>
 
-Complete history of URL, Email, Image and File scans performed by SentinelX AI.
+    </div>
 
-</p>
 
-</div>
+    <!-- =====================================================
+         FILTERS
+    ====================================================== -->
 
-<div class="filter-card">
+    <div class="filter-card">
 
-<h4 class="text-info mb-4">
+        <div class="filter-header">
 
-<i class="fa-solid fa-filter"></i>
+            <i class="fa-solid fa-sliders"></i>
 
-Advanced Filters
+            <h4>
+                Advanced Filters
+            </h4>
 
-</h4>
+        </div>
 
-<form method="GET">
 
-<div class="row g-3">
+        <form method="GET">
 
-<div class="col-lg-2">
+            <div class="row g-2">
 
-<select
-name="scan_type"
-class="form-select">
+                <div class="col-lg-2 col-md-6">
 
-<option value="">All Types</option>
+                    <select
+                        name="scan_type"
+                        class="form-select"
+                    >
 
-<option value="URL">URL</option>
+                        <option value="">
+                            All Types
+                        </option>
 
-<option value="EMAIL">EMAIL</option>
+                        <option value="URL">
+                            URL
+                        </option>
 
-<option value="IMAGE">IMAGE</option>
+                        <option value="EMAIL">
+                            Email
+                        </option>
 
-<option value="FILE">FILE</option>
+                        <option value="IMAGE">
+                            Image
+                        </option>
 
-<option value="QR">QR</option>
+                        <option value="FILE">
+                            File
+                        </option>
 
-</select>
+                        <!-- <option value="QR">
+                            QR
+                        </option> -->
 
-</div>
+                    </select>
 
-<div class="col-lg-2">
+                </div>
 
-<select
-name="status"
-class="form-select">
 
-<option value="">All Status</option>
+                <div class="col-lg-2 col-md-6">
 
-<option value="Safe">Safe</option>
+                    <select
+                        name="status"
+                        class="form-select"
+                    >
 
-<option value="Suspicious">Suspicious</option>
+                        <option value="">
+                            All Status
+                        </option>
 
-<option value="Dangerous">Dangerous</option>
+                        <option value="Safe">
+                            Safe
+                        </option>
 
-</select>
+                        <option value="Suspicious">
+                            Suspicious
+                        </option>
 
-</div>
+                        <option value="Dangerous">
+                            Dangerous
+                        </option>
 
-<div class="col-lg-2">
+                    </select>
 
-<select
-name="ml_prediction"
-class="form-select">
+                </div>
 
-<option value="">All ML Results</option>
 
-<option value="Phishing">Phishing</option>
+                <div class="col-lg-2 col-md-6">
 
-<option value="Legitimate">Legitimate</option>
+                    <select
+                        name="ml_prediction"
+                        class="form-select"
+                    >
 
-</select>
+                        <option value="">
+                            All ML Results
+                        </option>
 
-</div>
+                        <option value="Phishing">
+                            Phishing
+                        </option>
 
-<div class="col-lg-2">
+                        <option value="Legitimate">
+                            Legitimate
+                        </option>
 
-<input
+                    </select>
 
-type="date"
+                </div>
 
-name="start_date"
 
-class="form-control"
+                <div class="col-lg-2 col-md-6">
 
->
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="form-control"
+                    >
 
-</div>
+                </div>
 
-<div class="col-lg-2">
 
-<input
+                <div class="col-lg-2 col-md-6">
 
-type="date"
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="form-control"
+                    >
 
-name="end_date"
+                </div>
 
-class="form-control"
 
->
+                <div class="col-lg-2 col-md-6 d-grid">
 
-</div>
+                    <button
+                        type="submit"
+                        class="btn btn-filter"
+                    >
 
-<div class="col-lg-2 d-grid">
+                        <i class="fa-solid fa-filter"></i>
 
-<button class="btn btn-filter">
+                        Apply Filters
 
-<i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
 
-Filter
+                </div>
 
-</button>
+            </div>
 
-</div>
+        </form>
 
-</div>
+    </div>
 
-</form>
 
-</div>
+    <!-- =====================================================
+         RECORDS
+    ====================================================== -->
 
-<div class="table-card">
+    <div class="table-card">
 
-<h4 class="text-info mb-4">
+        <div class="records-header">
 
-<i class="fa-solid fa-clock-rotate-left"></i>
+            <i class="fa-solid fa-database"></i>
 
-Scan Records
+            <h4>
+                Scan Records
+            </h4>
 
-</h4>
+        </div>
 
-<table class="table table-hover table-bordered align-middle">
 
-<thead>
+        <table class="table table-bordered history-table">
 
-<tr>
+            <thead>
 
-<th>Type</th>
+                <tr>
 
-<th>Input / File</th>
+                    <th>
+                        Type
+                    </th>
 
-<th>Risk</th>
+                    <th>
+                        Input / File
+                    </th>
 
-<th>Status</th>
+                    <th>
+                        Risk
+                    </th>
 
-<th>Reasons</th>
+                    <th>
+                        Status
+                    </th>
 
-<th>ML</th>
+                    <th>
+                        Indicators
+                    </th>
 
-<th>Confidence</th>
+                    <th>
+                        ML Result
+                    </th>
 
-<th>Date</th>
+                    <th>
+                        Confidence
+                    </th>
 
-</tr>
+                    <th>
+                        Date
+                    </th>
 
-</thead>
+                </tr>
 
-<tbody>
+            </thead>
 
-{% for scan in scans %}
 
-<tr>
+            <tbody>
 
-<td>
+                {% for scan in scans %}
 
-{% if scan.scan_type == 'URL' %}
+                <tr>
 
-<span class="badge bg-primary">
 
-🌐 URL
+                    <!-- TYPE -->
 
-</span>
+                    <td>
 
-{% elif scan.scan_type == 'EMAIL' %}
+                        {% if scan.scan_type == 'URL' %}
 
-<span class="badge bg-success">
+                        <span class="scan-type type-url">
 
-📧 EMAIL
+                            <i class="fa-solid fa-globe"></i>
+                            URL
 
-</span>
+                        </span>
 
-{% elif scan.scan_type == 'IMAGE' %}
+                        {% elif scan.scan_type == 'EMAIL' %}
 
-<span class="badge bg-warning text-dark">
+                        <span class="scan-type type-email">
 
-🖼 IMAGE
+                            <i class="fa-solid fa-envelope"></i>
+                            EMAIL
 
-</span>
+                        </span>
 
-{% elif scan.scan_type == 'FILE' %}
+                        {% elif scan.scan_type == 'IMAGE' %}
 
-<span class="badge bg-info text-dark">
+                        <span class="scan-type type-image">
 
-📄 FILE
+                            <i class="fa-solid fa-image"></i>
+                            IMAGE
 
-</span>
+                        </span>
 
-{% elif scan.scan_type == 'QR' %}
+                        {% elif scan.scan_type == 'FILE' %}
 
-<span class="badge bg-success">
+                        <span class="scan-type type-file">
 
-📱 QR
+                            <i class="fa-solid fa-file-lines"></i>
+                            FILE
 
-</span>
+                        </span>
 
-{% endif %}
+                        {% elif scan.scan_type == 'QR' %}
 
-</td>
+                        <span class="scan-type type-qr">
 
-<td>
+                            <i class="fa-solid fa-qrcode"></i>
+                            QR
 
-{% if scan.scan_type == 'URL' %}
+                        </span>
 
-<div>
+                        {% endif %}
 
-<strong class="text-info">
+                    </td>
 
-{{ scan.input_data }}
 
-</strong>
+                    <!-- TARGET -->
 
-</div>
+                    <td class="target-cell">
 
-{% elif scan.scan_type == 'EMAIL' %}
+                        {% if scan.scan_type == 'URL' %}
 
-<div>
+                        <span
+                            class="target-value url"
+                            title="{{ scan.input_data }}"
+                        >
 
-<strong class="text-success">
+                            <i class="fa-solid fa-link me-1"></i>
 
-📧 Email Scan
+                            {{ scan.input_data }}
 
-</strong>
+                        </span>
 
-</div>
 
-{% elif scan.scan_type == 'IMAGE' %}
+                        {% elif scan.scan_type == 'EMAIL' %}
 
-<div>
+                        <span class="target-value email">
 
-<strong class="text-warning">
+                            <i class="fa-solid fa-envelope me-1"></i>
 
-{{ scan.image_name }}
+                            Email Scan
 
-</strong>
+                        </span>
 
-</div>
 
-{% elif scan.scan_type == 'FILE' %}
+                        {% elif scan.scan_type == 'IMAGE' %}
 
-<div>
+                        <span
+                            class="target-value image"
+                            title="{{ scan.image_name }}"
+                        >
 
-<strong class="text-info">
+                            <i class="fa-solid fa-image me-1"></i>
 
-{{ scan.file_name }}
+                            {{ scan.image_name }}
 
-</strong>
+                        </span>
 
-</div>
 
-{% elif scan.scan_type == 'QR' %}
+                        {% elif scan.scan_type == 'FILE' %}
 
-<div>
+                        <span
+                            class="target-value file"
+                            title="{{ scan.file_name }}"
+                        >
 
-<strong class="text-success">
+                            <i class="fa-solid fa-file me-1"></i>
 
-{{ scan.input_data|truncatechars:45 }}
+                            {{ scan.file_name }}
 
-</strong>
+                        </span>
 
-</div>
 
-{% endif %}
+                        {% elif scan.scan_type == 'QR' %}
 
-</td>
+                        <span
+                            class="target-value qr"
+                            title="{{ scan.input_data }}"
+                        >
 
-<td>
+                            <i class="fa-solid fa-qrcode me-1"></i>
 
-<span class="fw-bold text-info fs-5">
+                            {{ scan.input_data|truncatechars:45 }}
 
-{{ scan.risk_score }}
+                        </span>
 
-</span>
+                        {% endif %}
 
-</td>
+                    </td>
 
-<td>
 
-{% if scan.status == 'Safe' %}
+                    <!-- RISK -->
 
-<span class="badge rounded-pill bg-success">
+                    <td>
 
-🟢 Safe
+                        <span class="risk-score">
+                            {{ scan.risk_score }}
+                        </span>
 
-</span>
+                        <span class="risk-label">
+                            Risk Score
+                        </span>
 
-{% elif scan.status == 'Suspicious' %}
+                    </td>
 
-<span class="badge rounded-pill bg-warning text-dark">
 
-🟡 Suspicious
+                    <!-- STATUS -->
 
-</span>
+                    <td>
 
-{% else %}
+                        {% if scan.status == 'Safe' %}
 
-<span class="badge rounded-pill bg-danger">
+                        <span class="status-badge status-safe">
 
-🔴 Dangerous
+                            <i class="fa-solid fa-circle-check"></i>
+                            Safe
 
-</span>
+                        </span>
 
-{% endif %}
+                        {% elif scan.status == 'Suspicious' %}
 
-</td>
+                        <span class="status-badge status-suspicious">
 
-<td class="reason-cell">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Suspicious
 
-{% if scan.analysis_reason %}
+                        </span>
 
-{{ scan.analysis_reason }}
+                        {% else %}
 
-{% else %}
+                        <span class="status-badge status-dangerous">
 
-<span class="text-secondary">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            Dangerous
 
-No suspicious indicators detected.
+                        </span>
 
-</span>
+                        {% endif %}
 
-{% endif %}
+                    </td>
 
-</td>
 
-<td>
+                    <!-- REASONS -->
 
-{% if scan.ml_prediction == "Phishing" %}
+                    <td class="reason-cell">
 
-<span class="badge rounded-pill bg-danger">
+                        {% if scan.analysis_reason %}
 
-🤖 Phishing
+                            {{ scan.analysis_reason }}
 
-</span>
+                        {% else %}
 
-{% elif scan.ml_prediction == "Legitimate" %}
+                            <span class="no-reason">
 
-<span class="badge rounded-pill bg-success">
+                                <i class="fa-solid fa-circle-check me-1"></i>
 
-✅ Legitimate
+                                No suspicious indicators detected.
 
-</span>
+                            </span>
 
-{% else %}
+                        {% endif %}
 
-<span class="badge rounded-pill bg-secondary">
+                    </td>
 
-N/A
 
-</span>
+                    <!-- ML -->
 
-{% endif %}
+                    <td>
 
-</td>
+                        {% if scan.ml_prediction == "Phishing" %}
 
-<td style="min-width:180px;">
+                        <span class="ml-badge ml-phishing">
 
-<div class="progress">
+                            <i class="fa-solid fa-robot"></i>
+                            Phishing
 
-<div
+                        </span>
 
-class="progress-bar bg-info"
+                        {% elif scan.ml_prediction == "Legitimate" %}
 
-role="progressbar"
+                        <span class="ml-badge ml-legitimate">
 
-style="width: {{ scan.ml_confidence }}%;"
+                            <i class="fa-solid fa-shield-check"></i>
+                            Legitimate
 
->
+                        </span>
 
-{{ scan.ml_confidence }}%
+                        {% else %}
 
-</div>
+                        <span class="ml-badge ml-na">
 
-</div>
+                            <i class="fa-solid fa-minus"></i>
+                            N/A
 
-</td>
+                        </span>
 
-<td>
+                        {% endif %}
 
-<div class="fw-semibold">
+                    </td>
 
-{{ scan.created_at|date:"d M Y" }}
 
-</div>
+                    <!-- CONFIDENCE -->
 
-<small class="text-secondary">
+                    <td>
 
-{{ scan.created_at|time:"H:i" }}
+                        <div class="confidence-wrapper">
 
-</small>
+                            <div class="confidence-value">
 
-</td>
+                                <span>
+                                    AI Confidence
+                                </span>
 
-</tr>
+                                <span>
+                                    {{ scan.ml_confidence }}%
+                                </span>
 
-{% empty %}
+                            </div>
 
-<tr>
+                            <div class="progress">
 
-<td colspan="8" class="text-center py-5">
+                                <div
+                                    class="progress-bar bg-info"
+                                    role="progressbar"
+                                    style="width: {{ scan.ml_confidence }}%;"
+                                ></div>
 
-<h4 class="text-secondary">
+                            </div>
 
-No Scan History Found
+                        </div>
 
-</h4>
+                    </td>
 
-<p class="text-secondary mb-0">
 
-Start scanning URLs, Emails, Images, Files or QR Codes to generate your history.
+                    <!-- DATE -->
 
-</p>
+                    <td class="date-cell">
 
-</td>
+                        <div class="date-main">
 
-</tr>
+                            <i class="fa-regular fa-calendar me-1"></i>
 
-{% endfor %}
+                            {{ scan.created_at|date:"d M Y" }}
 
-</tbody>
+                        </div>
 
-</table>
+                        <div class="date-time">
 
-</div>
+                            <i class="fa-regular fa-clock me-1"></i>
 
-<div class="row mt-5">
+                            {{ scan.created_at|time:"H:i" }}
 
-<div class="col-lg-6 mb-3">
+                        </div>
 
-<a
+                    </td>
 
-href="{% url 'download_report' %}?{{ request.GET.urlencode }}"
+                </tr>
 
-class="btn btn-success btn-lg w-100"
 
->
+                {% empty %}
 
-<i class="fa-solid fa-file-pdf"></i>
+                <tr>
 
-Download PDF Report
+                    <td
+                        colspan="8"
+                        class="empty-state"
+                    >
 
-</a>
+                        <div class="empty-icon">
 
-</div>
+                            <i class="fa-solid fa-folder-open"></i>
 
-<div class="col-lg-6 mb-3">
+                        </div>
 
-<a
+                        <h4>
+                            No Scan History Found
+                        </h4>
 
-href="{% url 'dashboard' %}"
+                        <p>
+                            Start scanning URLs, Emails, Images, Files or QR Codes to generate your history.
+                        </p>
 
-class="btn btn-info btn-lg w-100"
+                    </td>
 
->
+                </tr>
 
-<i class="fa-solid fa-house"></i>
+                {% endfor %}
 
-Back to Dashboard
+            </tbody>
 
-</a>
+        </table>
 
-</div>
+    </div>
 
-</div>
 
-<div class="row g-4 mt-4">
+    <!-- =====================================================
+         ACTIONS
+    ====================================================== -->
 
-<!-- <div class="col-md-3">
+    <div class="row g-3 history-actions">
 
-<div class="card bg-dark border-info h-100 shadow">
+        <div class="col-lg-6">
 
-<div class="card-body text-center">
+            <a
+                href="{% url 'download_report' %}?{{ request.GET.urlencode }}"
+                class="btn btn-success action-btn w-100"
+            >
 
-<h5 class="text-info">
+                <i class="fa-solid fa-file-pdf"></i>
 
-🌐 URL Scans
+                Download PDF Report
 
-</h5>
+            </a>
 
-<h2 class="text-white">
+        </div>
 
-{{ url_scans }}
 
-</h2>
+        <div class="col-lg-6">
 
-</div>
+            <a
+                href="{% url 'dashboard' %}"
+                class="btn btn-info action-btn w-100"
+            >
 
-</div>
+                <i class="fa-solid fa-house"></i>
 
-</div>
+                Back to Dashboard
 
-<div class="col-md-3">
+            </a>
 
-<div class="card bg-dark border-success h-100 shadow">
+        </div>
 
-<div class="card-body text-center">
+    </div>
 
-<h5 class="text-success">
 
-📧 Email Scans
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-</h5>
+    <div class="history-footer">
 
-<h2 class="text-white">
+        <div class="footer-logo">
 
-{{ email_scans }}
+            <i class="fa-solid fa-shield-halved"></i>
 
-</h2>
+            SentinelX AI
 
-</div>
+        </div>
 
-</div>
+        <div class="footer-text">
 
-</div>
+            AI-Powered Multi-Channel Scam Detection Platform
 
-<div class="col-md-3">
+        </div>
 
-<div class="card bg-dark border-warning h-100 shadow">
+        <div class="footer-description">
 
-<div class="card-body text-center">
+            All scan records are securely stored and can be filtered,
+            reviewed and exported as a PDF report for future security analysis.
 
-<h5 class="text-warning">
+        </div>
 
-🖼 Image Scans
 
-</h5>
+        <div class="footer-tags">
 
-<h2 class="text-white">
+            <span class="footer-tag">
+                <i class="fa-solid fa-globe"></i>
+                URL Detection
+            </span>
 
-{{ image_scans }}
+            <span class="footer-tag">
+                <i class="fa-solid fa-envelope"></i>
+                Email Detection
+            </span>
 
-</h2>
+            <span class="footer-tag">
+                <i class="fa-solid fa-image"></i>
+                Image OCR
+            </span>
 
-</div>
+            <span class="footer-tag">
+                <i class="fa-solid fa-file-lines"></i>
+                File Analysis
+            </span>
 
-</div>
+            <span class="footer-tag">
+                <i class="fa-solid fa-qrcode"></i>
+                QR Analysis
+            </span>
 
-</div>
+        </div>
 
-<div class="col-md-3">
 
-<div class="card bg-dark border-primary h-100 shadow">
+        <div class="footer-text mt-3">
 
-<div class="card-body text-center">
+            © 2026 SentinelX AI | Advanced AI-Based Multi-Channel Scam Detection Platform
 
-<h5 class="text-info">
+        </div>
 
-📄 File Scans
-
-</h5>
-
-
-
-<h2 class="text-white">
-
-{{ file_scans }}
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card bg-dark border-success h-100 shadow">
-
-<div class="card-body text-center">
-
-<h5 class="text-success">
-
-📱 QR Scans
-
-</h5>
-
-<h2 class="text-white">
-
-{{ qr_scans }}
-
-</h2>
-
-</div>
-
-</div>
-
-</div> -->
-
-<div class="text-center mt-5">
-
-<hr style="border-color:#1E3A5F;">
-
-<h4 class="text-info">
-
-🛡 SentinelX AI
-
-</h4>
-
-<p class="text-secondary">
-
-AI-Powered Multi-Channel Scam Detection Platform
-
-</p>
-
-<p class="text-secondary">
-
-All scan records are securely stored and can be filtered, reviewed and exported as a PDF report for future security analysis.
-
-</p>
-
-<div class="mt-4">
-
-<span class="badge bg-success me-2">
-
-URL Detection
-
-</span>
-
-<span class="badge bg-primary me-2">
-
-Email Detection
-
-</span>
-
-<span class="badge bg-warning text-dark me-2">
-
-Image OCR
-
-</span>
-
-<span class="badge bg-info text-dark me-2">
-
-File Analysis
-
-</span>
-
-<span class="badge bg-success">
-
-QR Analysis
-
-</span>
-
-</div>
-
-<p class="mt-4 text-secondary">
-
-© 2026 SentinelX AI | Advanced AI-Based Multi-Channel Scam Detection Platform
-
-</p>
-
-</div>
+    </div>
 
 </div>
 

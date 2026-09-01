@@ -4,294 +4,862 @@
 
 <style>
 
-.cyber-card{
+/* =========================================================
+   SENTINELX AI — EMAIL SCANNER
+   UI ONLY — NO BACKEND LOGIC CHANGED
+   ========================================================= */
 
-    background:#111827;
+.email-page {
+    min-height: calc(100vh - 80px);
+    padding: 28px 0 60px;
+    color: #e5edf7;
+}
 
-    border:1px solid #1E3A5F;
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
 
-    border-radius:20px;
+.email-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
 
-    box-shadow:0 0 20px rgba(0,229,255,.08);
+.email-header-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 229, 255, .13),
+            rgba(37, 99, 235, .16)
+        );
+
+    border: 1px solid rgba(0, 229, 255, .42);
+
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, .10),
+        inset 0 0 20px rgba(0, 229, 255, .04);
+}
+
+.email-header-icon i {
+    font-size: 28px;
+    color: #00e5ff;
+}
+
+.email-header h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 750;
+    letter-spacing: -.5px;
+    color: #f8fafc;
+}
+
+.email-header h1 span {
+    color: #00e5ff;
+}
+
+.email-header p {
+    margin: 8px 0 0;
+    color: #7f94ae;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   MAIN SCANNER
+   ========================================================= */
+
+.email-scanner {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b1729 0%,
+            #091525 48%,
+            #071321 100%
+        );
+
+    border: 1px solid rgba(0, 229, 255, .24);
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, .35),
+        0 0 35px rgba(0, 229, 255, .06);
+}
+
+
+/* =========================================================
+   SCANNER HEADER
+   ========================================================= */
+
+.scanner-header {
+    min-height: 78px;
+
+    padding: 16px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(13, 37, 63, .85),
+            rgba(10, 27, 46, .55)
+        );
+
+    border-bottom: 1px solid rgba(67, 104, 139, .28);
+}
+
+.scanner-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.scanner-title-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: rgba(0, 229, 255, .08);
+    border: 1px solid rgba(0, 229, 255, .24);
+}
+
+.scanner-title-icon i {
+    color: #00e5ff;
+    font-size: 17px;
+}
+
+.scanner-title h3 {
+    margin: 0;
+
+    color: #f1f5f9;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.scanner-title p {
+    margin: 3px 0 0;
+
+    color: #61758e;
+    font-size: 12px;
+}
+
+.secure-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    border-radius: 999px;
+
+    color: #35d9f0;
+    background: rgba(0, 229, 255, .05);
+    border: 1px solid rgba(0, 229, 255, .22);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}
+
+.secure-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #00e5ff;
+
+    box-shadow: 0 0 9px rgba(0, 229, 255, .8);
+}
+
+
+/* =========================================================
+   SCANNER BODY
+   ========================================================= */
+
+.scanner-body {
+    padding: 25px 28px 28px;
+}
+
+
+/* =========================================================
+   EMAIL LABEL
+   ========================================================= */
+
+.email-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.email-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #d8e4f1;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.email-label i {
+    color: #00e5ff;
+    font-size: 13px;
+}
+
+.email-label-side {
+    color: #536981;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   LARGE EMAIL TEXTAREA
+   ========================================================= */
+
+.email-input-wrapper {
+    position: relative;
+}
+
+.cyber-textarea {
+    width: 100%;
+
+    min-height: 500px;
+    height: 500px;
+
+    padding: 18px 20px;
+
+    background: #06111f !important;
+
+    color: #e2e8f0 !important;
+
+    border: 1px solid #23415f !important;
+    border-radius: 14px !important;
+
+    outline: none !important;
+
+    resize: vertical;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 14px;
+    line-height: 1.65;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.cyber-textarea:hover {
+    border-color: #2c587c !important;
+}
+
+.cyber-textarea:focus {
+    background: #071524 !important;
+
+    border-color: #00cfe8 !important;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 229, 255, .07),
+        0 0 25px rgba(0, 229, 255, .09) !important;
+}
+
+.cyber-textarea::placeholder {
+    color: #4f647c !important;
+    opacity: 1;
+}
+
+
+/* =========================================================
+   INPUT FOOTER
+   ========================================================= */
+
+.input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color: #566b83;
+    font-size: 11px;
+}
+
+.input-security {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-security i {
+    color: #22c55e;
+}
+
+.input-provider {
+    color: #566b83;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-row {
+    display: grid;
+
+    grid-template-columns: 1fr 215px;
+
+    gap: 12px;
+
+    margin-top: 23px;
+}
+
+.analyze-btn {
+    height: 52px;
+
+    border: none !important;
+    border-radius: 12px !important;
+
+    background:
+        linear-gradient(
+            100deg,
+            #08bfd5,
+            #2563eb
+        ) !important;
+
+    color: white !important;
+
+    font-size: 14px !important;
+    font-weight: 700 !important;
+
+    letter-spacing: .1px;
+
+    box-shadow:
+        0 8px 25px rgba(37, 99, 235, .20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.analyze-btn:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 12px 32px rgba(37, 99, 235, .30);
+}
+
+.analyze-btn i {
+    margin-right: 8px;
+}
+
+
+.dashboard-btn {
+    height: 52px;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px !important;
+
+    color: #b8c7d8 !important;
+
+    background: #0a1626 !important;
+
+    border: 1px solid #28415b !important;
+
+    font-size: 13px !important;
+    font-weight: 600 !important;
+
+    transition: .2s ease;
+}
+
+.dashboard-btn:hover {
+    color: #e8f4ff !important;
+
+    border-color: #3b607f !important;
+
+    background: #0e1d30 !important;
+
+    transform: translateY(-1px);
+}
+
+.dashboard-btn i {
+    margin-right: 8px;
+}
+
+
+/* =========================================================
+   SECURITY CHECKS
+   ========================================================= */
+
+.security-checks {
+    margin-top: 25px;
+
+    padding: 19px 20px;
+
+    border-radius: 14px;
+
+    background: rgba(6, 18, 32, .72);
+
+    border: 1px solid #233e5c;
+}
+
+.security-checks-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 14px;
+
+    color: #d9e6f3;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.security-checks-title i {
+    color: #00e5ff;
+}
+
+.check-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.check-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 11px;
+
+    border-radius: 8px;
+
+    background: #0c1d31;
+
+    border: 1px solid #23415e;
+
+    color: #8498ae;
+
+    font-size: 11px;
+}
+
+.check-item i {
+    color: #22c55e;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   BOTTOM INFO
+   ========================================================= */
+
+.scanner-note {
+    margin-top: 14px;
+
+    text-align: center;
+
+    color: #536981;
+
+    font-size: 11px;
+}
+
+.scanner-note i {
+    color: #22c55e;
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .email-page {
+        padding-top: 20px;
+    }
+
+    .email-header {
+        margin-bottom: 22px;
+    }
+
+    .email-header h1 {
+        font-size: 30px;
+    }
+
+    .scanner-body {
+        padding: 22px;
+    }
+
+    .cyber-textarea {
+        min-height: 440px;
+        height: 440px;
+    }
+
+    .action-row {
+        grid-template-columns: 1fr;
+    }
 
 }
 
-.cyber-textarea{
+@media (max-width: 600px) {
 
-    background:#0B1220 !important;
+    .email-page {
+        padding-bottom: 30px;
+    }
 
-    color:#E2E8F0 !important;
+    .email-scanner {
+        width: calc(100% - 20px);
+        border-radius: 16px;
+    }
 
-    border:2px solid #00E5FF !important;
+    .email-header-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 10px;
+    }
 
-    border-radius:15px;
+    .email-header h1 {
+        font-size: 26px;
+    }
 
-    padding:18px;
+    .email-header p {
+        font-size: 13px;
+    }
 
-    font-size:16px;
+    .scanner-header {
+        padding: 14px 16px;
+    }
 
-    min-height:420px;
+    .secure-badge {
+        display: none;
+    }
 
-    resize:vertical;
+    .scanner-body {
+        padding: 18px 16px 20px;
+    }
 
-    transition:.3s;
+    .cyber-textarea {
+        min-height: 400px;
+        height: 400px;
+        padding: 15px;
+    }
 
-}
+    .input-footer {
+        align-items: flex-start;
+        gap: 8px;
+        flex-direction: column;
+    }
 
-.cyber-textarea::placeholder{
-
-    color:#94A3B8;
-
-}
-
-.cyber-textarea:focus{
-
-    background:#111827 !important;
-
-    color:white !important;
-
-    border-color:#00FFFF !important;
-
-    box-shadow:0 0 20px rgba(0,229,255,.45);
-
-}
-
-.feature-card{
-
-    background:#111827;
-
-    border-radius:15px;
-
-    border:1px solid #1E3A5F;
-
-    transition:.3s;
-
-}
-
-.feature-card:hover{
-
-    transform:translateY(-5px);
-
-    box-shadow:0 0 20px rgba(0,229,255,.25);
-
-}
-
-.feature-icon{
-
-    font-size:50px;
-
-    color:#00E5FF;
+    .check-list {
+        gap: 7px;
+    }
 
 }
 
 </style>
 
-<div class="container py-5">
 
-    <div class="text-center mb-5">
+<div class="email-page">
 
-        <h1 class="fw-bold text-info">
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
 
-            📧 Email Scam Detection
+    <div class="email-header">
 
+        <div class="email-header-icon">
+            <i class="fa-solid fa-envelope-open-text"></i>
+        </div>
+
+        <h1>
+            Email <span>Threat Scanner</span>
         </h1>
 
-        <p class="text-secondary">
-
-            Analyze suspicious emails using Rule-Based Detection + Machine Learning
-
+        <p>
+            Analyze suspicious email content using SentinelX AI
         </p>
 
     </div>
 
-    <div class="row justify-content-center">
 
-        <div class="col-lg-10">
+    <!-- =====================================================
+         MAIN SCANNER
+         ===================================================== -->
 
-            <div class="card cyber-card">
+    <div class="email-scanner">
 
-                <div class="card-header bg-info text-dark">
 
-                    <h4 class="mb-0">
+        <!-- Scanner Header -->
 
-                        <i class="fa-solid fa-shield-virus"></i>
+        <div class="scanner-header">
+
+            <div class="scanner-title">
+
+                <div class="scanner-title-icon">
+
+                    <i class="fa-solid fa-shield-virus"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        Email Security Analysis
+                    </h3>
+
+                    <p>
+                        Rule-Based Detection + Machine Learning
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="secure-badge">
+
+                <span class="secure-dot"></span>
+
+                Secure Analysis
+
+            </div>
+
+        </div>
+
+
+        <!-- Scanner Body -->
+
+        <div class="scanner-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- Email Label -->
+
+                <div class="email-label-row">
+
+                    <label
+                        for="email_text"
+                        class="email-label"
+                    >
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        Paste Email Content
+
+                    </label>
+
+                    <span class="email-label-side">
+                        Full email analysis
+                    </span>
+
+                </div>
+
+
+                <!-- Large Email Input -->
+
+                <div class="email-input-wrapper">
+
+                    <textarea
+                        id="email_text"
+                        name="email_text"
+                        class="form-control cyber-textarea"
+                        placeholder="Paste the complete email content here...
+
+Example:
+
+From: security@example.com
+Subject: Urgent account verification required
+
+Dear Customer,
+
+Your account requires immediate verification.
+Click the link below to verify your account...
+
+Regards,
+Security Team"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- Input Footer -->
+
+                <div class="input-footer">
+
+                    <div class="input-security">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Your email content is analyzed for security indicators.
+
+                    </div>
+
+                    <div class="input-provider">
+
+                        Gmail • Outlook • Yahoo • Office365
+
+                    </div>
+
+                </div>
+
+
+                <!-- Action Buttons -->
+
+                <div class="action-row">
+
+                    <button
+                        type="submit"
+                        class="btn analyze-btn"
+                    >
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
 
                         Analyze Email
 
-                    </h4>
+                    </button>
+
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="btn dashboard-btn"
+                    >
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back to Dashboard
+
+                    </a>
 
                 </div>
 
-                <div class="card-body p-4">
 
-                    <form method="POST">
+                <!-- Security Checks -->
 
-                        {% csrf_token %}
+                <div class="security-checks">
 
-                        <div class="mb-4">
+                    <div class="security-checks-title">
 
-                            <label class="form-label fw-bold text-info">
+                        <i class="fa-solid fa-shield-halved"></i>
 
-                                <i class="fa-solid fa-paste"></i>
+                        SentinelX AI Security Checks
 
-                                Paste Email Content
+                    </div>
 
-                            </label>
 
-                            <textarea
+                    <div class="check-list">
 
-                                name="email_text"
+                        <div class="check-item">
 
-                                class="form-control cyber-textarea"
+                            <i class="fa-solid fa-check"></i>
 
-                                rows="14"
-
-                                placeholder="Paste the complete email content here..."
-
-                                required
-
-                            ></textarea>
-
-                            <small class="text-secondary">
-
-                                Supports Gmail, Outlook, Yahoo, Office365 and other email providers.
-
-                            </small>
+                            Suspicious Keywords
 
                         </div>
 
-                        <div class="row">
+                        <div class="check-item">
 
-                            <div class="col-md-8">
+                            <i class="fa-solid fa-check"></i>
 
-                                <button
-
-                                    type="submit"
-
-                                    class="btn btn-info btn-lg w-100"
-
-                                >
-
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                                    Analyze Email
-
-                                </button>
-
-                            </div>
-
-                            <div class="col-md-4">
-
-                                <a
-
-                                    href="{% url 'dashboard' %}"
-
-                                    class="btn btn-outline-light btn-lg w-100"
-
-                                >
-
-                                    <i class="fa-solid fa-arrow-left"></i>
-
-                                    Dashboard
-
-                                </a>
-
-                            </div>
+                            Urgency Patterns
 
                         </div>
 
-                    </form>
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Fake Login Requests
+
+                        </div>
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Malicious URLs
+
+                        </div>
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Machine Learning
+
+                        </div>
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Confidence Analysis
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
 
-        </div>
+                <div class="scanner-note">
 
-    </div>
+                    <i class="fa-solid fa-lock"></i>
 
-    <div class="row mt-5">
-
-        <div class="col-md-4">
-
-            <div class="card feature-card h-100">
-
-                <div class="card-body text-center">
-
-                    <i class="fa-solid fa-robot feature-icon"></i>
-
-                    <h4 class="mt-3 text-info">
-
-                        AI Detection
-
-                    </h4>
-
-                    <p class="text-secondary">
-
-                        Machine Learning predicts whether the email is Legitimate or Phishing.
-
-                    </p>
+                    Do not include passwords, authentication codes, or other sensitive credentials.
 
                 </div>
 
-            </div>
 
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card feature-card h-100">
-
-                <div class="card-body text-center">
-
-                    <i class="fa-solid fa-triangle-exclamation feature-icon"></i>
-
-                    <h4 class="mt-3 text-warning">
-
-                        Threat Indicators
-
-                    </h4>
-
-                    <p class="text-secondary">
-
-                        Detects suspicious keywords, fake login requests, malicious URLs and urgency patterns.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card feature-card h-100">
-
-                <div class="card-body text-center">
-
-                    <i class="fa-solid fa-chart-line feature-icon"></i>
-
-                    <h4 class="mt-3 text-success">
-
-                        Confidence Score
-
-                    </h4>
-
-                    <p class="text-secondary">
-
-                        Shows AI confidence percentage with a complete cybersecurity report.
-
-                    </p>
-
-                </div>
-
-            </div>
+            </form>
 
         </div>
 
     </div>
 
 </div>
+
+
+
 
 {% endblock %}

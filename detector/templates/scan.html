@@ -4,392 +4,959 @@
 
 <style>
 
-.scan-card{
+/* =========================================================
+   SENTINELX AI — URL SCANNER
+   UI MATCHED WITH EMAIL SCANNER
+   BACKEND LOGIC NOT CHANGED
+   ========================================================= */
 
-background:#111827;
+.url-page {
+    min-height: calc(100vh - 80px);
+    padding: 28px 0 60px;
+    color: #e5edf7;
+}
 
-border:1px solid #1E3A5F;
 
-border-radius:22px;
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
 
-padding:35px;
+.url-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
 
-box-shadow:0 0 25px rgba(0,229,255,.08);
+.url-header-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 229, 255, .13),
+            rgba(37, 99, 235, .16)
+        );
+
+    border: 1px solid rgba(0, 229, 255, .42);
+
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, .10),
+        inset 0 0 20px rgba(0, 229, 255, .04);
+}
+
+.url-header-icon i {
+    font-size: 28px;
+    color: #00e5ff;
+}
+
+.url-header h1 {
+    margin: 0;
+
+    font-size: 34px;
+    font-weight: 750;
+
+    letter-spacing: -.5px;
+
+    color: #f8fafc;
+}
+
+.url-header h1 span {
+    color: #00e5ff;
+}
+
+.url-header p {
+    margin: 8px 0 0;
+
+    color: #7f94ae;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   MAIN SCANNER
+   ========================================================= */
+
+.url-scanner {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b1729 0%,
+            #091525 48%,
+            #071321 100%
+        );
+
+    border: 1px solid rgba(0, 229, 255, .24);
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, .35),
+        0 0 35px rgba(0, 229, 255, .06);
+}
+
+
+/* =========================================================
+   SCANNER HEADER
+   ========================================================= */
+
+.scanner-header {
+    min-height: 78px;
+
+    padding: 16px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(13, 37, 63, .85),
+            rgba(10, 27, 46, .55)
+        );
+
+    border-bottom: 1px solid rgba(67, 104, 139, .28);
+}
+
+.scanner-title {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.scanner-title-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: rgba(0, 229, 255, .08);
+
+    border: 1px solid rgba(0, 229, 255, .24);
+}
+
+.scanner-title-icon i {
+    color: #00e5ff;
+    font-size: 17px;
+}
+
+.scanner-title h3 {
+    margin: 0;
+
+    color: #f1f5f9;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.scanner-title p {
+    margin: 3px 0 0;
+
+    color: #61758e;
+
+    font-size: 12px;
+}
+
+.secure-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    border-radius: 999px;
+
+    color: #35d9f0;
+
+    background: rgba(0, 229, 255, .05);
+
+    border: 1px solid rgba(0, 229, 255, .22);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}
+
+.secure-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #00e5ff;
+
+    box-shadow: 0 0 9px rgba(0, 229, 255, .8);
+}
+
+
+/* =========================================================
+   SCANNER BODY
+   ========================================================= */
+
+.scanner-body {
+    padding: 25px 28px 28px;
+}
+
+
+/* =========================================================
+   URL LABEL
+   ========================================================= */
+
+.url-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.url-label {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #d8e4f1;
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.url-label i {
+    color: #00e5ff;
+    font-size: 13px;
+}
+
+.url-label-side {
+    color: #536981;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   URL INPUT
+   ========================================================= */
+
+.url-input-wrapper {
+    position: relative;
+}
+
+.cyber-url-input {
+    width: 100%;
+    height: 58px;
+
+    padding: 0 20px;
+
+    background: #06111f !important;
+
+    color: #e2e8f0 !important;
+
+    border: 1px solid #23415f !important;
+
+    border-radius: 14px !important;
+
+    outline: none !important;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 14px;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.cyber-url-input:hover {
+    border-color: #2c587c !important;
+}
+
+.cyber-url-input:focus {
+    background: #071524 !important;
+
+    border-color: #00cfe8 !important;
+
+    box-shadow:
+        0 0 0 3px rgba(0, 229, 255, .07),
+        0 0 25px rgba(0, 229, 255, .09) !important;
+}
+
+.cyber-url-input::placeholder {
+    color: #4f647c !important;
+    opacity: 1;
+}
+
+
+/* =========================================================
+   INPUT FOOTER
+   ========================================================= */
+
+.input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color: #566b83;
+
+    font-size: 11px;
+}
+
+.input-security {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.input-security i {
+    color: #22c55e;
+}
+
+.input-provider {
+    color: #566b83;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-row {
+    display: grid;
+
+    grid-template-columns: 1fr 215px;
+
+    gap: 12px;
+
+    margin-top: 23px;
+}
+
+.analyze-btn {
+    height: 52px;
+
+    border: none !important;
+
+    border-radius: 12px !important;
+
+    background:
+        linear-gradient(
+            100deg,
+            #08bfd5,
+            #2563eb
+        ) !important;
+
+    color: white !important;
+
+    font-size: 14px !important;
+    font-weight: 700 !important;
+
+    letter-spacing: .1px;
+
+    box-shadow:
+        0 8px 25px rgba(37, 99, 235, .20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.analyze-btn:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+
+    box-shadow:
+        0 12px 32px rgba(37, 99, 235, .30);
+}
+
+.analyze-btn i {
+    margin-right: 8px;
+}
+
+
+.dashboard-btn {
+    height: 52px;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px !important;
+
+    color: #b8c7d8 !important;
+
+    background: #0a1626 !important;
+
+    border: 1px solid #28415b !important;
+
+    font-size: 13px !important;
+    font-weight: 600 !important;
+
+    transition: .2s ease;
+}
+
+.dashboard-btn:hover {
+    color: #e8f4ff !important;
+
+    border-color: #3b607f !important;
+
+    background: #0e1d30 !important;
+
+    transform: translateY(-1px);
+}
+
+.dashboard-btn i {
+    margin-right: 8px;
+}
+
+
+/* =========================================================
+   SECURITY CHECKS
+   ========================================================= */
+
+.security-checks {
+    margin-top: 25px;
+
+    padding: 19px 20px;
+
+    border-radius: 14px;
+
+    background: rgba(6, 18, 32, .72);
+
+    border: 1px solid #233e5c;
+}
+
+.security-checks-title {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 14px;
+
+    color: #d9e6f3;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.security-checks-title i {
+    color: #00e5ff;
+}
+
+.check-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+.check-item {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 11px;
+
+    border-radius: 8px;
+
+    background: #0c1d31;
+
+    border: 1px solid #23415e;
+
+    color: #8498ae;
+
+    font-size: 11px;
+}
+
+.check-item i {
+    color: #22c55e;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   BOTTOM INFO
+   ========================================================= */
+
+.scanner-note {
+    margin-top: 14px;
+
+    text-align: center;
+
+    color: #536981;
+
+    font-size: 11px;
+}
+
+.scanner-note i {
+    color: #22c55e;
+
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   EXAMPLE FORMAT
+   ========================================================= */
+
+.example-format {
+    margin-top: 14px;
+
+    padding: 14px 16px;
+
+    background: rgba(6, 18, 32, .60);
+
+    border: 1px solid #233e5c;
+
+    border-radius: 12px;
+}
+
+.example-format-title {
+    margin-bottom: 9px;
+
+    color: #7f94ae;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.example-url {
+    display: inline-block;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+    background: #0c1d31;
+
+    border: 1px solid #23415e;
+
+    color: #9bdcf0;
+
+    font-family: monospace;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .url-page {
+        padding-top: 20px;
+    }
+
+    .url-header {
+        margin-bottom: 22px;
+    }
+
+    .url-header h1 {
+        font-size: 30px;
+    }
+
+    .scanner-body {
+        padding: 22px;
+    }
+
+    .action-row {
+        grid-template-columns: 1fr;
+    }
 
 }
 
-.url-box{
 
-background:#0F172A;
+@media (max-width: 600px) {
 
-border:2px solid #334155;
+    .url-page {
+        padding-bottom: 30px;
+    }
 
-border-radius:18px;
+    .url-scanner {
+        width: calc(100% - 20px);
 
-padding:25px;
+        border-radius: 16px;
+    }
 
-transition:.3s;
+    .url-header-icon {
+        width: 56px;
+        height: 56px;
 
-}
+        margin-bottom: 10px;
+    }
 
-.url-input{
+    .url-header h1 {
+        font-size: 26px;
+    }
 
-    background:#07152d;
+    .url-header p {
+        font-size: 13px;
+    }
 
-    color:#fff;
+    .scanner-header {
+        padding: 14px 16px;
+    }
 
-    border:2px solid #00e5ff;
+    .secure-badge {
+        display: none;
+    }
 
-    border-radius:15px;
+    .scanner-body {
+        padding: 18px 16px 20px;
+    }
 
-    height:60px;
+    .input-footer {
+        align-items: flex-start;
 
-    font-size:18px;
+        gap: 8px;
 
-    padding:15px 20px;
+        flex-direction: column;
+    }
 
-    transition:.3s;
-
-}
-
-.url-input::placeholder{
-
-    color:#9ca3af;
-
-}
-
-.url-input:focus{
-
-    background:#07152d;
-
-    color:#fff;
-
-    border-color:#00e5ff;
-
-    box-shadow:0 0 15px rgba(0,229,255,.4);
-
-}
-
-.url-box:focus-within{
-
-border-color:#00E5FF;
-
-box-shadow:0 0 20px rgba(0,229,255,.25);
-
-}
-
-textarea{
-
-background:#0F172A !important;
-
-color:white !important;
-
-border:none !important;
-
-resize:none;
-
-font-size:16px;
-
-}
-
-textarea:focus{
-
-outline:none !important;
-
-box-shadow:none !important;
-
-}
-
-textarea::placeholder{
-
-color:#94A3B8;
-
-}
-
-.example-box{
-
-background:#172554;
-
-border-left:5px solid #00E5FF;
-
-border-radius:15px;
-
-padding:18px;
-
-margin-top:25px;
-
-color:#CBD5E1;
-
-}
-
-.tip-card{
-
-background:#0F172A;
-
-border:1px solid #1E3A5F;
-
-border-radius:18px;
-
-padding:25px;
-
-margin-top:30px;
-
-}
-
-.tip-card ul{
-
-margin:0;
-
-padding-left:20px;
-
-}
-
-.tip-card li{
-
-margin-bottom:12px;
-
-color:#CBD5E1;
+    .check-list {
+        gap: 7px;
+    }
 
 }
 
 </style>
 
-<div class="container py-5">
 
-<div class="text-center mb-5">
+<div class="url-page">
 
-<h1 class="fw-bold text-info">
 
-🌐 URL Scam Detection
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
 
-</h1>
+    <div class="url-header">
 
-<p class="text-secondary">
+        <div class="url-header-icon">
 
-Analyze suspicious URLs using Rule-Based Detection and Machine Learning.
+            <i class="fa-solid fa-link"></i>
 
-</p>
+        </div>
+
+        <h1>
+            Analyze a <span>URL</span>
+        </h1>
+
+        <p>
+            Inspect suspicious websites and links before you visit them using SentinelX AI.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN SCANNER
+         ===================================================== -->
+
+    <div class="url-scanner">
+
+
+        <!-- Scanner Header -->
+
+        <div class="scanner-header">
+
+            <div class="scanner-title">
+
+                <div class="scanner-title-icon">
+
+                    <i class="fa-solid fa-link"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        URL Threat Analysis
+                    </h3>
+
+                    <p>
+                        Rule-Based Detection + Machine Learning
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="secure-badge">
+
+                <span class="secure-dot"></span>
+
+                Secure Analysis
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SCANNER BODY
+             ================================================= -->
+
+        <div class="scanner-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- URL Label -->
+
+                <div class="url-label-row">
+
+                    <label
+                        for="url"
+                        class="url-label"
+                    >
+
+                        <i class="fa-solid fa-globe"></i>
+
+                        Website URL
+
+                    </label>
+
+                    <span class="url-label-side">
+                        Required
+                    </span>
+
+                </div>
+
+
+                <!-- URL Input -->
+
+                <div class="url-input-wrapper">
+
+                    <input
+                        type="url"
+                        id="url"
+                        name="url"
+                        class="form-control cyber-url-input"
+                        placeholder="https://example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Input Footer -->
+
+                <div class="input-footer">
+
+                    <div class="input-security">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Your URL is analyzed before any destination is opened.
+
+                    </div>
+
+                    <div class="input-provider">
+
+                        HTTP • HTTPS • Domains • IP Addresses
+
+                    </div>
+
+                </div>
+
+
+                <!-- Action Buttons -->
+
+                <div class="action-row">
+
+                    <button
+                        type="submit"
+                        class="btn analyze-btn"
+                    >
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        Analyze URL
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="btn dashboard-btn"
+                    >
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back to Dashboard
+
+                    </a>
+
+                </div>
+
+
+                <!-- Security Checks -->
+
+                <div class="security-checks">
+
+                    <div class="security-checks-title">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                        SentinelX AI Security Checks
+
+                    </div>
+
+
+                    <div class="check-list">
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            URL Structure & Length
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            HTTPS Security
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            IP Address Detection
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            URL Shortener Detection
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Suspicious Keywords
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Machine Learning
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Domain Analysis
+
+                        </div>
+
+
+                        <div class="check-item">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Threat Detection
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Example Format -->
+
+                <div class="example-format">
+
+                    <div class="example-format-title">
+
+                        Example Format
+
+                    </div>
+
+                    <span class="example-url">
+
+                        https://example.com/login
+
+                    </span>
+
+                </div>
+
+
+                <!-- Bottom Security Note -->
+
+                <div class="scanner-note">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    SentinelX AI analyzes the URL for security indicators before opening the destination.
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="scan-card">
-
-<form method="POST">
-
-{% csrf_token %}
-
-<label class="form-label fs-5">
-
-Enter Website URL
-
-</label>
-
-<div class="url-box">
-
-<input
-    type="url"
-    name="url"
-    class="form-control form-control-lg"
-    placeholder="https://example.com"
-    required
->
-
-</div>
-
-<div class="example-box">
-
-<strong>
-
-Supported Examples
-
-</strong>
-
-<br><br>
-
-✔ Banking URLs
-
-<br>
-
-✔ Login Pages
-
-<br>
-
-✔ Shortened URLs
-
-<br>
-
-✔ Shopping Links
-
-<br>
-
-✔ Social Media Links
-
-<br>
-
-✔ QR Redirect Links
-
-</div>
-
-<div class="tip-card">
-
-<h4 class="text-info mb-4">
-
-<i class="fa-solid fa-shield-halved"></i>
-
-What SentinelX AI Checks
-
-</h4>
-
-<ul>
-
-<li>URL Length Analysis</li>
-
-<li>HTTPS Security Verification</li>
-
-<li>IP Address Detection</li>
-
-<li>Shortened URL Detection</li>
-
-<li>Suspicious Keywords</li>
-
-<li>Machine Learning Classification</li>
-
-<li>Confidence Score Estimation</li>
-
-</ul>
-
-</div>
-
-<div class="text-center mt-5">
-
-<button
-
-type="submit"
-
-class="btn btn-info btn-lg me-3"
-
->
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-Analyze URL
-
-</button>
-
-<a
-
-href="{% url 'dashboard' %}"
-
-class="btn btn-secondary btn-lg"
-
->
-
-<i class="fa-solid fa-house"></i>
-
-Back Dashboard
-
-</a>
-
-</div>
-
-</form>
-
-</div>
-
-<div class="row mt-5">
-
-<div class="col-md-4">
-
-<div class="tip-card text-center">
-
-<i class="fa-solid fa-link fa-3x text-info mb-3"></i>
-
-<h5>
-
-URL Scanner
-
-</h5>
-
-<p class="text-secondary">
-
-Detects phishing links, fake domains and malicious URLs using AI.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="tip-card text-center">
-
-<i class="fa-solid fa-robot fa-3x text-danger mb-3"></i>
-
-<h5>
-
-Machine Learning
-
-</h5>
-
-<p class="text-secondary">
-
-Predicts whether a URL is Phishing or Legitimate with confidence score.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="tip-card text-center">
-
-<i class="fa-solid fa-shield-halved fa-3x text-success mb-3"></i>
-
-<h5>
-
-Cyber Protection
-
-</h5>
-
-<p class="text-secondary">
-
-Provides detailed security analysis and threat intelligence before you visit the website.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="text-center mt-5">
-
-<hr>
-
-<h4 class="text-info">
-
-🛡 SentinelX AI
-
-</h4>
-
-<p class="text-secondary">
-
-AI-Powered Multi-Channel Scam Detection Platform
-
-</p>
-
-<p class="text-secondary">
-
-URL analysis combines Rule-Based Detection, Machine Learning Classification and Confidence Score Estimation to identify phishing attacks before they cause harm.
-
-</p>
-
-</div>
-
-</div>
 
 {% endblock %}

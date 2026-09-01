@@ -1,1230 +1,1796 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-
+{% block title %}
 SentinelX AI | Email Security Report
+{% endblock %}
 
-</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+{% block content %}
 
 <style>
 
-*{
+/* =========================================================
+   SENTINELX AI - EMAIL RESULT PAGE
+   ========================================================= */
 
-margin:0;
-
-padding:0;
-
-box-sizing:border-box;
-
-font-family:'Poppins',sans-serif;
-
+.result-page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 20px 50px;
+    color: #e2e8f0;
 }
 
-body{
+/* =========================================================
+   MAIN REPORT
+   ========================================================= */
 
-background:#081120;
+.report-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 25, 45, .98),
+            rgba(5, 16, 31, .98)
+        );
 
-color:white;
+    border: 1px solid rgba(0, 229, 255, .18);
+    border-radius: 20px;
 
-min-height:100vh;
+    overflow: hidden;
 
-padding:40px 0;
-
+    box-shadow:
+        0 0 35px rgba(0, 229, 255, .06);
 }
 
-/* ===========================
-Main Card
-=========================== */
+/* =========================================================
+   REPORT HEADER
+   ========================================================= */
 
-.main-card{
+.report-header {
+    padding: 24px 28px;
 
-background:#111827;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(10, 31, 55, .98),
+            rgba(7, 24, 45, .98)
+        );
 
-border:1px solid rgba(0,255,255,.18);
+    border-bottom: 1px solid rgba(0, 229, 255, .15);
 
-border-radius:22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-overflow:hidden;
-
-box-shadow:
-0 0 35px rgba(0,255,255,.08);
-
+    gap: 20px;
 }
 
-/* ===========================
-Header
-=========================== */
-
-.header{
-
-background:
-linear-gradient(
-135deg,
-#0f172a,
-#172554
-);
-
-padding:32px;
-
-border-bottom:1px solid rgba(0,255,255,.18);
-
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.header h2{
+.header-icon {
+    width: 52px;
+    height: 52px;
 
-font-size:34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-font-weight:700;
+    border-radius: 14px;
 
-color:white;
+    background: rgba(0, 229, 255, .08);
+    border: 1px solid rgba(0, 229, 255, .28);
 
+    color: #00e5ff;
+
+    font-size: 23px;
+
+    box-shadow:
+        0 0 18px rgba(0, 229, 255, .08);
 }
 
-.header p{
+.report-header h1 {
+    margin: 0;
 
-margin-top:8px;
+    font-size: 25px;
+    font-weight: 700;
 
-color:#b6c2d1;
-
+    color: #f8fafc;
 }
 
-/* ===========================
-Section Title
-=========================== */
+.report-header p {
+    margin: 4px 0 0;
 
-.section-title{
-
-color:#00e5ff;
-
-font-weight:700;
-
-margin-bottom:20px;
-
+    color: #71839c;
+    font-size: 13px;
 }
 
-/* ===========================
-Email Box
-=========================== */
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
 
-.email-box{
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 
-background:#071321;
+    padding: 9px 17px;
 
-border:1px solid #00d9ff;
+    border-radius: 999px;
 
-border-radius:14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
 
-padding:20px;
-
-font-size:15px;
-
-line-height:1.8;
-
-color:white;
-
-white-space:pre-wrap;
-
-max-height:250px;
-
-overflow-y:auto;
-
+    white-space: nowrap;
 }
 
-/* ===========================
-Stat Cards
-=========================== */
-
-.stat-card{
-
-background:#071321;
-
-border:1px solid rgba(0,229,255,.18);
-
-border-radius:18px;
-
-transition:.35s;
-
-height:100%;
-
+.status-safe {
+    color: #34d399;
+    background: rgba(16, 185, 129, .10);
+    border: 1px solid rgba(16, 185, 129, .28);
 }
 
-.stat-card:hover{
-
-transform:translateY(-6px);
-
-border-color:#00e5ff;
-
-box-shadow:
-0 0 22px rgba(0,229,255,.15);
-
+.status-suspicious {
+    color: #fbbf24;
+    background: rgba(245, 158, 11, .10);
+    border: 1px solid rgba(245, 158, 11, .28);
 }
 
-.stat-icon{
-
-font-size:42px;
-
-color:#00e5ff;
-
-margin-bottom:12px;
-
+.status-dangerous {
+    color: #ff5c67;
+    background: rgba(239, 68, 68, .10);
+    border: 1px solid rgba(239, 68, 68, .28);
 }
 
-.stat-title{
+/* =========================================================
+   BODY
+   ========================================================= */
 
-font-size:15px;
-
-color:#9ca3af;
-
-margin-bottom:10px;
-
+.report-body {
+    padding: 26px;
 }
 
-.stat-value{
+/* =========================================================
+   SECTION
+   ========================================================= */
 
-font-size:36px;
-
-font-weight:bold;
-
-color:white;
-
+.section {
+    margin-bottom: 24px;
 }
 
-.badge-box{
-
-font-size:17px;
-
-padding:10px 24px;
-
-border-radius:30px;
-
+.section:last-child {
+    margin-bottom: 0;
 }
 
-.safe{
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
 
-background:#16a34a;
+    margin-bottom: 12px;
 
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #e5f7ff;
 }
 
-.warning{
-
-background:#facc15;
-
-color:black;
-
+.section-title i {
+    color: #00e5ff;
 }
 
-.danger{
+/* =========================================================
+   EMAIL CONTENT
+   ========================================================= */
 
-background:#dc2626;
+.email-box {
+    background: #061323;
 
+    border: 1px solid rgba(0, 229, 255, .16);
+    border-radius: 14px;
+
+    padding: 17px 18px;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+
+    max-height: 220px;
+    overflow-y: auto;
 }
 
-.list-group-item{
-
-background:transparent !important;
-
-border-color:#374151 !important;
-
-color:white;
-
+.email-box::-webkit-scrollbar {
+    width: 7px;
 }
 
-.reason-card{
-
-background:#071321;
-
-border:1px solid rgba(0,229,255,.18);
-
-border-radius:18px;
-
-padding:25px;
-
+.email-box::-webkit-scrollbar-track {
+    background: #07111f;
 }
 
-.ai-card{
-
-background:#071321;
-
-border:1px solid rgba(0,229,255,.20);
-
-border-radius:18px;
-
-padding:30px;
-
-box-shadow:
-0 0 18px rgba(0,229,255,.08);
-
+.email-box::-webkit-scrollbar-thumb {
+    background: #164e63;
+    border-radius: 10px;
 }
 
-.ai-output{
+/* =========================================================
+   METRIC CARDS
+   ========================================================= */
 
-background:#0d1b2d;
+.metric-card {
+    height: 100%;
 
-border:1px solid rgba(0,229,255,.15);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7, 22, 39, .95),
+            rgba(5, 16, 30, .95)
+        );
 
-border-radius:15px;
+    border: 1px solid rgba(0, 229, 255, .14);
 
-padding:25px;
+    border-radius: 16px;
 
-white-space:pre-wrap;
+    padding: 19px;
 
-line-height:1.9;
-
-max-height:700px;
-
-overflow-y:auto;
-
-color:#E5F3FF;
-
+    transition: .25s ease;
 }
 
-.footer-brand{
+.metric-card:hover {
+    transform: translateY(-3px);
 
-font-size:24px;
+    border-color: rgba(0, 229, 255, .35);
 
-font-weight:700;
-
-color:#00d9ff;
-
+    box-shadow:
+        0 0 22px rgba(0, 229, 255, .08);
 }
 
-.footer-text{
+.metric-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-color:#8CA3BF;
-
+    margin-bottom: 14px;
 }
 
-.btn{
+.metric-icon {
+    width: 38px;
+    height: 38px;
 
-border-radius:12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-font-weight:600;
+    border-radius: 10px;
 
+    background: rgba(0, 229, 255, .08);
+
+    color: #00e5ff;
+
+    font-size: 17px;
 }
 
-.btn-info{
-
-background:#00c8ff;
-
-border:none;
-
+.metric-label {
+    color: #71839c;
+    font-size: 12px;
 }
 
-.btn-info:hover{
+.metric-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f8fafc;
+}
 
-background:#00b0e6;
+.metric-subtitle {
+    margin-top: 4px;
+
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* =========================================================
+   RISK SCORE
+   ========================================================= */
+
+.score-panel {
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 229, 255, .07),
+            transparent 65%
+        );
+
+    border: 1px solid rgba(0, 229, 255, .16);
+    border-radius: 16px;
+
+    padding: 22px;
+
+    text-align: center;
+
+    height: 100%;
+}
+
+.score-ring {
+    width: 132px;
+    height: 132px;
+
+    margin: 5px auto 15px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #00e5ff calc(var(--score) * 1%),
+            #14263b 0
+        );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.score-ring::before {
+    content: "";
+
+    width: 104px;
+    height: 104px;
+
+    border-radius: 50%;
+
+    background: #071321;
+
+    position: absolute;
+}
+
+.score-number {
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 31px;
+    font-weight: 700;
+
+    color: #f8fafc;
+}
+
+.score-number span {
+    display: block;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    color: #64748b;
+}
+
+.score-title {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+/* =========================================================
+   PREDICTION
+   ========================================================= */
+
+.prediction-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 15px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.prediction-phishing {
+    color: #ff6b75;
+    background: rgba(239, 68, 68, .10);
+    border: 1px solid rgba(239, 68, 68, .22);
+}
+
+.prediction-legitimate {
+    color: #34d399;
+    background: rgba(16, 185, 129, .10);
+    border: 1px solid rgba(16, 185, 129, .22);
+}
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.confidence-bar {
+    height: 7px;
+
+    background: #122238;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00e5ff,
+            #2563eb
+        );
+
+    border-radius: 20px;
+}
+
+/* =========================================================
+   INDICATORS
+   ========================================================= */
+
+.indicator-card {
+    background: #061323;
+
+    border: 1px solid rgba(0, 229, 255, .13);
+
+    border-radius: 16px;
+
+    padding: 20px;
+}
+
+.indicator-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.indicator-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    border-radius: 9px;
+
+    background: rgba(15, 30, 48, .7);
+
+    color: #cbd5e1;
+
+    font-size: 12px;
+
+    border: 1px solid rgba(148, 163, 184, .06);
+}
+
+.indicator-item i {
+    color: #f59e0b;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   AI ASSISTANT
+   ========================================================= */
+
+.ai-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10, 31, 54, .95),
+            rgba(5, 18, 34, .95)
+        );
+
+    border: 1px solid rgba(139, 92, 246, .24);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+.ai-header {
+    padding: 16px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(139, 92, 246, .15);
+}
+
+.ai-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #f8fafc;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.ai-title i {
+    color: #a78bfa;
+    font-size: 20px;
+}
+
+.ai-tag {
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    color: #a78bfa;
+
+    background: rgba(139, 92, 246, .09);
+
+    border: 1px solid rgba(139, 92, 246, .18);
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.ai-content {
+    padding: 18px;
+
+    color: #cbd5e1;
+
+    font-size: 13px;
+    line-height: 1.75;
+
+    white-space: pre-wrap;
+
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.ai-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ai-content::-webkit-scrollbar-thumb {
+    background: #4338ca;
+    border-radius: 10px;
+}
+
+/* =========================================================
+   RECOMMENDATIONS
+   ========================================================= */
+
+.recommendation-card {
+    background: #061323;
+
+    border: 1px solid rgba(0, 229, 255, .13);
+
+    border-radius: 16px;
+
+    padding: 20px;
+}
+
+.recommendation-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 9px;
+}
+
+.recommendation-item {
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    background: rgba(15, 30, 48, .7);
+
+    color: #cbd5e1;
+
+    font-size: 12px;
+
+    border: 1px solid rgba(148, 163, 184, .06);
+}
+
+/* =========================================================
+   FINAL VERDICT
+   ========================================================= */
+
+.verdict {
+    border-radius: 16px;
+
+    padding: 20px 22px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.verdict-icon {
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 20px;
+}
+
+.verdict h3 {
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.verdict p {
+    margin: 5px 0 0;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.verdict-danger {
+    background: rgba(239, 68, 68, .07);
+    border: 1px solid rgba(239, 68, 68, .22);
+}
+
+.verdict-danger .verdict-icon {
+    background: rgba(239, 68, 68, .12);
+    color: #ff5c67;
+}
+
+.verdict-danger h3 {
+    color: #ff6b75;
+}
+
+.verdict-warning {
+    background: rgba(245, 158, 11, .07);
+    border: 1px solid rgba(245, 158, 11, .22);
+}
+
+.verdict-warning .verdict-icon {
+    background: rgba(245, 158, 11, .12);
+    color: #fbbf24;
+}
+
+.verdict-warning h3 {
+    color: #fbbf24;
+}
+
+.verdict-safe {
+    background: rgba(16, 185, 129, .07);
+    border: 1px solid rgba(16, 185, 129, .22);
+}
+
+.verdict-safe .verdict-icon {
+    background: rgba(16, 185, 129, .12);
+    color: #34d399;
+}
+
+.verdict-safe h3 {
+    color: #34d399;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-btn {
+    min-height: 45px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    transition: .25s;
+}
+
+.btn-scan {
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #2563eb
+        );
+
+    border: none;
+
+    color: white;
+}
+
+.btn-scan:hover {
+    color: white;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(37, 99, 235, .25);
+}
+
+.btn-history {
+    background: rgba(16, 185, 129, .08);
+
+    border: 1px solid rgba(16, 185, 129, .25);
+
+    color: #34d399;
+}
+
+.btn-history:hover {
+    color: #34d399;
+
+    background: rgba(16, 185, 129, .14);
+}
+
+.btn-dashboard {
+    background: transparent;
+
+    border: 1px solid #263b55;
+
+    color: #94a3b8;
+}
+
+.btn-dashboard:hover {
+    color: white;
+
+    border-color: #00e5ff;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.report-footer {
+    text-align: center;
+
+    padding: 20px 0 0;
+
+    color: #52657c;
+
+    font-size: 11px;
+}
+
+.report-footer strong {
+    color: #00bcd4;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .result-page {
+        padding: 18px 12px 35px;
+    }
+
+    .report-header {
+        padding: 20px;
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .report-body {
+        padding: 18px;
+    }
+
+    .recommendation-list {
+        grid-template-columns: 1fr;
+    }
 
 }
 
 </style>
 
-</head>
 
-<body>
+<div class="result-page">
 
-<div class="container">
+    <div class="report-card">
 
-<div class="row justify-content-center">
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
 
-<div class="col-lg-11">
+        <div class="report-header">
 
-<div class="main-card">
+            <div class="header-left">
 
-<!-- ================= HEADER ================= -->
+                <div class="report-header-icon">
+        <i class="fa-solid fa-envelope"></i>
+    </div>
 
-<div class="header d-flex justify-content-between align-items-center">
+                <div>
 
-<div>
+                    <h1>
+                        Email Security Report
+                    </h1>
 
-<h2>
+                    <p>
+                        SentinelX AI • Multi-Layer Threat Analysis
+                    </p>
 
-<i class="bi bi-envelope-fill text-info"></i>
+                </div>
 
-Email Security Report
+            </div>
 
-</h2>
 
-<p>
+            {% if status == "Safe" %}
 
-AI Powered Email Phishing Analysis
+                <span class="status-badge status-safe">
 
-</p>
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    SAFE
+
+                </span>
+
+            {% elif status == "Suspicious" %}
+
+                <span class="status-badge status-suspicious">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    SUSPICIOUS
+
+                </span>
+
+            {% else %}
+
+                <span class="status-badge status-dangerous">
+
+                    <i class="fa-solid fa-shield-virus"></i>
+
+                    DANGEROUS
+
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =====================================================
+             BODY
+        ====================================================== -->
+
+        <div class="report-body">
+
+
+            <!-- =================================================
+                 SCANNED EMAIL
+            ================================================== -->
+
+            <div class="section">
+
+                <div class="section-title">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    Scanned Email
+
+                </div>
+
+
+                <div class="email-box">
+
+                    {{ email_text }}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 METRICS
+            ================================================== -->
+
+            <div class="row g-3 mb-4">
+
+
+                <!-- Risk Score -->
+
+                <div class="col-lg-4">
+
+                    <div class="score-panel">
+
+                        <div class="section-title justify-content-center mb-2">
+
+                            <i class="fa-solid fa-gauge-high"></i>
+
+                            Risk Score
+
+                        </div>
+
+
+                        <div
+                            class="score-ring"
+                            style="--score: {{ score }};"
+                        >
+
+                            <div class="score-number">
+
+                                {{ score }}
+
+                                <span>
+                                    / 100
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="score-title">
+
+                            Overall threat risk
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ML Prediction -->
+
+                <div class="col-lg-4">
+
+                    <div class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-label">
+                                Machine Learning
+                            </div>
+
+                            <div class="metric-icon">
+
+                                <i class="fa-solid fa-brain"></i>
+
+                            </div>
+
+                        </div>
+
+
+                        {% if ml_prediction == "Phishing" %}
+
+                            <div class="prediction-badge prediction-phishing">
+
+                                <i class="fa-solid fa-skull-crossbones"></i>
+
+                                Phishing Email
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="prediction-badge prediction-legitimate">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                Legitimate Email
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="metric-subtitle mt-3">
+
+                            AI classification result
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confidence -->
+
+                <div class="col-lg-4">
+
+                    <div class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div class="metric-label">
+                                AI Confidence
+                            </div>
+
+                            <div class="metric-icon">
+
+                                <i class="fa-solid fa-chart-line"></i>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-value">
+
+                            {{ ml_confidence }}%
+
+                        </div>
+
+
+                        <div class="confidence-bar mt-3">
+
+                            <div
+                                class="confidence-fill"
+                                style="width: {{ ml_confidence }}%;"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="metric-subtitle">
+
+                            Model prediction confidence
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DETECTION + QUICK ANALYSIS
+            ================================================== -->
+
+            <div class="row g-3 mb-4">
+
+
+                <!-- Detection Indicators -->
+
+                <div class="col-lg-7">
+
+                    <div class="indicator-card h-100">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
+
+                            Detection Indicators
+
+                        </div>
+
+
+                        <div class="indicator-list">
+
+                            {% for reason in reasons %}
+
+                                <div class="indicator-item">
+
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                                    <span>
+                                        {{ reason }}
+                                    </span>
+
+                                </div>
+
+                            {% empty %}
+
+                                <div class="indicator-item">
+
+                                    <i
+                                        class="fa-solid fa-circle-check"
+                                        style="color:#34d399;"
+                                    ></i>
+
+                                    <span>
+                                        No suspicious indicators detected.
+                                    </span>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick Analysis -->
+
+                <div class="col-lg-5">
+
+                    <div class="metric-card h-100">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-bolt"></i>
+
+                            Quick Analysis
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <div class="metric-label mb-2">
+                                Overall Status
+                            </div>
+
+
+                            {% if status == "Safe" %}
+
+                                <span class="status-badge status-safe">
+
+                                    <i class="fa-solid fa-check"></i>
+
+                                    SAFE
+
+                                </span>
+
+                            {% elif status == "Suspicious" %}
+
+                                <span class="status-badge status-suspicious">
+
+                                    <i class="fa-solid fa-warning"></i>
+
+                                    SUSPICIOUS
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-dangerous">
+
+                                    <i class="fa-solid fa-ban"></i>
+
+                                    DANGEROUS
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="metric-label mb-2">
+
+                                Threat Assessment
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ score }}/100
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 AI SECURITY ASSISTANT
+            ================================================== -->
+
+            <div class="section">
+
+                <div class="ai-card">
+
+                    <div class="ai-header">
+
+                        <div class="ai-title">
+
+                            <i class="fa-solid fa-robot"></i>
+
+                            AI Security Assistant
+
+                        </div>
+
+
+                        <span class="ai-tag">
+
+                            GEMINI AI
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="ai-content">
+
+                        {{ ai_explanation }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECURITY RECOMMENDATIONS
+            ================================================== -->
+
+            <div class="section">
+
+                <div class="recommendation-card">
+
+                    <div class="section-title">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                        Security Recommendations
+
+                    </div>
+
+
+                    <div class="recommendation-list">
+
+
+                        {% if status == "Dangerous" %}
+
+                            <div class="recommendation-item">
+                                ❌ Do NOT trust this email.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🔒 Never click links inside this email.
+                            </div>
+
+                            <div class="recommendation-item">
+                                📎 Do not download unknown attachments.
+                            </div>
+
+                            <div class="recommendation-item">
+                                💳 Never share OTP, passwords or banking information.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🚨 Report this email as phishing.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🗑 Delete the email immediately.
+                            </div>
+
+
+                        {% elif status == "Suspicious" %}
+
+                            <div class="recommendation-item">
+                                ⚠️ Verify the sender carefully.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🔍 Check all links before clicking.
+                            </div>
+
+                            <div class="recommendation-item">
+                                📎 Avoid downloading unknown attachments.
+                            </div>
+
+                            <div class="recommendation-item">
+                                📧 Contact the sender through another trusted channel.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🔐 Never enter credentials through email links.
+                            </div>
+
+
+                        {% else %}
+
+                            <div class="recommendation-item">
+                                ✅ No major phishing indicators were detected.
+                            </div>
+
+                            <div class="recommendation-item">
+                                📧 Continue using normal email precautions.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🔐 Enable Two-Factor Authentication.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🛡 Keep your security software updated.
+                            </div>
+
+                            <div class="recommendation-item">
+                                🌐 Verify payment or banking requests independently.
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 THREAT CLASSIFICATION
+            ================================================== -->
+
+            <div class="section">
+
+                <div class="metric-card">
+
+                    <div class="section-title">
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        Threat Classification
+
+                    </div>
+
+
+                    <div class="row g-3 text-center">
+
+
+                        <div class="col-md-4">
+
+                            <div class="metric-label mb-2">
+
+                                Overall Status
+
+                            </div>
+
+
+                            {% if status == "Safe" %}
+
+                                <span class="status-badge status-safe">
+
+                                    SAFE
+
+                                </span>
+
+                            {% elif status == "Suspicious" %}
+
+                                <span class="status-badge status-suspicious">
+
+                                    SUSPICIOUS
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-dangerous">
+
+                                    DANGEROUS
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="metric-label">
+
+                                Risk Score
+
+                            </div>
+
+                            <div class="metric-value mt-1">
+
+                                {{ score }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="metric-label">
+
+                                ML Confidence
+
+                            </div>
+
+                            <div class="metric-value mt-1">
+
+                                {{ ml_confidence }}%
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DETECTION SUMMARY
+            ================================================== -->
+
+            <div class="section">
+
+                <div class="indicator-card">
+
+                    <div class="section-title">
+
+                        <i class="fa-solid fa-clipboard-list"></i>
+
+                        Detection Summary
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        <div class="col-md-4">
+
+                            <div class="metric-card">
+
+                                <div class="metric-label">
+                                    Rule-Based Score
+                                </div>
+
+                                <div class="metric-value mt-2">
+
+                                    {{ score }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="metric-card">
+
+                                <div class="metric-label">
+                                    Machine Learning
+                                </div>
+
+                                <div class="mt-2">
+
+                                    {% if ml_prediction == "Phishing" %}
+
+                                        <span class="prediction-badge prediction-phishing">
+
+                                            Phishing
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="prediction-badge prediction-legitimate">
+
+                                            Legitimate
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+
+                            <div class="metric-card">
+
+                                <div class="metric-label">
+                                    Confidence
+                                </div>
+
+                                <div class="metric-value mt-2">
+
+                                    {{ ml_confidence }}%
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row g-3 mt-2">
+
+
+                        <div class="col-md-6">
+
+                            <div class="metric-card">
+
+                                <div class="metric-label mb-2">
+
+                                    Rule-Based Detection
+
+                                </div>
+
+                                <p class="mb-0"
+                                   style="
+                                   color:#71839c;
+                                   font-size:12px;
+                                   line-height:1.7;
+                                   ">
+
+                                    Analyzes suspicious keywords,
+                                    urgency patterns, phishing
+                                    indicators and social engineering
+                                    behaviour.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="metric-card">
+
+                                <div class="metric-label mb-2">
+
+                                    Machine Learning Detection
+
+                                </div>
+
+                                <p class="mb-0"
+                                   style="
+                                   color:#71839c;
+                                   font-size:12px;
+                                   line-height:1.7;
+                                   ">
+
+                                    Uses the trained phishing
+                                    detection model to classify the
+                                    email and estimate prediction
+                                    confidence.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FINAL VERDICT
+            ================================================== -->
+
+            <div class="section">
+
+
+                {% if status == "Dangerous" %}
+
+                    <div class="verdict verdict-danger">
+
+                        <div class="verdict-icon">
+
+                            <i class="fa-solid fa-shield"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Dangerous Email Detected
+                            </h3>
+
+                            <p>
+
+                                This email contains phishing
+                                indicators and may attempt to
+                                steal credentials, OTPs, financial
+                                information or other sensitive data.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                {% elif status == "Suspicious" %}
+
+                    <div class="verdict verdict-warning">
+
+                        <div class="verdict-icon">
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Suspicious Email Detected
+                            </h3>
+
+                            <p>
+
+                                Suspicious indicators were detected.
+                                Verify the sender before replying,
+                                clicking links or opening attachments.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="verdict verdict-safe">
+
+                        <div class="verdict-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Email Appears Safe
+                            </h3>
+
+                            <p>
+
+                                No major phishing indicators were
+                                detected. Continue following normal
+                                email security practices.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
+
+            <div class="row g-2 mt-2">
+
+
+                <div class="col-md-4">
+
+                    <a
+                        href="{% url 'email_scan' %}"
+                        class="btn action-btn btn-scan w-100"
+                    >
+
+                        <i class="fa-solid fa-envelope-circle-check"></i>
+
+                        Scan Another Email
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <a
+                        href="{% url 'history' %}"
+                        class="btn action-btn btn-history w-100"
+                    >
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        View History
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="btn action-btn btn-dashboard w-100"
+                    >
+
+                        <i class="fa-solid fa-gauge-high"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+
+            <div class="report-footer">
+
+                <div>
+
+                    <strong>SentinelX AI</strong>
+
+                    &nbsp;•&nbsp;
+
+                    AI-Powered Multi-Channel Scam Detection
+
+                </div>
+
+                <div class="mt-1">
+
+                    Rule-Based Detection
+                    &nbsp;|&nbsp;
+                    Machine Learning
+                    &nbsp;|&nbsp;
+                    AI Security Assistant
+
+                    &nbsp;•&nbsp;
+
+                    {% now "d M Y | h:i A" %}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
 
 </div>
 
-<div>
-
-{% if status == "Safe" %}
-
-<span class="badge badge-box safe">
-
-SAFE
-
-</span>
-
-{% elif status == "Suspicious" %}
-
-<span class="badge badge-box warning">
-
-SUSPICIOUS
-
-</span>
-
-{% else %}
-
-<span class="badge badge-box danger">
-
-DANGEROUS
-
-</span>
-
-{% endif %}
-
-</div>
-
-</div>
-
-<!-- ================= BODY ================= -->
-
-<div class="card-body p-4">
-
-<h4 class="section-title">
-
-<i class="bi bi-envelope-paper"></i>
-
-Scanned Email
-
-</h4>
-
-<div class="email-box mb-5">
-
-{{ email_text }}
-
-</div>
-
-<div class="row g-4">
-
-<div class="col-md-4">
-
-<div class="stat-card">
-
-<div class="card-body text-center">
-
-<i class="bi bi-shield-check stat-icon"></i>
-
-<div class="stat-title">
-
-Risk Score
-
-</div>
-
-<div class="stat-value">
-
-{{ score }}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="stat-card">
-
-<div class="card-body text-center">
-
-<i class="bi bi-cpu-fill stat-icon"></i>
-
-<div class="stat-title">
-
-AI Prediction
-
-</div>
-
-{% if ml_prediction == "Phishing" %}
-
-<span class="badge bg-danger fs-5 px-4 py-2">
-
-{{ ml_prediction }}
-
-</span>
-
-{% else %}
-
-<span class="badge bg-success fs-5 px-4 py-2">
-
-{{ ml_prediction }}
-
-</span>
-
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="stat-card">
-
-<div class="card-body text-center">
-
-<i class="bi bi-bar-chart-line-fill stat-icon"></i>
-
-<div class="stat-title">
-
-Confidence
-
-</div>
-
-<div class="stat-value text-success">
-
-{{ ml_confidence }}%
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<hr class="border-secondary my-5">
-
-<!-- ================= AI ANALYSIS ================= -->
-
-<div class="row g-4">
-
-<div class="col-lg-7">
-
-<div class="reason-card">
-
-<h4 class="section-title">
-
-<i class="bi bi-search"></i>
-
-Detection Reasons
-
-</h4>
-
-<ul class="list-group list-group-flush">
-
-{% for reason in reasons %}
-
-<li class="list-group-item">
-
-<i class="bi bi-exclamation-circle-fill text-warning me-2"></i>
-
-{{ reason }}
-
-</li>
-
-{% empty %}
-
-<li class="list-group-item text-success">
-
-<i class="bi bi-check-circle-fill me-2"></i>
-
-No suspicious indicators detected.
-
-</li>
-
-{% endfor %}
-
-</ul>
-
-</div>
-
-</div>
-
-<div class="col-lg-5">
-
-<div class="stat-card">
-
-<div class="card-body p-4">
-
-<h4 class="section-title">
-
-<i class="bi bi-envelope-check-fill"></i>
-
-Quick Email Analysis
-
-</h4>
-
-<div class="mb-4">
-
-<h6 class="text-secondary">
-
-Machine Learning
-
-</h6>
-
-{% if ml_prediction == "Phishing" %}
-
-<div class="badge bg-danger fs-5 px-4 py-3">
-
-⚠️ Phishing Email
-
-</div>
-
-{% else %}
-
-<div class="badge bg-success fs-5 px-4 py-3">
-
-✅ Legitimate Email
-
-</div>
-
-{% endif %}
-
-</div>
-
-<hr>
-
-<div class="mb-4">
-
-<h6 class="text-secondary">
-
-Overall Status
-
-</h6>
-
-{% if status == "Safe" %}
-
-<span class="badge bg-success fs-6 px-4 py-2">
-
-SAFE
-
-</span>
-
-{% elif status == "Suspicious" %}
-
-<span class="badge bg-warning text-dark fs-6 px-4 py-2">
-
-SUSPICIOUS
-
-</span>
-
-{% else %}
-
-<span class="badge bg-danger fs-6 px-4 py-2">
-
-DANGEROUS
-
-</span>
-
-{% endif %}
-
-</div>
-
-<hr>
-
-<div>
-
-<h6 class="text-secondary">
-
-Confidence Score
-
-</h6>
-
-<h2 class="fw-bold text-info">
-
-{{ ml_confidence }}%
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<hr class="border-secondary my-5">
-
-<!-- ================= AI SECURITY ASSISTANT ================= -->
-
-<div class="ai-card">
-
-<h2 class="section-title">
-
-<i class="bi bi-robot"></i>
-
-AI Security Assistant
-
-</h2>
-
-<div class="alert alert-primary border-0">
-
-<i class="bi bi-stars"></i>
-
-The explanation below is generated using Google's Gemini AI by combining Rule-Based Detection, Machine Learning prediction and confidence score.
-
-</div>
-
-<div class="ai-output">
-
-{{ ai_explanation }}
-
-</div>
-
-</div>
-
-<hr class="border-secondary my-5">
-
-<!-- ================= SECURITY RECOMMENDATIONS ================= -->
-
-<div class="reason-card mb-5">
-
-<h4 class="section-title">
-
-<i class="bi bi-lightbulb-fill"></i>
-
-Security Recommendations
-
-</h4>
-
-<ul class="list-group list-group-flush">
-
-{% if status == "Dangerous" %}
-
-<li class="list-group-item">
-
-❌ Do NOT trust this email.
-
-</li>
-
-<li class="list-group-item">
-
-🔒 Never click any links inside this email.
-
-</li>
-
-<li class="list-group-item">
-
-📎 Do not download any attachments.
-
-</li>
-
-<li class="list-group-item">
-
-💳 Never share OTP, passwords or banking information.
-
-</li>
-
-<li class="list-group-item">
-
-🚨 Report this email as phishing.
-
-</li>
-
-<li class="list-group-item">
-
-🗑 Delete the email immediately.
-
-</li>
-
-{% elif status == "Suspicious" %}
-
-<li class="list-group-item">
-
-⚠️ Verify the sender carefully.
-
-</li>
-
-<li class="list-group-item">
-
-🔍 Check all links before clicking.
-
-</li>
-
-<li class="list-group-item">
-
-📎 Avoid downloading unknown attachments.
-
-</li>
-
-<li class="list-group-item">
-
-📧 Contact the sender through another trusted channel.
-
-</li>
-
-<li class="list-group-item">
-
-🔐 Never enter login credentials from email links.
-
-</li>
-
-{% else %}
-
-<li class="list-group-item">
-
-✅ No major phishing indicators were detected.
-
-</li>
-
-<li class="list-group-item">
-
-📧 Continue using normal email precautions.
-
-</li>
-
-<li class="list-group-item">
-
-🔐 Enable Two-Factor Authentication.
-
-</li>
-
-<li class="list-group-item">
-
-🛡 Keep your antivirus updated.
-
-</li>
-
-<li class="list-group-item">
-
-🌐 Always verify payment or banking requests.
-
-</li>
-
-{% endif %}
-
-</ul>
-
-</div>
-
-<!-- ================= THREAT CLASSIFICATION ================= -->
-
-<div class="stat-card mb-5">
-
-<div class="card-body p-4">
-
-<h4 class="section-title">
-
-<i class="bi bi-shield-exclamation"></i>
-
-Threat Classification
-
-</h4>
-
-<div class="row text-center">
-
-<div class="col-md-4">
-
-<h6 class="text-secondary">
-
-Overall Status
-
-</h6>
-
-{% if status == "Safe" %}
-
-<span class="badge bg-success fs-5 px-4 py-2">
-
-SAFE
-
-</span>
-
-{% elif status == "Suspicious" %}
-
-<span class="badge bg-warning text-dark fs-5 px-4 py-2">
-
-SUSPICIOUS
-
-</span>
-
-{% else %}
-
-<span class="badge bg-danger fs-5 px-4 py-2">
-
-DANGEROUS
-
-</span>
-
-{% endif %}
-
-</div>
-
-<div class="col-md-4">
-
-<h6 class="text-secondary">
-
-Risk Score
-
-</h6>
-
-<h2 class="fw-bold text-info">
-
-{{ score }}
-
-</h2>
-
-</div>
-
-<div class="col-md-4">
-
-<h6 class="text-secondary">
-
-ML Confidence
-
-</h6>
-
-<h2 class="fw-bold text-success">
-
-{{ ml_confidence }}%
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ================= DETECTION SUMMARY ================= -->
-
-<div class="reason-card">
-
-<h4 class="section-title">
-
-<i class="bi bi-clipboard-data-fill"></i>
-
-Detection Summary
-
-</h4>
-
-<div class="row text-center">
-
-<div class="col-md-4">
-
-<h2 class="text-info fw-bold">
-
-{{ score }}
-
-</h2>
-
-<p class="text-secondary">
-
-Rule-Based Score
-
-</p>
-
-</div>
-
-<div class="col-md-4">
-
-<h2>
-
-{% if ml_prediction == "Phishing" %}
-
-<span class="text-danger fw-bold">
-
-Phishing
-
-</span>
-
-{% else %}
-
-<span class="text-success fw-bold">
-
-Legitimate
-
-</span>
-
-{% endif %}
-
-</h2>
-
-<p class="text-secondary">
-
-Machine Learning Result
-
-</p>
-
-</div>
-
-<div class="col-md-4">
-
-<h2 class="text-warning fw-bold">
-
-{{ ml_confidence }}%
-
-</h2>
-
-<p class="text-secondary">
-
-Confidence Score
-
-</p>
-
-</div>
-
-</div>
-
-<hr class="border-secondary">
-
-<div class="row mt-4">
-
-<div class="col-md-6">
-
-<h5 class="text-info">
-
-Rule-Based Detection
-
-</h5>
-
-<p class="text-secondary">
-
-Analyzes suspicious keywords, urgent language, sender behaviour, phishing patterns, fake payment requests and social engineering indicators.
-
-</p>
-
-</div>
-
-<div class="col-md-6">
-
-<h5 class="text-info">
-
-Machine Learning Detection
-
-</h5>
-
-<p class="text-secondary">
-
-Uses an AI-trained phishing detection model to classify the email and estimate prediction confidence.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<hr class="border-secondary my-5">
-
-<!-- ================= FINAL VERDICT ================= -->
-
-<div class="text-center">
-
-{% if status == "Dangerous" %}
-
-<div class="alert alert-danger border-0 shadow-lg p-4">
-
-<h2 class="fw-bold">
-
-<i class="bi bi-x-octagon-fill"></i>
-
-Dangerous Email Detected
-
-</h2>
-
-<p class="mt-3 mb-0">
-
-This email contains multiple phishing indicators and may attempt to steal your passwords, banking details, OTPs or other sensitive information.
-
-</p>
-
-</div>
-
-{% elif status == "Suspicious" %}
-
-<div class="alert alert-warning border-0 shadow-lg p-4">
-
-<h2 class="fw-bold">
-
-<i class="bi bi-exclamation-triangle-fill"></i>
-
-Suspicious Email
-
-</h2>
-
-<p class="mt-3 mb-0">
-
-Some suspicious indicators were detected.
-
-Verify the sender before replying, clicking links or downloading attachments.
-
-</p>
-
-</div>
-
-{% else %}
-
-<div class="alert alert-success border-0 shadow-lg p-4">
-
-<h2 class="fw-bold">
-
-<i class="bi bi-check-circle-fill"></i>
-
-Email Appears Safe
-
-</h2>
-
-<p class="mt-3 mb-0">
-
-No major phishing indicators were detected.
-
-However, always verify the sender before sharing passwords, OTPs or financial information.
-
-</p>
-
-</div>
-
-{% endif %}
-
-</div>
-
-<hr class="border-secondary my-5">
-
-<!-- ================= ACTION BUTTONS ================= -->
-
-<div class="row text-center g-3">
-
-<div class="col-md-4">
-
-<a
-
-href="{% url 'email_scan' %}"
-
-class="btn btn-info btn-lg w-100"
-
->
-
-<i class="bi bi-envelope-plus-fill"></i>
-
-Scan Another Email
-
-</a>
-
-</div>
-
-<div class="col-md-4">
-
-<a
-
-href="{% url 'history' %}"
-
-class="btn btn-success btn-lg w-100"
-
->
-
-<i class="bi bi-clock-history"></i>
-
-View History
-
-</a>
-
-</div>
-
-<div class="col-md-4">
-
-<a
-
-href="{% url 'dashboard' %}"
-
-class="btn btn-outline-light btn-lg w-100"
-
->
-
-<i class="bi bi-speedometer2"></i>
-
-Dashboard
-
-</a>
-
-</div>
-
-</div>
-
-<hr class="border-secondary my-5">
-
-<!-- ================= FOOTER ================= -->
-
-<div class="text-center">
-
-<div class="footer-brand">
-
-<i class="bi bi-shield-lock-fill"></i>
-
-SentinelX AI
-
-</div>
-
-<p class="footer-text mt-3">
-
-AI Powered Multi-Channel Scam & Phishing Detection Platform
-
-</p>
-
-<p class="footer-text">
-
-Rule-Based Detection
-
-&nbsp;|&nbsp;
-
-Machine Learning
-
-&nbsp;|&nbsp;
-
-Gemini AI Security Assistant
-
-</p>
-
-<p class="footer-text">
-
-Generated on
-
-<strong>
-
-{% now "d M Y | h:i A" %}
-
-</strong>
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</body>
-
-</html>
+{% endblock %}

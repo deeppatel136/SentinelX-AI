@@ -4,70 +4,72 @@ import whois
 from datetime import datetime
 from urllib.parse import urlparse
 
+from .threat_result import ThreatResult
+
 
 def analyze_url(url):
+    """
+    Analyze a URL using SentinelX rule-based detection.
+
+    Existing detection logic is preserved.
+    The function now returns a unified ThreatResult object.
+    """
 
     score = 0
     reasons = []
 
     suspicious_words = [
-        'login',
-        'verify',
-        'bank',
-        'secure',
-        'update',
-        'account',
-        'password',
-        'otp'
+        "login",
+        "verify",
+        "bank",
+        "secure",
+        "update",
+        "account",
+        "password",
+        "otp",
     ]
 
-    # HTTPS Check
+    # --------------------------------------------------
+    # HTTPS CHECK
+    # --------------------------------------------------
 
     if not url.startswith("https://"):
         score += 20
         reasons.append("No HTTPS")
 
-    # URL Length Detection
+    # --------------------------------------------------
+    # URL LENGTH DETECTION
+    # --------------------------------------------------
 
     url_length = len(url)
 
     if url_length > 100:
-
         score += 30
-
-        reasons.append(
-            "Extremely Long URL"
-        )
+        reasons.append("Extremely Long URL")
 
     elif url_length > 75:
-
         score += 20
-
-        reasons.append(
-            "Very Long URL"
-        )
+        reasons.append("Very Long URL")
 
     elif url_length > 50:
-
         score += 10
+        reasons.append("Long URL")
 
-        reasons.append(
-            "Long URL"
-        )
+    # --------------------------------------------------
+    # IP ADDRESS DETECTION
+    # --------------------------------------------------
 
-    # IP Address Detection
-
-    ip_pattern = r'\d+\.\d+\.\d+\.\d+'
+    ip_pattern = r"\d+\.\d+\.\d+\.\d+"
 
     if re.search(ip_pattern, url):
-
         score += 30
-
         reasons.append(
             "IP Address used instead of domain"
         )
 
-    # URL Shortener Detection
+    # --------------------------------------------------
+    # URL SHORTENER DETECTION
+    # --------------------------------------------------
 
     shorteners = [
         "bit.ly",
@@ -76,7 +78,7 @@ def analyze_url(url):
         "t.co",
         "is.gd",
         "cutt.ly",
-        "shorturl.at"
+        "shorturl.at",
     ]
 
     for short in shorteners:
@@ -89,13 +91,15 @@ def analyze_url(url):
                 "URL Shortener Detected"
             )
 
-    # Special Character Detection
+    # --------------------------------------------------
+    # SPECIAL CHARACTER DETECTION
+    # --------------------------------------------------
 
     special_chars = [
-        '@',
-        '%',
-        '&',
-        '='
+        "@",
+        "%",
+        "&",
+        "=",
     ]
 
     for ch in special_chars:
@@ -108,9 +112,11 @@ def analyze_url(url):
                 f"Special Character Found: {ch}"
             )
 
-    # Hyphen Abuse Detection
+    # --------------------------------------------------
+    # HYPHEN ABUSE DETECTION
+    # --------------------------------------------------
 
-    if url.count('-') >= 3:
+    if url.count("-") >= 3:
 
         score += 15
 
@@ -118,7 +124,9 @@ def analyze_url(url):
             "Too many hyphens in URL"
         )
 
-    # Suspicious Keywords
+    # --------------------------------------------------
+    # SUSPICIOUS KEYWORDS
+    # --------------------------------------------------
 
     for word in suspicious_words:
 
@@ -130,11 +138,14 @@ def analyze_url(url):
                 f"Suspicious keyword: {word}"
             )
 
-    # Domain Age Check
+    # --------------------------------------------------
+    # DOMAIN AGE CHECK
+    # --------------------------------------------------
 
     try:
 
         parsed_url = urlparse(url)
+
         domain = parsed_url.netloc
 
         if not re.search(ip_pattern, domain):
@@ -144,18 +155,19 @@ def analyze_url(url):
             creation_date = domain_info.creation_date
 
             if isinstance(creation_date, list):
+
                 creation_date = creation_date[0]
 
             if creation_date:
 
                 if creation_date.tzinfo:
+
                     creation_date = creation_date.replace(
                         tzinfo=None
                     )
 
                 age_days = (
-                    datetime.now() -
-                    creation_date
+                    datetime.now() - creation_date
                 ).days
 
                 if age_days < 30:
@@ -180,7 +192,9 @@ def analyze_url(url):
             "Domain age could not be verified"
         )
 
-    # Status
+    # --------------------------------------------------
+    # STATUS
+    # --------------------------------------------------
 
     if score >= 60:
 
@@ -194,4 +208,25 @@ def analyze_url(url):
 
         status = "Safe"
 
-    return score, status, reasons
+    # --------------------------------------------------
+    # UNIFIED THREAT RESULT
+    # --------------------------------------------------
+
+    result = ThreatResult(
+
+        scan_type="URL",
+
+        target=url,
+
+        risk_score=min(score, 100),
+
+        status=status,
+
+        indicators=reasons,
+
+    )
+
+    # Finalize severity
+    result.finalize()
+
+    return result
